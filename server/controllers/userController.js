@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
-const {MESSAGES, HTTP_STATUS_CODES} = require("../constants");
+const {MESSAGES, HTTP_STATUS_CODES} = require("../utils/server.constants");
 
 const register = async (req, res) => {
   const { email, password } = req.body;
