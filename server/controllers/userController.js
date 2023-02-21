@@ -1,12 +1,7 @@
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
-<<<<<<< HEAD
-const {MESSAGES, HTTP_STATUS_CODES} = require("../constants");
-=======
-const HTTP_STATUS_CODES = require("../utils/statusCodes");
-const MESSAGES = require("../utils/messages");
->>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
+const {MESSAGES, HTTP_STATUS_CODES} = require("../utils/server.constants");
 
 const register = async (req, res) => {
   const { email, password } = req.body;
