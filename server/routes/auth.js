@@ -29,7 +29,7 @@ router.post('/createadmin', (req, res)=>{
             })
             user.save()
             .then((user)=>{
-                res.json({message: "success! account created"})
+                res.json({message: "success. account created"})
             }) 
             .catch(err=>{
                 console.log(err)
