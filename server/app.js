@@ -16,13 +16,13 @@ mongoose.connect(process.env.MONGOURI,
     console.log(err)
 })
 
-require('./models/user')
-require('./models/post')
+require('./models/userModel')
+require('./models/projectModel')
 
 app.use(express.json())
-app.use(require('./routes/auth'))
-app.use(require('./routes/post'))
+app.use(require('./routes/projectRoutes'))
+app.use(require('./routes/UserRoutes'))
 
-app.listen(PORT, ()=>{
-    console.log("server is running on sever", PORT);
+app.listen(process.env.PORT || PORT, ()=>{
+    console.log("server is running on sever", process.env.PORT || PORT);
 })
