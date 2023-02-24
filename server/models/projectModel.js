@@ -44,4 +44,4 @@ const userSchema = mongoose.Schema({
     }
 })
 
-mongoose.model("Post", userSchema)
+mongoose.model("ProjectModel", userSchema)
