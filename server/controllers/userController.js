@@ -1,7 +1,6 @@
+const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
-const jwt = require("jsonwebtoken");
-
 
 const register = async (req, res) => {
   const { email, password } = req.body;
@@ -17,7 +16,6 @@ const register = async (req, res) => {
         .status(422)
         .json({ message: "User with that email already exist" });
     }
-    
     const user = new User({
       email,
       password,
@@ -30,13 +28,12 @@ const register = async (req, res) => {
       if (error.name === "ValidationError") {
         return res.status(422).json({ message: error.message });
       } else {
-        console.log('user sign up')
         return res.json({ message: error.message });
       }
     }
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ error: 'Server error.' });
+    return res.status(500).json({ error: "Sorry, we are experiencing technical difficulties" });
   }
 };
 
@@ -54,30 +51,29 @@ const login = async (req, res) => {
 
     const isPasswordValid = await savedUser.comparePassword(password);
     if (isPasswordValid) {
-      const token = jwt.sign({ id: savedUser._id }, process.env.JWTSECRET);
+      const token = jwt.sign({ _id: savedUser._id }, process.env.JWTSECRET);
       return res.json({ token });
     } else {
       return res.status(422).json({ error: "Invalid email or password." });
     }
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ error: error.message});
+    return res.status(500).json({ error: error.message });
   }
-
 };
 
-const protectedRoute = async(req, res) => {
+const protectedRoute = async (req, res) => {
   try {
     //exclude the password from the returned data
-    const user = await User.findOne(req.user._id).select("-password")
-    return res.json({user})
+    const user = await User.findOne(req.user._id).select("-password");
+    return res.json({ user });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
-}
+};
 
 module.exports = {
   register,
   login,
-  protectedRoute
+  protectedRoute,
 };
