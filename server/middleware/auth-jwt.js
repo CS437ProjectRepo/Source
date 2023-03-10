@@ -20,7 +20,7 @@ const requireLogin = async (req, res, next) => {
         .json({ error: MESSAGES.notLoggedIn });
 >>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
     }
-    
+
     const token = authorization.replace("Bearer ", "");
     const payload = await jwt.verify(token, process.env.JWTSECRET);
     const user = await User.findById(payload._id);
