@@ -1,11 +1,23 @@
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
+<<<<<<< HEAD
+const {MESSAGES, HTTP_STATUS_CODES} = require("../constants");
+=======
+const HTTP_STATUS_CODES = require("../utils/statusCodes");
+const MESSAGES = require("../utils/messages");
+>>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
 
 const register = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res.status(422).json({ error: "Please add all of the fields" });
+    return res
+      .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
+<<<<<<< HEAD
+      .json({ error: MESSAGES.FIELDS_MISSING });
+=======
+      .json({ error: MESSAGES.fieldsMissing });
+>>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
   }
 
   const existingUser = await User.findOne({ email: email });
@@ -13,8 +25,12 @@ const register = async (req, res) => {
   try {
     if (existingUser) {
       return res
-        .status(422)
-        .json({ message: "User with that email already exist" });
+        .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
+<<<<<<< HEAD
+        .json({ message: MESSAGES.EMAIL_ALREADY_EXIST });
+=======
+        .json({ message: MESSAGES.emailAlreadyExist });
+>>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
     }
     const user = new User({
       email,
@@ -23,30 +39,65 @@ const register = async (req, res) => {
 
     try {
       await user.save();
-      return res.status(200).json({ message: "Account created successfully." });
+      return res
+        .status(HTTP_STATUS_CODES.OK)
+<<<<<<< HEAD
+        .json({ message: MESSAGES.ACCOUNT_CREATED });
+=======
+        .json({ message: MESSAGES.accountCreated });
+>>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
     } catch (error) {
       if (error.name === "ValidationError") {
-        return res.status(422).json({ message: error.message });
+        return res
+          .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
+<<<<<<< HEAD
+          .json({ message: MESSAGES.INVALID_CREDENTIALS });
       } else {
-        return res.json({ message: error.message });
+        return res
+          .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+          .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
+=======
+          .json({ message: MESSAGES.userValidationError });
+      } else {
+        return res
+          .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+          .json({ error: MESSAGES.internalServerError });
+>>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
       }
     }
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: "Sorry, we are experiencing technical difficulties" });
+    return res
+      .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+<<<<<<< HEAD
+      .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
+=======
+      .json({ error: MESSAGES.internalServerError });
+>>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
   }
 };
 
 const login = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res.status(422).json({ error: "Please add all of the fields" });
+    return res
+      .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
+<<<<<<< HEAD
+      .json({ error: MESSAGES.FIELDS_MISSING });
+=======
+      .json({ error: MESSAGES.fieldsMissing });
+>>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
   }
 
   try {
     const savedUser = await User.findOne({ email: email });
     if (!savedUser) {
-      return res.status(422).json({ message: "Invalid email or password" });
+      return res
+        .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
+<<<<<<< HEAD
+        .json({ message: MESSAGES.FIELDS_MISSING });
+=======
+        .json({ message: MESSAGES.fieldsMissing });
+>>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
     }
 
     const isPasswordValid = await savedUser.comparePassword(password);
@@ -54,11 +105,22 @@ const login = async (req, res) => {
       const token = jwt.sign({ _id: savedUser._id }, process.env.JWTSECRET);
       return res.json({ token });
     } else {
-      return res.status(422).json({ error: "Invalid email or password." });
+      return res
+        .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
+<<<<<<< HEAD
+        .json({ error: MESSAGES.FIELDS_MISSING });
+=======
+        .json({ error: MESSAGES.fieldsMissing });
+>>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
     }
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: error.message });
+    return res
+      .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+<<<<<<< HEAD
+      .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
+=======
+      .json({ error: MESSAGES.internalServerError });
+>>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
   }
 };
 
@@ -68,7 +130,9 @@ const protectedRoute = async (req, res) => {
     const user = await User.findOne(req.user._id).select("-password");
     return res.json({ user });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return res
+      .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+      .json({ error: MESSAGES.internalServerError });
   }
 };
 
