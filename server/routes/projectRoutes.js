@@ -27,7 +27,7 @@ router.get('/favorites', (req,res)=>{
 router.post('/createpost', requireLogin, (req, res)=>{
     const {project_name,semester, year,instructor,description, team, documentation, favorite} = req.body
     if(!project_name || !semester || !year || !instructor || !description || !team || !documentation || !favorite){
-        return res.status(422).json({error:"please add all the feilds"})
+        return res.status(422).json({error: "please add all the feilds"})
     }
     Post.findOne({project_name: project_name})
      .then(existingPost=>{
@@ -67,6 +67,7 @@ router.post('/editpost', requireLogin, (req,res)=>{
         res.json({message:"success. post updated"})
     })
     .catch(err=>{
+        res.status(500).json({error: "invalid format"})
         console.log(err)
     })
 })
