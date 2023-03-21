@@ -14,6 +14,6 @@ app.use(express.json())
 app.use(require('./routes/projectRoutes'))
 app.use(require('./routes/UserRoutes'))
 
-app.listen(process.env.PORT || PORT, ()=>{
-    console.log("server is running on sever", process.env.PORT || PORT);
+app.listen(PORT, ()=>{
+    console.log("server is running on sever", PORT);
 })
