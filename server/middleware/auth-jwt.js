@@ -9,11 +9,7 @@ const requireLogin = async (req, res, next) => {
     if (!authorization) {
       return res
         .status(HTTP_STATUS_CODES.UNAUTHORIZED)
-<<<<<<< HEAD
         .json({ error: MESSAGES.NOT_LOGGED_IN });
-=======
-        .json({ error: MESSAGES.notLoggedIn });
->>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
     }
 
     const token = authorization.replace("Bearer ", "");
@@ -23,11 +19,7 @@ const requireLogin = async (req, res, next) => {
     if (!user) {
       return res
         .status(HTTP_STATUS_CODES.UNAUTHORIZED)
-<<<<<<< HEAD
         .json({ error: MESSAGES.NOT_LOGGED_IN });
-=======
-        .json({ error: MESSAGES.notLoggedIn });
->>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
     }
 
     req.user = user;
@@ -36,11 +28,7 @@ const requireLogin = async (req, res, next) => {
     console.error(error);
     res
       .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
-<<<<<<< HEAD
       .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
-=======
-      .json({ error: MESSAGES.internalServerError });
->>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
   }
 };
 module.exports = requireLogin;

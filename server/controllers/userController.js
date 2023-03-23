@@ -8,11 +8,7 @@ const register = async (req, res) => {
   if (!email || !password) {
     return res
       .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
-<<<<<<< HEAD
       .json({ error: MESSAGES.FIELDS_MISSING });
-=======
-      .json({ error: MESSAGES.fieldsMissing });
->>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
   }
 
   const existingUser = await User.findOne({ email: email });
@@ -21,11 +17,7 @@ const register = async (req, res) => {
     if (existingUser) {
       return res
         .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
-<<<<<<< HEAD
         .json({ message: MESSAGES.EMAIL_ALREADY_EXIST });
-=======
-        .json({ message: MESSAGES.emailAlreadyExist });
->>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
     }
     const user = new User({
       email,
@@ -36,38 +28,22 @@ const register = async (req, res) => {
       await user.save();
       return res
         .status(HTTP_STATUS_CODES.OK)
-<<<<<<< HEAD
         .json({ message: MESSAGES.ACCOUNT_CREATED });
-=======
-        .json({ message: MESSAGES.accountCreated });
->>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
     } catch (error) {
       if (error.name === "ValidationError") {
         return res
           .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
-<<<<<<< HEAD
           .json({ message: MESSAGES.INVALID_CREDENTIALS });
       } else {
         return res
           .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
           .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
-=======
-          .json({ message: MESSAGES.userValidationError });
-      } else {
-        return res
-          .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
-          .json({ error: MESSAGES.internalServerError });
->>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
       }
     }
   } catch (error) {
     return res
       .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
-<<<<<<< HEAD
       .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
-=======
-      .json({ error: MESSAGES.internalServerError });
->>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
   }
 };
 
@@ -76,11 +52,7 @@ const login = async (req, res) => {
   if (!email || !password) {
     return res
       .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
-<<<<<<< HEAD
       .json({ error: MESSAGES.FIELDS_MISSING });
-=======
-      .json({ error: MESSAGES.fieldsMissing });
->>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
   }
 
   try {
@@ -88,11 +60,7 @@ const login = async (req, res) => {
     if (!savedUser) {
       return res
         .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
-<<<<<<< HEAD
         .json({ message: MESSAGES.FIELDS_MISSING });
-=======
-        .json({ message: MESSAGES.fieldsMissing });
->>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
     }
 
     const isPasswordValid = await savedUser.comparePassword(password);
@@ -102,20 +70,12 @@ const login = async (req, res) => {
     } else {
       return res
         .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
-<<<<<<< HEAD
         .json({ error: MESSAGES.FIELDS_MISSING });
-=======
-        .json({ error: MESSAGES.fieldsMissing });
->>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
     }
   } catch (error) {
     return res
       .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
-<<<<<<< HEAD
       .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
-=======
-      .json({ error: MESSAGES.internalServerError });
->>>>>>> 11f52a1... Add HTTP status code file and a Messages file for a single location updatable location
   }
 };
 
