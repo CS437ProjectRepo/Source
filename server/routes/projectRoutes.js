@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const requireLogin = require('../middleware/requireLogin');
+const {projectFieldValidation} = require("../utils/validators");
 const projectController = require("../controllers/projectController");
 
-router.get('/allposts', projectController.allPosts);
+router.get('/allprojects', projectController.allprojects);
 
-router.post('/createpost', projectController.createPost);
+router.post('/createproject', projectFieldValidation, projectController.createproject);
 
-router.post('/editpost', requireLogin,  projectController.editPost)
+router.post('/editproject', requireLogin,  projectController.updateProject)
 
 module.exports = router
