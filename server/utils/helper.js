@@ -1,5 +1,5 @@
 const axios = require("axios");
-const {MESSAGES, HTTP_STATUS_CODES } = require("../utils/server.constants");
+const {MESSAGES } = require("../utils/server.constants");
 
 async function appendLanguageTags(github, tags) {
     if (!github)
