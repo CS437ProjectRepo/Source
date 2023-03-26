@@ -8,7 +8,8 @@ const userSchema = mongoose.Schema({
     unique: true,
     validate: {
       validator: function (email) {
-        return /^[a-zA-Z0-9._%+-]+@bu\.edu$/.test(email);
+        return /[^@]+@[^@]+\.[^@]+/.test(email);
+        // return /^[a-zA-Z0-9._%+-]+@bu\.edu$/.test(email);
       },
       message: (props) => `${props.value} is not a valid email!`,
     },

@@ -1,15 +1,11 @@
 const mongoose = require('mongoose');
 
-const userSchema = mongoose.Schema({
+const projectSchema = mongoose.Schema({
     project_name:{
         type: String,
         require: true
     },
     semester:{
-        type: String,
-        require: true
-    },
-    year:{
         type: String,
         require: true
     },
@@ -21,6 +17,9 @@ const userSchema = mongoose.Schema({
         type: String,
         require: true
     },
+    tags: {
+        type: [String],
+    },
     team:{
         type: [String],
         require: true
@@ -28,10 +27,6 @@ const userSchema = mongoose.Schema({
     documentation:{
         type: String,
         require: true
-    },
-    favorite:{
-        type: Boolean,
-        require: true,
     },
     website: {
         type: String
@@ -44,4 +39,4 @@ const userSchema = mongoose.Schema({
     }
 })
 
-mongoose.model("ProjectModel", userSchema)
+mongoose.model("Project", projectSchema)

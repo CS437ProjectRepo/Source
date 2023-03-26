@@ -5,6 +5,7 @@ const User = mongoose.model("User");
 const register = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
+    console.log(req);
     return res.status(422).json({ error: "Please add all of the fields" });
   }
 
