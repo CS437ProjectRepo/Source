@@ -10,7 +10,7 @@ require('./models/projectModel')
 
 app.use(express.json())
 app.use(require('./routes/projectRoutes'))
- app.use(require('./routes/userRoutes'))
+app.use(require('./routes/userRoutes'))
 
 app.listen(PORT, ()=>{
     console.log("server is running on sever", PORT);

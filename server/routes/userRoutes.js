@@ -3,7 +3,7 @@ const express = require('express');
  const requireLogin = require('../middleware/requireLogin');
  const UserController = require("../controllers/userController")
 
- router.get('/protected',requireLogin, UserController.protectedRoute)
+ router.get('/protected', requireLogin, UserController.protectedRoute)
 
  router.post('/register', UserController.register)
  

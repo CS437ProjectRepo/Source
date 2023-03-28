@@ -21,4 +21,6 @@ async function appendLanguageTags(github, tags) {
     }
 }
 
- module.exports = { appendLanguageTags}
+ module.exports = {
+    appendLanguageTags
+}
