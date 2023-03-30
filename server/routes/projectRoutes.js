@@ -19,4 +19,7 @@ router.post('/editproject', requireLogin,  projectController.updateProject);
 
 router.post('/uploadfiletest', upload.any(), projectController.uploadFileTest);
 
+router.get('/download/projects', projectController.downloadProjects);
+
+
 module.exports = router
