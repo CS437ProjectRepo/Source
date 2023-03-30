@@ -60,17 +60,19 @@ const login = async (req, res) => {
     if (!savedUser) {
       return res
         .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
-        .json({ message: MESSAGES.FIELDS_MISSING });
+        .json({ message: MESSAGES.INVALID_CREDENTIALS });
     }
 
     const isPasswordValid = await savedUser.comparePassword(password);
     if (isPasswordValid) {
       const token = jwt.sign({ _id: savedUser._id }, process.env.JWTSECRET);
-      return res.json({ token });
+      return res
+        .status(HTTP_STATUS_CODES.OK)
+        .json({ token });
     } else {
       return res
         .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
-        .json({ error: MESSAGES.FIELDS_MISSING });
+        .json({ message: MESSAGES.INVALID_CREDENTIALS });
     }
   } catch (error) {
     return res

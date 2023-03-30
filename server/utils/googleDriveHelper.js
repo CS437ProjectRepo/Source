@@ -1,6 +1,7 @@
 const { google } = require('googleapis');
 const jwt = require('jsonwebtoken');
 const stream = require('stream');
+require('dotenv').config()
 const serviceAccountKey = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY);
 const scopes = ['https://www.googleapis.com/auth/drive'];
 const folderId = "1YHDfQNxN9tatehJWb0epepSoS3gYuhhn";

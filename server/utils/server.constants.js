@@ -21,6 +21,12 @@ exports.MESSAGES = {
     UNPROCESSABLE_ENTITY : 422,
     INTERNAL_SERVER_ERROR : 500
   };
+
+  exports.ROUTES = {
+    USER_LOGIN      : "/login",
+    USER_REGISTER   : "/register",
+    USER_PROTECTED  : "/protected"
+  }
  
   exports.SEMESTER = [
     "Spring",
