@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const router = express.Router();
 const upload = multer();
-const requireLogin = require('../middleware/requireLogin');
+const requireLogin = require('../middleware/auth-jwt');
 const {projectFieldValidation} = require("../utils/validators");
 const projectController = require("../controllers/projectController");
 
