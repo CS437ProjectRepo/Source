@@ -6,42 +6,52 @@ const projectSchema = mongoose.Schema({
         require: true,
         trim : true,
         max: 150,
-        unique : true
+        unique : true,
+        label : 'Project Name'
     },
     semester:{
         type: String,
         trim : true,
-        require: true
+        require: true,
+        label : 'Semester'
     },
     instructor:{
         type: String,
         require: true,
-        trim : true
+        trim : true,
+        label: 'Instructor'
     },
     description:{
         type: String,
         require: true,
-        max : 300
+        max : 300,
+        label: 'Description'
     },
     tags: {
         type: [String],
+        label: 'Tags'
     },
     team:{
         type: [String],
-        require: true
+        require: true,
+        label : 'Team Members'
     },
     documentation:{
         type: String,
-        require: true
+        require: true,
+        label: 'Documentation'
     },
     website: {
-        type: String
+        type: String,
+        label: 'Website'
     },
     github: {
-        type: String
+        type: String,
+        label: 'Github'
     },
     pivitol_tracker: {
-        type: String
+        type: String,
+        label : 'Pivitol Tracker'
     }
 })
 

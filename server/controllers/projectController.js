@@ -1,9 +1,65 @@
 const mongoose = require('mongoose');
-// const Readable = require('readable');
+const Excel = require('exceljs');
 const Post = mongoose.model('Project')
-const {MESSAGES} = require("../utils/server.constants");
+const {MESSAGES, HTTP_STATUS_CODES} = require("../utils/server.constants");
 const {appendLanguageTags} = require("../utils/helper");
 const {createFile, deleteFile} = require("../utils/googleDriveHelper");
+
+const downloadProjects = async (req, res) => {
+  try{
+
+    const projects = await Post.find({}, '-_id -__v');
+    const schemaPaths = await Post.schema.paths
+    
+    const excelWorkbook = new Excel.Workbook();
+    const worksheet = excelWorkbook.addWorksheet('Projects')
+
+    /**
+     * The columns will be generated using the project schema paths this will allow for future developement if any fields get added to the modul
+     */
+    worksheet.columns = Object.keys(schemaPaths).filter(path => !['_id','__v'].includes(path)).map(path => {
+      const header = schemaPaths[path].options.label || path
+      return {header, key : path}
+     
+    })
+
+    /**
+     * Insert the data into the excel workbook
+     * Tags can sometimes be an empty array --> [] so we add some clean up work for the worksheet we will insert an empty "" instead of []
+     */
+    const projectData = {}
+    const maxWidths = {}
+    projects.forEach(project => {
+      Object.keys(project.toObject()).forEach(key =>{
+        if(key ==='tags'){
+          projectData[key] = project[key].length ? project[key].join(', ') : ''
+        } else {
+          projectData[key] = project[key]
+        }
+        const currentWidth = project[key] ? project[key].toString().length : 10
+        maxWidths[key] = Math.max(maxWidths[key] || 10 ,currentWidth + 2)
+      })
+     worksheet.addRow(projectData)
+    })
+
+    //console.log(maxWidths)
+    Object.keys(maxWidths).forEach(key => {
+      const column = worksheet.getColumn(key)
+      //console.log("Key ", column.key, "Width ", column.width )
+      column.width = Math.max(column.width, maxWidths[key])
+    })
+
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', 'attachment; filename=projects.xlsx');
+
+    await excelWorkbook.xlsx.write(res);
+    res.end()
+
+  } catch(error) {
+    console.log(error)
+    return res.status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).json({error: MESSAGES.ERROR_GENERATING_PROJECTS_FILE})
+  }
+};
 
 const uploadFileTest = async (req, res) => {
   try {
@@ -125,6 +181,7 @@ const updateProject = async (req, res) => {
 module.exports = {
     allprojects,
     createproject,
+    downloadProjects,
     updateProject,
     uploadFileTest
 }
