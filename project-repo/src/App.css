@@ -2,6 +2,11 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+:root{
+  --accent: #4f46e5;
+  --light-accent: #8d8ad0;
+}
+
 body {
   margin: 0;
   font-family: 'Inter', 'Segoe UI', 'Roboto', 'Oxygen',
@@ -16,6 +21,14 @@ code {
     monospace;
 }
 
+.form-checkbox{
+  border-radius: 5px;
+}
+
+img.logo-nav{
+  filter: invert();
+}
+
 .h-full{
   height: 100%;
   margin: 0;
@@ -28,11 +41,11 @@ code {
 }
 
 .bg-gradient{
-  background-image: linear-gradient(120deg, #fdfbfb 0%, rgb(241, 242, 243) 100%);
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #f1f1f3 100%);
 }
 
 .nav-bg{
-  background-color:#4f46e5;
+  background-color:var(--accent);
 }
 
 header{
@@ -40,8 +53,48 @@ header{
   position: sticky;
 }
 
+.add-button{
+  background-color: #b84f7f;
+  color: white;
+}
+
+.add-button svg{
+  fill: white;
+}
+
+.add-card{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 5rem 0;
+  border: 1px dashed #acabbc;
+  height: 100%;
+}
+
+.add-card svg{
+  margin-left: auto;
+  margin-right: auto;
+  width: 3rem;
+  /* color: var(--light-accent); */
+}
+
+.card{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .card-header{
-  background-color: rgb(238, 239, 240);
+  cursor: pointer;
+  background-image: linear-gradient(120deg, #e1dfff 20%, #ffecdc 90%, #ffe1dc 100%);
+}
+
+.card-body{
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card-body > p{
@@ -63,20 +116,50 @@ header{
   gap: .5rem;
 }
 
+.tag{
+  background-color: #edecfc;
+}
+
+.card-admin-options{
+  display: flex;
+  justify-content: space-evenly;
+  padding: .5rem 1rem 1rem;
+  gap: 1rem;
+  /* border-top: 1px dashed #c4c3d7; */
+}
+
+.card-admin-options button{
+  justify-content: center;
+  width: 100%;
+}
+
 @media (prefers-color-scheme: dark) {
   .bg-gradient{
-    background-image: linear-gradient(120deg, #282828 0%, rgb(0, 0, 0) 100%);
+    background-image: linear-gradient(150deg, #282828 0%, rgb(0, 0, 0) 100%);
   }
 
   .browse{
-    color:white;
+    color:#eeeff0;
   }
-  .text-gray-900, .text-gray-800{ 
-      color: white;
+  
+  .text-gray-800{ 
+      color: #eeeff0;
   }
 
-  .text-gray-700, .text-gray-600,  .text-gray-400{
-    color:#eeeff0;
+  .text-gray-700, .text-gray-600{
+    color:#a0a0a0;
+  }
+
+  .text-gray-400, .text-gray-500{
+    color:#7b7a7a;
+  }
+
+  .text-gray-200, .text-gray-300{
+    color: #545454;
+  }
+
+  .form-checkbox{
+    background-color: #545454;
   }
 
   input.text-gray-900, textarea.text-gray-900, select.text-gray-900{
@@ -84,28 +167,32 @@ header{
   }
 
   .border-gray-900{
-    border-color: white;
+    border-color: transparent;
   }
 
-  .border-gray-200{
-    border-color: #7f7d7d;
+  .border-gray-200, .border-gray-500, .add-card{
+    border-color: #9e9e9e;
   }
   
   .bg-white{
     background-color: #1e1f1f;
   }
 
-  .bg-gray-200{
-    background-color: #4f46e5;
+  .tag{
+    background-color: var(--accent);
   }
 
   .card-header{
-    background-color: #282828;
+    background-image: linear-gradient(120deg, var(--accent)20%, #9c2041);
   }
 
   img.logo{
     filter: invert();
   }
+
+  /* .add-card svg{
+    color: var(--accent);
+  } */
 
 
 }

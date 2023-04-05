@@ -1,14 +1,21 @@
-import { useState, Component } from 'react'
+import { useState, useContext } from 'react'
+import { AuthContext } from '../../App';
+import { Navigate } from "react-router-dom";
 import { FolderIcon } from '@heroicons/react/24/solid'
 
 export default function Add(){
-  function getYear(){
-    return new Date().getFullYear();
-  }
-
+  const { isAdminLoggedIn } = useContext(AuthContext);
   const [developmentType, setDevelopmentType] = useState("code");
   const [teamMembers, setTeamMembers] = useState([]);
   const [tags, setTags] = useState([]);
+
+  if(!isAdminLoggedIn){
+    return <Navigate to="/login" />;
+  }
+
+  function getYear(){
+    return new Date().getFullYear();
+  }
 
   const handledevelopmentTypeChange = (event) => {
     const curr = event.target.value;

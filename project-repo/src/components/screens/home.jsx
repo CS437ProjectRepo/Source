@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <div className="">
-        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 xs:mx-48">
+    <div className="mx-4">
+        <div className="mx-auto max-w-2xl py-32 sm:py-48">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
               Getting started on your term project?{' '}
@@ -15,9 +15,8 @@ export default function Home() {
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
               Welcome to the Term Project Repository
             </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600">
-              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-              fugiat veniam occaecat fugiat aliqua.
+            <p className="mt-6 text-md leading-8 text-gray-600">
+            See examples of successful projects from CS437/CS637 and gain inspiration for your own work. The repository is can be filtered by featured projects, programming languages, no code solutions, and catagory.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a

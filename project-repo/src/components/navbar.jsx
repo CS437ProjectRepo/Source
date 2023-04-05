@@ -1,47 +1,19 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import {Popover } from '@headlessui/react'
-
-// function activeNav(isLoggedIn){
-//   if (isLoggedIn){
-//     return navigationAuthenticated;
-//   }
-
-//   return navigation
-// }
-// 
-// function Navbar({ isLoggedIn }) {
-//   return (
-//     <nav>
-//       <ul>
-//         {isLoggedIn ? (
-//           <>
-//             <li><a href="/my-account">My Account</a></li>
-//             <li><a href="/settings">Settings</a></li>
-//             <li><a href="/post">Post</a></li>
-//           </>
-//         ) : (
-//           <>
-//             <li><a href="/login">Login</a></li>
-//             <li><a href="/signup">Signup</a></li>
-//           </>
-//         )}
-//         <li><a href="/about">About</a></li>
-//       </ul>
-//     </nav>
-//   );
-// }
+import { AuthContext } from '../App'
 
 function Navbar(){
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const {isAdminLoggedIn} = useContext(AuthContext);
   return (
     <header className="nav-bg">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
           <p href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">CS 473 Project Repository</span>
-            <img className="h-8 w-auto logo" src="https://cdn3.iconfinder.com/data/icons/rounded-folders/64/rounded_folder_label_closed-512.png" alt="" />
+            <img className="h-8 w-auto logo-nav" src="https://cdn3.iconfinder.com/data/icons/rounded-folders/64/rounded_folder_label_closed-512.png" alt="" />
           </p>
           {/* <p className="hidden lg:flex  -m-1.5 p-1.5 text-sm font-semibold text-white">&nbsp;&nbsp;CS 473 Project Repository</p> */}
         </div>
@@ -62,17 +34,25 @@ function Navbar(){
             <a href="/browse" className="text-sm font-semibold leading-6 text-white">
             Browse
             </a>
-          {/* <a href="/search" className="text-sm font-semibold leading-6 text-white">
-            Search
-          </a> */}
           <a href="/about" className="text-sm font-semibold leading-6 text-white">
             About
           </a>
+          {isAdminLoggedIn  && (
+            <a href="/dashboard" className="text-sm font-semibold leading-6 text-white">
+            Dashboard
+          </a>
+          )}
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="/login" className="text-sm font-semibold leading-6 text-white">
+        {isAdminLoggedIn ? (
+          <a href="/logout" className="text-sm font-semibold leading-6 text-white">
+            Log out <span aria-hidden="true">&rarr;</span>
+          </a>
+          ) : (
+            <a href="/login" className="text-sm font-semibold leading-6 text-white">
             Admin Log in <span aria-hidden="true">&rarr;</span>
           </a>
+        )}
         </div>
       </nav>
       <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
@@ -123,14 +103,34 @@ function Navbar(){
                 >
                   About
                 </a>
+
+                {isAdminLoggedIn  && (
+                  <a
+                  href="/dashboard"
+                  className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Dashboard
+                  </a>
+                )}
               </div>
               <div className="py-6">
+
+              {isAdminLoggedIn ? (
                 <a
+                  href="/logout"
+                  className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                >
+                  Log out
+                </a>
+                ) : (
+                  <a
                   href="/login"
                   className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Admin Log in
                 </a>
+              )}
+                
               </div>
             </div>
           </div>

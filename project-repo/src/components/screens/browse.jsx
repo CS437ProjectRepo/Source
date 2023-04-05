@@ -1,50 +1,14 @@
-import { Fragment, useState, useEffect } from 'react'
-import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon} from '@heroicons/react/20/solid'
+import { Fragment, useState, useEffect, useContext } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+import { XMarkIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { FolderPlusIcon, FunnelIcon} from '@heroicons/react/20/solid'
 import apiURL from "../../config/apiURL";
 // import axios from 'axios';
+import filters from '../../config/filters';
+import FilterMenu from '../filterMenu';
 import ProjectModal from '../projectModal';
-
-const filters = [
-  {
-    id: 'featured',
-    name: 'Featured',
-    options: [
-      { value: 'outstanding-ui', label: 'Outstanding UI', checked: false },
-      { value: 'outstanding-report', label: 'Outstanding Report', checked: false },
-      { value: 'outstanding-testing', label: 'Outstanding Testing', checked: false },
-    ],
-  },
-  {
-    id: 'category',
-    name: 'Category',
-    options: [
-      { value: 'software-engineering', label: 'Software Engineering', checked: false },
-      { value: 'education', label: 'Education', checked: false },
-      { value: 'travel', label: 'Travel', checked: false },
-      { value: 'productivity-&-organization', label: 'Productivity & Organization', checked: false },
-      { value: 'fitness-&-health', label: 'Fitness & Health', checked: false },
-      { value: 'event-planning', label: 'Event Planning', checked: false },
-      { value: 'social-networking', label: 'Social Networking', checked: false },
-      { value: 'miscellaneous', label: 'Miscellaneous', checked: false },
-    ],
-  },
-  {
-    id: 'languages',
-    name: 'Programming Languages',
-    options: [
-      { value: 'JavaScript', label: 'JavaScript', checked: false },
-      { value: 'Java', label: 'Java', checked: false },
-      { value: 'Python', label: 'Python', checked: false },
-      { value: 'PHP', label: 'PHP', checked: false },
-      { value: 'HTML', label: 'HTML', checked: false },
-      { value: 'CSS', label: 'CSS', checked: false },
-      { value: 'ApacheConf', label: 'ApacheConf', checked: false },
-    ],
-  },
-]
-
+import { AuthContext } from '../../App';
+import { Link } from "react-router-dom";
 
 const sortOptions = [
   { name: 'Featured', href: '#', current: true },
@@ -53,53 +17,6 @@ const sortOptions = [
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
-}
-
-function FilterMenu({ options, catagory, selectedOptions, onChange }) {
-  const handleOptionChange = (optionValue) => {
-    const newSelectedOptions = selectedOptions.includes(optionValue)
-      ? selectedOptions.filter(value => value !== optionValue)
-      : [...selectedOptions, optionValue];
-      onChange(newSelectedOptions);
-   }; 
-      return (
-        <Disclosure as="div" className="border-b border-gray-200 py-6">
-        {({ open }) => (
-          <>
-            <h3 className="-my-3 flow-root">
-              <Disclosure.Button className="flex w-full items-center justify-between py-3 text-sm text-gray-400 hover:text-gray-500">
-                <span className="font-medium text-gray-800">{catagory}</span>
-                <span className="ml-6 flex items-center">
-                  {open ? (
-                    <MinusIcon className="h-5 w-5" aria-hidden="true" />
-                  ) : (
-                    <PlusIcon className="h-5 w-5" aria-hidden="true" />
-                  )}
-                </span>
-              </Disclosure.Button>
-            </h3>
-            <Disclosure.Panel className="pt-6">
-              <div className="space-y-4">
-                {options.map((option) => (
-                  <div key={option.value} className="flex items-center">
-                    <label key={option.value} className="flex items-center">
-                   <input
-                     type="checkbox"
-                     className="form-checkbox h-5 w-5 text-purple-600"
-                     value={option.value}
-                     checked={selectedOptions.includes(option.value)}
-                     onChange={() => handleOptionChange(option.value)}
-                   />
-                   <span className="ml-2 text-gray-700">{option.label}</span>
-                 </label>
-                  </div>
-                ))}
-              </div>
-            </Disclosure.Panel>
-          </>
-        )}
-      </Disclosure>
-    )
 }
 
 export default function Browse() {
@@ -112,6 +29,7 @@ export default function Browse() {
     language: [],
     featured: [],
   });
+  const {isAdminLoggedIn} = useContext(AuthContext);
 
   useEffect(() => {
     const apiEndpoint =  apiURL + '/allprojects';
@@ -201,7 +119,7 @@ export default function Browse() {
               >
                 <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
                   <div className="flex items-center justify-between px-4">
-                    <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+                    <h2 className="text-lg font-medium text-gray-800">Filters</h2>
                     <button
                       type="button"
                       className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
@@ -241,51 +159,16 @@ export default function Browse() {
 
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pt-10 pb-6">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900">Term Project Repository</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-gray-800">Term Project Repository</h1>
 
             <div className="flex items-center">
-              <Menu as="div" className="relative inline-block text-left">
-                <div>
-                  <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700">
-                    Sort
-                    <ChevronDownIcon
-                      className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                      aria-hidden="true"
-                    />
-                  </Menu.Button>
-                </div>
-
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="py-1">
-                      {sortOptions.map((option) => (
-                        <Menu.Item key={option.name}>
-                          {({ active }) => (
-                            <a
-                              href={option.href}
-                              className={classNames(
-                                option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm'
-                              )}
-                            >
-                              {option.name}
-                            </a>
-                          )}
-                        </Menu.Item>
-                      ))}
-                    </div>
-                  </Menu.Items>
-                </Transition>
-              </Menu>
+            {/* <button
+              type="button"
+              className="add-button inline-flex items-center rounded-md px-3 py-2 text-sm text-gray-800 shadow-sm hover:bg-gray-800"
+              >
+              <FolderPlusIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+              Add Project
+            </button> */}
 
               <button
                 type="button"
@@ -322,10 +205,10 @@ export default function Browse() {
                     onChange={(filterValue) => handleFilterChange('category', filterValue)}
                   />
                   <FilterMenu
-                    options={filters[1].options}
-                    catagory={filters[1].name}
-                    selectedOptions={selectedFilters.language}
-                    onChange={filterValue => handleFilterChange(filters[1].name, filterValue)}
+                      options={filters[1].options}
+                      catagory={filters[1].name}
+                      selectedOptions={selectedFilters.language}
+                      onChange={filterValue => handleFilterChange('language', filterValue)}
                   />
                   <FilterMenu
                     options={filters[2].options}
@@ -338,22 +221,52 @@ export default function Browse() {
               {/* Filtered cards */}
               <div className="lg:col-span-3">
                 <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 mt-4'>
+                {isAdminLoggedIn && (
+                  <Link to="/add">
+                   <div className="add-card rounded-lg  border">
+                    <FolderPlusIcon className="text-gray-300"/>
+                    <p className='mt-2 text-md text-gray-500'>Add a Project</p>
+                   </div>
+                  </Link>
+                )}
                 {filteredCards.map(card => (
-                  <div key={card} className="bg-white rounded-lg shadow-md" onClick={() => handleCardClick(card)}>
-                  <div className="p-4 card-header rounded-t">
-                    <h2 className="text-lg font-medium">{card.project_name}</h2>
-                    <h6 className="text-md cont-medium">{card.semester} / {card.instructor}</h6>
-                  </div>
-                  
-                  <div className="mt-2 mx-4 mb-4 card-body">
-                    <p className="mt-2">{card.description}</p>
-                    <div className="tag-container mt-4">
-                      {card.tags.map(tag => (
-                        <span key={tag} className="bg-gray-200 px-2 py-1 rounded-full text-sm">{tag}</span>
-                      ))}
+                  <div className="bg-white rounded-lg shadow-md card">
+                  <div  key={card._id} onClick={() => handleCardClick(card)}>
+                    <div className="p-4 card-header rounded-t">
+                      <h2 className="text-md font-medium">{card.project_name}</h2>
+                      <h6 className="text-md">{card.semester} / {card.instructor}</h6>
+                    </div>
+                    
+                    <div className="mt-2 mx-4 mb-4 card-body">
+                      <p className="mt-2">{card.description}</p>
+                      <div className="tag-container mt-4">
+                        {card.tags.map(tag => (
+                          <span key={tag} className="tag px-2 py-1 rounded-full text-sm font-medium">{tag}</span>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
+                  {isAdminLoggedIn && (
+                    <div className="card-admin-options">
+                      <button
+                      type="button"
+                      className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm text-gray-600 shadow-sm  border border-dashed border-gray-400"
+                      key={card._id + "-edit"}
+                      >
+                      <PencilIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-600" aria-hidden="true" />
+                      Edit
+                    </button>
+                    {/* <button
+                      type="button"
+                      className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm text-red-500 shadow-sm  border border-red-500"
+                      key={card._id + "-delete"}
+                      >
+                      <TrashIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-red-500" aria-hidden="true" />
+                      Delete
+                    </button> */}
+                  </div>
+                  )}
+              </div>
                 ))}
               </div>
               </div>

@@ -11,7 +11,7 @@ export default function signUp() {
               src="https://cdn3.iconfinder.com/data/icons/rounded-folders/64/rounded_folder_label_closed-512.png"
               alt="Your Company"
             />
-            <h2 className="mt-2 text-center text-3xl font-bold tracking-tight text-gray-900">
+            <h2 className="mt-2 text-center text-3xl font-bold tracking-tight text-gray-800">
               Sign Up
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">

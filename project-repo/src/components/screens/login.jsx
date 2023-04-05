@@ -1,15 +1,23 @@
 import { LockClosedIcon } from '@heroicons/react/20/solid'
-import { useState } from 'react';
+import { useState, useContext} from 'react';
 import axios from 'axios';
 import apiURL from "../../config/apiURL";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Navigate, useNavigate } from "react-router-dom";
+import { AuthContext } from '../../App';
 
 export default function Login() {
-  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const { isAdminLoggedIn, login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
+  if(isAdminLoggedIn){
+    return <Navigate to="/dashboard" />;
+  }
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -18,29 +26,29 @@ export default function Login() {
         email,
         password,
       });
+      
+      const data = await response.data;
+      const token = data.token;
+      toast.success('Login successful!', { position: 'top-right' });
+      // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      sessionStorage.setItem('authToken', token);
+      login();
+      navigate('/browse')
 
-      const data = await response.json();
+      return;
 
-      if (response.ok) {
-        
-        toast.success('Login successful!', { position: 'top-right' });
-        
-        axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
-
-      } else {
-        
-        toast.error(data.message, { position: 'top-right' });
-      }
-
-      // TODO: Redirect the user to the protected page
     } catch (error) {
-      console.error(error);
+      console.log(error);
+      toast.error("Invalid username or password", { position: 'top-right' });
     }
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
     <>
-      <ToastContainer/>
       <div className="flex near-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>
@@ -50,7 +58,7 @@ export default function Login() {
               alt="Your Company"
             />
              <p className="mt-6 text-center text-sm text-gray-600">Welcome Back Admin!</p>
-            <h2 className="mt-2 text-center text-3xl font-bold tracking-tight text-gray-900">
+            <h2 className="mt-2 text-center text-3xl font-bold tracking-tight text-gray-800">
               Log In
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
@@ -86,7 +94,7 @@ export default function Login() {
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   required
                   className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -100,13 +108,15 @@ export default function Login() {
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
-                  id="remember-me"
-                  name="remember-me"
+                  id="show-password"
+                  name="show-password"
                   type="checkbox"
                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  checked={showPassword}
+                  onChange={toggleShowPassword}
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                  Remember me
+                <label htmlFor="show-password" className="ml-2 block text-sm text-gray-900">
+                  Show Password
                 </label>
               </div>
 

@@ -32,7 +32,7 @@ const register = async (req, res) => {
     } catch (error) {
       if (error.name === "ValidationError") {
         return res
-          .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
+          .status(HTTP_STATUS_CODES.UNAUTHORIZED)
           .json({ message: MESSAGES.INVALID_CREDENTIALS });
       } else {
         return res
@@ -59,7 +59,7 @@ const login = async (req, res) => {
     const savedUser = await User.findOne({ email: email });
     if (!savedUser) {
       return res
-        .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
+        .status(HTTP_STATUS_CODES.UNAUTHORIZED)
         .json({ message: MESSAGES.INVALID_CREDENTIALS });
     }
 
@@ -71,8 +71,8 @@ const login = async (req, res) => {
         .json({ token });
     } else {
       return res
-        .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
-        .json({ message: MESSAGES.INVALID_CREDENTIALS });
+        .status(HTTP_STATUS_CODES.UNAUTHORIZED)
+        .json({ error: MESSAGES.INVALID_CREDENTIALS });
     }
   } catch (error) {
     return res
