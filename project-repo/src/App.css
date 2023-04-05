@@ -1,0 +1,125 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.h-full{
+  height: 100%;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.near-full {
+  min-height: 90vh;
+}
+
+.bg-gradient{
+  background-image: linear-gradient(120deg, #fdfbfb 0%, rgb(241, 242, 243) 100%);
+}
+
+.nav-bg{
+  background-color:#4f46e5;
+}
+
+header{
+  z-index: 1;
+  position: sticky;
+}
+
+.card-header{
+  background-color: rgb(238, 239, 240);
+}
+
+.card-body > p{
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5; /* number of lines to show */
+          line-clamp: 5; 
+  -webkit-box-orient: vertical;
+}
+
+.card-body > div{
+  position: relative;
+  bottom: 10;
+}
+
+.tag-container{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .bg-gradient{
+    background-image: linear-gradient(120deg, #282828 0%, rgb(0, 0, 0) 100%);
+  }
+
+  .browse{
+    color:white;
+  }
+  .text-gray-900, .text-gray-800{ 
+      color: white;
+  }
+
+  .text-gray-700, .text-gray-600,  .text-gray-400{
+    color:#eeeff0;
+  }
+
+  input.text-gray-900, textarea.text-gray-900, select.text-gray-900{
+    color: black;
+  }
+
+  .border-gray-900{
+    border-color: white;
+  }
+
+  .border-gray-200{
+    border-color: #7f7d7d;
+  }
+  
+  .bg-white{
+    background-color: #1e1f1f;
+  }
+
+  .bg-gray-200{
+    background-color: #4f46e5;
+  }
+
+  .card-header{
+    background-color: #282828;
+  }
+
+  img.logo{
+    filter: invert();
+  }
+
+
+}
+
+/* .surround {
+  /* border-radius: 5px;
+  background-color: white;
+  filter: drop-shadow(0 0 0.25rem rgb(32, 32, 32));
+} */ 
+
+/* .bg-indigo-600{
+  background-color: #4b8d5c;
+}
+
+.text-indigo-600{
+  color: #4b8d5c;
+} */

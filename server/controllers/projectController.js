@@ -104,8 +104,10 @@ const createproject = async(req, res) => {
     }
 
     let documentation_link = "";
+    let fileId
     try{
-        documentation_link = await createFile(files[0]);
+      fileId = await createFile(files[i]);
+      documentation_link = `https://drive.google.com/file/d/${fileId}/view`
     }catch(e){
         return res.status(422).json({error: e.message});
     }

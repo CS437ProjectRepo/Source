@@ -1,8 +1,13 @@
 const express = require('express');
 const app = express();
-const PORT = 5050
+const cors = require('cors');
+
+
 require('../models/userModel')
 require('../models/projectModel')
+
+
+app.use(cors());
 app.use(express.json())
 app.use(require('../routes/projectRoutes'))
 app.use(require('../routes/userRoutes'))
