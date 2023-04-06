@@ -4,11 +4,16 @@ const User = mongoose.model("User");
 const {MESSAGES, HTTP_STATUS_CODES} = require("../utils/server.constants");
 
 const register = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, adminCode} = req.body;
   if (!email || !password) {
     return res
       .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
       .json({ error: MESSAGES.FIELDS_MISSING });
+  }
+
+  //TODO: add to server.constants
+  if(adminCode != process.env.ADMIN_CODE){
+    return res.status(401).json({ error: "Invalid admin code" });
   }
 
   const existingUser = await User.findOne({ email: email });

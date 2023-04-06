@@ -1,6 +1,50 @@
 import { LockClosedIcon } from '@heroicons/react/20/solid'
+import { useState, useContext} from 'react';
+import axios from 'axios';
+import apiURL from "../../config/apiURL";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Navigate, useNavigate } from "react-router-dom";
+import { AuthContext } from '../../App';
 
-export default function signUp() {
+export default function SignUp() {
+  const [adminCode, setAdminCode] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [showPassword, setShowPassword] = useState(false);
+  const { isAdminLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+  // if(isAdminLoggedIn){
+  //   return <Navigate to="/dashboard" />;
+  // }
+  
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.post(apiURL + '/register', {
+        adminCode,
+        email,
+        password,
+      });
+      
+      const data = await response.data;
+      toast.success('Account created successful!', { position: 'top-right' });
+      navigate('/login')
+
+      return;
+
+    } catch (error) {
+      console.log(error);
+      toast.error("Invalid username or password", { position: 'top-right' });
+    }
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <>
       <div className="flex near-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -21,7 +65,7 @@ export default function signUp() {
               </a>
             </p>
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px rounded-md shadow-sm">
             <div>
@@ -30,12 +74,14 @@ export default function signUp() {
                 </label>
                 <input
                   id="admin-code"
-                  name="adminCode"
-                  type="adminCode"
-                  autoComplete="adminCode"
+                  name="admin-code"
+                  type="admin-code"
+                  autoComplete="admin-code"
                   required
                   className="relative block w-full rounded-t-md border-0 py-1.5 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  placeholder="Admin code"
+                  value={adminCode}
+                  onChange={(e) => setAdminCode(e.target.value)}
+                  placeholder="Secret Admin Code"
                 />
               </div>
               <div>
@@ -48,8 +94,10 @@ export default function signUp() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="relative block w-full border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  placeholder="Email address"
+                  className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email address (example@bu.edu)"
                 />
               </div>
               <div>
@@ -59,12 +107,30 @@ export default function signUp() {
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   required
                   className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
                 />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <input
+                  id="show-password"
+                  name="show-password"
+                  type="checkbox"
+                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  checked={showPassword}
+                  onChange={toggleShowPassword}
+                />
+                <label htmlFor="show-password" className="ml-2 block text-sm text-gray-900">
+                  Show Password
+                </label>
               </div>
             </div>
 
