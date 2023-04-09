@@ -9,6 +9,7 @@ exports.MESSAGES = {
     ERROR_GENERATING_PROJECTS_FILE:   "Could not generate excel file.",
     PROJECT_ALREADY_EXIST:            "A project with that name already exist.",
     PROJECT_CREATED:                  "Project has been created",
+    PROJECT_DELETED:                  "Project deleted succesfully.",
     PROJECTS_FILE_DOWNLOADED:         "Excel file generated.",
     PROJECT_DOES_NOT_EXIST:           "A project with that name doesn't exist.",
     PROJECT_UPDATED:                  "Project updated successfully.",
