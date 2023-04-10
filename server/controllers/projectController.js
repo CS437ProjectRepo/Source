@@ -147,7 +147,7 @@ const createproject = async(req, res) => {
 const updateProject = async (req, res) => {
     const {project_name} = req.body;
     try {
-      const project = await Project.findOne({project_name: project_name})
+      const project = await Post.findOne({project_name: project_name})
       if(!project){
         return res.status(422).json({ error: MESSAGES.PROJECT_DOES_NOT_EXIST });
       }
@@ -169,7 +169,7 @@ const updateProject = async (req, res) => {
             }
         }
       }
-      await Project.findByIdAndUpdate(_id, newData);
+      await Post.findByIdAndUpdate(_id, newData);
       return res.status(200).json({ message: MESSAGES.PROJECT_UPDATED });
     } catch (error) {
       if (error.name === "ValidationError") {
@@ -182,11 +182,33 @@ const updateProject = async (req, res) => {
     }
   };
 
+const deleteProject = async (req, res) => {
+  const {project_name} = req.body;
+  if(!project_name) {
+    return res.status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY).json({message: MESSAGES.FIELDS_MISSING})
+  }
+
+  try {
+    const project = await Post.findOneAndDelete({project_name : project_name})
+    if(!project){
+      return res.status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY).json({error : MESSAGES.PROJECT_DOES_NOT_EXIST})
+    }
+    
+    const {documentation} = project;
+    deleteFile(documentation)
+
+    return res.status(HTTP_STATUS_CODES.OK).json({message : MESSAGES.PROJECT_DELETED});
+  } catch (error) {
+    return res.status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).json({error : MESSAGES.INTERNAL_SERVER_ERROR})
+  }
+}
+
 
 module.exports = {
     allprojects,
     createproject,
     downloadProjects,
     updateProject,
-    uploadFileTest
+    uploadFileTest,
+    deleteProject
 }
