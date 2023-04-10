@@ -66,7 +66,9 @@ const uploadFileTest = async (req, res) => {
     const { body, files } = req;
     let documentation_link;
     for (let i = 0; i < files.length; i += 1) {
-      const fileId = await createFile(files[i]);
+      //const fileId = await createFile(files[i]); 
+      //REACT VERSION vvvv
+      const fileId = await createFile(files['files'][i]);
       documentation_link = `https://drive.google.com/file/d/${fileId}/view`
     }
     console.log(body);
@@ -106,7 +108,8 @@ const createproject = async(req, res) => {
     let documentation_link = "";
     let fileId
     try{
-      fileId = await createFile(files[i]);
+      // fileId = await createFile(files[0]);
+      fileId = await createFile(files['files'][0]);
       documentation_link = `https://drive.google.com/file/d/${fileId}/view`
     }catch(e){
         return res.status(422).json({error: e.message});

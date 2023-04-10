@@ -29,7 +29,7 @@ export default function Login() {
       
       const data = await response.data;
       const token = data.token;
-      toast.success('Login successful!', { position: 'top-right' });
+      toast.success('Welcome Admin!', { position: 'top-right' });
       // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       sessionStorage.setItem('authToken', token);
       login();
@@ -115,7 +115,7 @@ export default function Login() {
                   checked={showPassword}
                   onChange={toggleShowPassword}
                 />
-                <label htmlFor="show-password" className="ml-2 block text-sm text-gray-900">
+                <label htmlFor="show-password" className="ml-2 block text-sm text-gray-800">
                   Show Password
                 </label>
               </div>

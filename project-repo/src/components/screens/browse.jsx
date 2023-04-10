@@ -22,7 +22,7 @@ function classNames(...classes) {
 export default function Browse() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [selectedCard, setSelectedCard] = useState(null);
-  const [projectModalIsOpen, setProjectModalIsOpen] = useState(true);
+  const [projectModalIsOpen, setProjectModalIsOpen] = useState(false);
   const [projectData, setProjectData] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({
     category: [],

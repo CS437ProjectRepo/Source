@@ -8,12 +8,14 @@ const register = async (req, res) => {
   if (!email || !password) {
     return res
       .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
-      .json({ error: MESSAGES.FIELDS_MISSING });
+      .json({ message: MESSAGES.FIELDS_MISSING });
   }
 
   //TODO: add to server.constants
   if(adminCode != process.env.ADMIN_CODE){
-    return res.status(401).json({ error: "Invalid admin code" });
+    return res
+    .status(HTTP_STATUS_CODES.UNAUTHORIZED)
+    .json({ message: "Invalid admin code" });
   }
 
   const existingUser = await User.findOne({ email: email });
@@ -38,17 +40,17 @@ const register = async (req, res) => {
       if (error.name === "ValidationError") {
         return res
           .status(HTTP_STATUS_CODES.UNAUTHORIZED)
-          .json({ message: MESSAGES.INVALID_CREDENTIALS });
+          .json({ message: error.message});
       } else {
         return res
           .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
-          .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
+          .json({ message: MESSAGES.INTERNAL_SERVER_ERROR });
       }
     }
   } catch (error) {
     return res
       .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
-      .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
+      .json({ message: MESSAGES.INTERNAL_SERVER_ERROR });
   }
 };
 
@@ -57,7 +59,7 @@ const login = async (req, res) => {
   if (!email || !password) {
     return res
       .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
-      .json({ error: MESSAGES.FIELDS_MISSING });
+      .json({ message: MESSAGES.FIELDS_MISSING });
   }
 
   try {
@@ -77,12 +79,12 @@ const login = async (req, res) => {
     } else {
       return res
         .status(HTTP_STATUS_CODES.UNAUTHORIZED)
-        .json({ error: MESSAGES.INVALID_CREDENTIALS });
+        .json({ message: MESSAGES.INVALID_CREDENTIALS });
     }
   } catch (error) {
     return res
       .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
-      .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
+      .json({ message: MESSAGES.INTERNAL_SERVER_ERROR });
   }
 };
 
@@ -94,7 +96,7 @@ const protectedRoute = async (req, res) => {
   } catch (error) {
     return res
       .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
-      .json({ error: MESSAGES.internalServerError });
+      .json({ message: MESSAGES.INTERNAL_SERVER_ERROR });
   }
 };
 

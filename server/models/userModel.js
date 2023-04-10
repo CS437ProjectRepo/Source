@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
       validator: function (email) {
         return /^[a-zA-Z0-9._%+-]+@bu\.edu$/.test(email);
       },
-      message: (props) => `${props.value} is not a valid email!`,
+      message: (props) => `${props.value} is not a valid bu.edu email`,
     },
   },
   password: {

@@ -5,9 +5,24 @@ import { FolderIcon } from '@heroicons/react/24/solid'
 
 export default function Add(){
   const { isAdminLoggedIn } = useContext(AuthContext);
-  const [developmentType, setDevelopmentType] = useState("code");
-  const [teamMembers, setTeamMembers] = useState([]);
+  const [development_type, setDevelopmentType] = useState("code");
+  const [project_name, setProjectName] = useState('');
+  const [description, setDescription] = useState('');
+  const [semester, setSemester] = useState('spring');
+  const [year, setYear] = useState(2015);
+  const [semester_year, setSemesterYear] = useState('')
+  const [instructor, setInstructor] = useState('');
+  const [github, setGithub] = useState('');
+  const [no_code_solution, setNoCode] = useState ('');
+  const [website, setWebsite] = useState('');
+  const [pivitol_tracker, setPivitolTracker] = useState('');
+  const [outstanding_UI, setOutstandingUI] = useState(false);
+  const [outstanding_report, setOutstandingReport] = useState(false);
+  const [outstanding_testing, setOutstandingTesting] = useState(false);
+  const [catagory, setCatagory] = useState('');
+  const [team, setTeam] = useState([]);
   const [tags, setTags] = useState([]);
+  const [files, setFile] = useState(null)
 
   if(!isAdminLoggedIn){
     return <Navigate to="/login" />;
@@ -15,6 +30,20 @@ export default function Add(){
 
   function getYear(){
     return new Date().getFullYear();
+  }
+
+  function handleSemesterChange(value, strCaller){
+    switch (strCaller){
+      case "semester":{
+        setSemester(value);
+        break
+      }
+      case "year":{
+        setYear(value);
+        break
+      }
+    }
+    setSemesterYear(semester + "_" + year)
   }
 
   const handledevelopmentTypeChange = (event) => {
@@ -25,40 +54,56 @@ export default function Add(){
   const handleTeamMembersChange = (event) => {
     const inputText = event.target.value;
     const membersList = inputText.split(",").map((member) => member.trim());
-    setTeamMembers(membersList);
+    setTeam(membersList);
   };
 
   function handleCategoryChange(event) {
     const category = event.target.value;
+    setCatagory(catagory)
     setTags(tags => [...tags, category]);
   }
 
-  function handleSuperlativeChange(event) {
+  function handleSuperlativeChange(event, strCaller ) {
+    const checked = event.target.checked;
+    switch (strCaller){
+      case "UI":{
+        setOutstandingUI(checked);
+        break
+      }
+      case "report":{
+        setOutstandingReport(checked);
+        break
+      }
+      case "testing":{
+        setOutstandingTesting(checked);
+        break
+      }
+    }
+    //TODO: fix error:
     const superlative = event.target.id;
     if (event.target.checked) {
-      setTags(tags => [...tags, superlative]);
+      setTags([...tags, superlative]);
     } else {
       setTags(tags => tags.filter(tag => tag !== superlative));
     }
+    
   }
-
-
 
   return (
     <div className="isolate bg-white px-6 py-10 sm:py-16 lg:px-8 ">
     <div className="mx-auto max-w-2xl text-center">
-      <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Add a New Project</h2>
+      <h2 className="text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl">Add a New Project</h2>
       {/* <p className="mt-2 text-lg leading-8 text-gray-600">
         Aute magna irure deserunt veniam aliqua magna enim voluptate.
       </p> */}
     </div>
     <form className="mx-auto max-w-2xl">
       <div className="space-y-12">
-        <div className="border-b border-gray-900/10 pb-12">
+        <div className="border-b border-gray-800/10 pb-12">
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="col-span-full">
-              <label htmlFor="project-name" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="project-name" className="block text-sm font-medium leading-6 text-gray-800">
                 Project Name*
               </label>
               <p className="text-sm leading-6 text-gray-600">Please Note: The project name cannot be modified once it is created</p>
@@ -69,13 +114,16 @@ export default function Add(){
                   id="project-name"
                   autoComplete="project-name"
                   maxLength={100}
+                  required
+                  value={project_name}
+                  onChange={(e) => setProjectName(e.target.value)}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
 
             <div className="col-span-full">
-              <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-800">
                 Description*
               </label>
               <p className="text-sm leading-6 text-gray-600">The project scope statement (Max 500 characters)</p>
@@ -85,6 +133,9 @@ export default function Add(){
                   name="about"
                   rows={6}
                   maxLength={500}
+                  required
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                   className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6"
                   defaultValue={''}
                 />
@@ -92,11 +143,11 @@ export default function Add(){
             </div>
 
             <div className="col-span-full">
-              <label htmlFor="file-upload" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="file-upload" className="block text-sm font-medium leading-6 text-gray-800">
                 Upload Documentation*
               </label>
               <p className="text-sm leading-6 text-gray-600">Attach documentation that is associated with this project</p>
-              <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900 px-6 py-10">
+              <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-800 px-6 py-10">
                 <div className="text-center">
                   <FolderIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
                   <div className="mt-4 flex text-sm leading-6 text-gray-600">
@@ -105,7 +156,10 @@ export default function Add(){
                       className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                     >
                       <span>Upload a file</span>
-                      <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+                      <input id="file-upload" name="file-upload" type="file" className="sr-only"
+                      required
+                      onChange={e => setFile(e.target.files[0])}
+                      />
                     </label>
                     <p className="pl-1">or drag and drop</p>
                   </div>
@@ -116,13 +170,13 @@ export default function Add(){
           </div>
         </div>
 
-        <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">Project Information</h2>
+        <div className="border-b border-gray-800/10 pb-12">
+          <h2 className="text-base font-semibold leading-7 text-gray-800">Project Information</h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">More information about this project</p>
 
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
-              <label htmlFor="semester-semester" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="semester-semester" className="block text-sm font-medium leading-6 text-gray-800">
                 Semester*
               </label>
               <div className="mt-2">
@@ -130,6 +184,9 @@ export default function Add(){
                   id="semester-semester"
                   name="semester-semester"
                   autoComplete="semester-semester"
+                  required
+                  value={semester}
+                  onChange={(e) => handleSemesterChange(e.target.value, "semester")}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option value="spring" >Spring</option>
@@ -140,7 +197,7 @@ export default function Add(){
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="year" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="year" className="block text-sm font-medium leading-6 text-gray-800">
                 Year*
               </label>
               <div className="mt-2">
@@ -152,13 +209,16 @@ export default function Add(){
                   name="semester-year"
                   id="semester-year"
                   autoComplete="semester-year"
+                  required
+                  value={year}
+                  onChange={(e) => handleSemesterChange(e.target.value, "year")}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
 
             <div className="col-span-full">
-              <label htmlFor="team-members" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="team-members" className="block text-sm font-medium leading-6 text-gray-800">
                 Team Members*
               </label>
               <p className="text-sm leading-6 text-gray-600">Enter team member names, separated by a comma</p>
@@ -175,7 +235,7 @@ export default function Add(){
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="developmentType-type" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="developmentType-type" className="block text-sm font-medium leading-6 text-gray-800">
                 Development Type*
               </label>
               <div className="mt-2">
@@ -184,7 +244,7 @@ export default function Add(){
                   name="developmentType-type"
                   autoComplete="developmentType-type"
                   onChange={handledevelopmentTypeChange}
-                  value={developmentType}
+                  value={development_type}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option value="code">Code</option>
@@ -193,9 +253,9 @@ export default function Add(){
               </div>
             </div>
 
-            {developmentType === "code" && (
+            {development_type === "code" ? (
               <div className="sm:col-span-3">
-                <label htmlFor="github" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="github" className="block text-sm font-medium leading-6 text-gray-800">
                   Github*
                 </label>
                 <div className="mt-2">
@@ -206,14 +266,15 @@ export default function Add(){
                     id="github"
                     autoComplete="github"
                     maxLength={500}
+                    value={github}
+                    onChange={(e) => setGithub(e.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
-            )}
-            {developmentType === "no-code" && (
+            ) :( development_type === "no-code" && (
               <div className="sm:col-span-3">
-                <label htmlFor="no-code-platform" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="no-code-platform" className="block text-sm font-medium leading-6 text-gray-800">
                   No-Code Platform*
                 </label>
                 <div className="mt-2">
@@ -221,6 +282,8 @@ export default function Add(){
                     id="no-code-platform"
                     name="no-code-platform"
                     autoComplete="no-code-platform"
+                    value={no_code_solution}
+                    onChange={(e) => setNoCode(e.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
                     <option value="adalo">Adalo</option>
@@ -236,10 +299,11 @@ export default function Add(){
                   </select>
                 </div>
               </div>
+            )
             )}
 
             <div className="sm:col-span-3">
-              <label htmlFor="pivitol-tracker" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="pivitol-tracker" className="block text-sm font-medium leading-6 text-gray-800">
                 Pivitol Tracker
               </label>
               <div className="mt-2">
@@ -250,13 +314,15 @@ export default function Add(){
                   id="pivitol-tracker"
                   autoComplete="pivitol-tracker"
                   maxLength={500}
+                  value={pivitol_tracker}
+                  onChange={(e) => setPivitolTracker(e.target.value)}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="website" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="website" className="block text-sm font-medium leading-6 text-gray-800">
                 Website
               </label>
               <div className="mt-2">
@@ -267,6 +333,8 @@ export default function Add(){
                   id="website"
                   autoComplete="website"
                   maxLength={500}
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -274,15 +342,15 @@ export default function Add(){
           </div>
         </div>
 
-        <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">Tags</h2>
+        <div className="border-b border-gray-800/10 pb-12">
+          <h2 className="text-base font-semibold leading-7 text-gray-800">Tags</h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
             Choose from the following tags so that the projects can be filtered
           </p>
 
           <div className="mt-5 space-y-10 mx-10">
           <div className="col-span-full">
-              <label htmlFor="catagory" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="catagory" className="block text-sm font-medium leading-6 text-gray-800">
                 Catagory*
               </label>
               <p className="text-sm text-gray-500">Select the catagory that this project most closely belongs to:</p>
@@ -292,6 +360,7 @@ export default function Add(){
                   id="catagory"
                   autoComplete="catagory"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={catagory}
                   onChange={handleCategoryChange}
                 >
                   <option value="software-engineering">Software Engineering</option>
@@ -308,7 +377,7 @@ export default function Add(){
             </div> 
 
             <fieldset>
-              <legend className="text-sm font-semibold leading-6 text-gray-900">Superlatives</legend>
+              <legend className="text-sm font-semibold leading-6 text-gray-800">Superlatives</legend>
               <p className="text-sm text-gray-500"> Other students should look to this project as an example for:</p>
               <div className="mt-6 space-y-6">
                 <div className="relative flex gap-x-3">
@@ -318,11 +387,12 @@ export default function Add(){
                       name="outstanding-UI"
                       type="checkbox"
                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      onChange={handleSuperlativeChange}
+                      value={outstanding_UI}
+                      onChange={(event) => {handleSuperlativeChange( event, "UI")}}
                     />
                   </div>
                   <div className="text-sm leading-6">
-                    <label htmlFor="outstanding-UI" className="font-medium text-gray-900">
+                    <label htmlFor="outstanding-UI" className="font-medium text-gray-800">
                       Outstanding UI
                     </label>
                   </div>
@@ -334,11 +404,12 @@ export default function Add(){
                       name="outstanding-report"
                       type="checkbox"
                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      onChange={handleSuperlativeChange}
+                      value={outstanding_report}
+                      onChange={(event) => {handleSuperlativeChange(event, "report")}}
                     />
                   </div>
                   <div className="text-sm leading-6">
-                    <label htmlFor="outstanding-report" className="font-medium text-gray-900">
+                    <label htmlFor="outstanding-report" className="font-medium text-gray-800">
                       Outstanding Report
                     </label>
                   </div>
@@ -350,11 +421,12 @@ export default function Add(){
                       name="outstanding-testing"
                       type="checkbox"
                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      onChange={handleSuperlativeChange}
+                      value={outstanding_testing}
+                      onChange={(event) => {handleSuperlativeChange(event, "testing")}}
                     />
                   </div>
                   <div className="text-sm leading-6">
-                    <label htmlFor="outstanding-testing" className="font-medium text-gray-900">
+                    <label htmlFor="outstanding-testing" className="font-medium text-gray-800">
                       Outstanding Testing
                     </label>
                   </div>
@@ -377,7 +449,7 @@ export default function Add(){
       />
     </div>
       <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
+        <button type="button" className="text-sm font-semibold leading-6 text-gray-800">
           Cancel
         </button>
         <button
