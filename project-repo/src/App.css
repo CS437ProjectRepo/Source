@@ -53,8 +53,8 @@ header{
   position: sticky;
 }
 
-.add-button{
-  background-color: #b84f7f;
+.download-button{
+  background-color: var(--accent);
   color: white;
 }
 

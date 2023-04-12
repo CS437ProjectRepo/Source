@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect, useContext } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
-import { FolderPlusIcon, FunnelIcon} from '@heroicons/react/20/solid'
+import { TableCellsIcon, FolderPlusIcon, FunnelIcon} from '@heroicons/react/20/solid'
 import apiURL from "../../config/apiURL";
 // import axios from 'axios';
 import filters from '../../config/filters';
@@ -162,13 +162,13 @@ export default function Browse() {
             <h1 className="text-2xl font-bold tracking-tight text-gray-800">Term Project Repository</h1>
 
             <div className="flex items-center">
-            {/* <button
+            <button
               type="button"
-              className="add-button inline-flex items-center rounded-md px-3 py-2 text-sm text-gray-800 shadow-sm hover:bg-gray-800"
+              className="download-button inline-flex items-center rounded-md px-3 py-2 text-sm text-gray-800 shadow-sm hover:bg-indigo-800"
               >
-              <FolderPlusIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-              Add Project
-            </button> */}
+              <TableCellsIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
+              Download CSV
+            </button>
 
               <button
                 type="button"
