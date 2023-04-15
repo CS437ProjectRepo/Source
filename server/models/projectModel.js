@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const projectSchema = mongoose.Schema({
     project_name:{
         type: String,
@@ -9,11 +8,16 @@ const projectSchema = mongoose.Schema({
         unique : true,
         label : 'Project Name'
     },
-    semester:{
+    semester: {
         type: String,
         trim : true,
         require: true,
         label : 'Semester'
+    },
+    year: {
+        type: Number,
+        require: true,
+        label: 'Year'
     },
     instructor:{
         type: String,
@@ -27,6 +31,14 @@ const projectSchema = mongoose.Schema({
         max : 300,
         label: 'Description'
     },
+    languages: {
+        type: [String],
+        label: 'Coding Language(s)'
+    },
+    superlatives: {
+        type: [String],
+        label: 'Superlatives'
+    },
     tags: {
         type: [String],
         label: 'Tags'
@@ -36,10 +48,10 @@ const projectSchema = mongoose.Schema({
         require: true,
         label : 'Team Members'
     },
-    documentation:{
+    drive_asset:{
         type: String,
         require: true,
-        label: 'Documentation'
+        label: 'Google Drive Asset ID'
     },
     website: {
         type: String,
@@ -52,6 +64,20 @@ const projectSchema = mongoose.Schema({
     pivitol_tracker: {
         type: String,
         label : 'Pivitol Tracker'
+    },
+    development_type: {
+        require: true,
+        type: String,
+        label : 'Development Type'
+    },
+    no_code_solution: {
+        type: String,
+        label : 'No code solution'
+    },
+    category: {
+        require: true,
+        type: String,
+        label : 'Catagory'
     }
 })
 

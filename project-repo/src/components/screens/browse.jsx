@@ -10,15 +10,6 @@ import ProjectModal from '../projectModal';
 import { AuthContext } from '../../App';
 import { Link } from "react-router-dom";
 
-const sortOptions = [
-  { name: 'Featured', href: '#', current: true },
-  { name: 'Most Recent', href: '#', current: false },
-]
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
 export default function Browse() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [selectedCard, setSelectedCard] = useState(null);
@@ -55,10 +46,14 @@ export default function Browse() {
 
   useEffect(() => {
     const selectedId = window.location.hash.slice(1);
-    const selectedCard = projectData.find(card => card._id === selectedId);
+    const selectedCard = projectData.find(project => project._id === selectedId);
     if (selectedCard) {
       setSelectedCard(selectedCard);
+      setProjectModalIsOpen(true);
     }
+
+    console.log(selectedId)
+    console.log(selectedCard);
   }, [projectData, selectedCard]);
   
   const filteredCards = projectData.filter(card => {
@@ -234,7 +229,7 @@ export default function Browse() {
                   <div  key={card._id} onClick={() => handleCardClick(card)}>
                     <div className="p-4 card-header rounded-t">
                       <h2 className="text-md font-medium">{card.project_name}</h2>
-                      <h6 className="text-md">{card.semester} / {card.instructor}</h6>
+                      <h6 className="text-md">{card.semester} {card.year} / {card.instructor}</h6>
                     </div>
                     
                     <div className="mt-2 mx-4 mb-4 card-body">

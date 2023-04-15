@@ -3,7 +3,6 @@ import { useState, useContext} from 'react';
 import axios from 'axios';
 import apiURL from "../../config/apiURL";
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from '../../App';
 

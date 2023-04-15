@@ -2,14 +2,14 @@ const mongoose = require('mongoose');
 const Excel = require('exceljs');
 const Post = mongoose.model('Project')
 const {MESSAGES, HTTP_STATUS_CODES} = require("../utils/server.constants");
-const {appendLanguageTags} = require("../utils/helper");
+const {getLanguageTags} = require("../utils/helper");
 const {createFile, deleteFile} = require("../utils/googleDriveHelper");
 
 const downloadProjects = async (req, res) => {
   try{
 
     const projects = await Post.find({}, '-_id -__v');
-    const schemaPaths = await Post.schema.paths
+    const schemaPaths = Post.schema.paths
     
     const excelWorkbook = new Excel.Workbook();
     const worksheet = excelWorkbook.addWorksheet('Projects')
@@ -65,10 +65,11 @@ const uploadFileTest = async (req, res) => {
   try {
     const { body, files } = req;
     let documentation_link;
+    console.log(req.body);
     for (let i = 0; i < files.length; i += 1) {
-      //const fileId = await createFile(files[i]); 
+      const fileId = await createFile(files[i]); 
       //REACT VERSION vvvv
-      const fileId = await createFile(files['files'][i]);
+      // const fileId = await createFile(files['files'][i]);
       documentation_link = `https://drive.google.com/file/d/${fileId}/view`
     }
     console.log(body);
@@ -88,49 +89,78 @@ const allprojects = async(req, res) => {
 }
 
 
-const createproject = async(req, res) => {
+const createProject = async(req, res) => {
   const files = req;
-  const {project_name, semester, instructor, github, description, team, website, pivitol_tracker} = req.body
-  let {tags} = req.body
-  const existingPost = await Post.findOne({project_name: project_name});
+  const {
+    project_name, 
+    semester,
+    instructor, 
+    github, 
+    description, 
+    team, 
+    website, 
+    pivitol_tracker, 
+    development_type, 
+    no_code_solution, 
+    category, 
+  } = req.body
 
+  let {year, superlatives} = req.body;
+
+  // const existingProject = await Post.findOne({project_name: project_name});
   try {
-    if (existingPost){
-        return res.status(422).json({error: "project with that title already exists"})
-    }
+    // if (existingProject){
+    //     return res.status(422).json({error: "project with that title already exists"})
+    // }
     
-    try{
-        tags = await appendLanguageTags(github, tags); 
-    } catch(e){
-        return res.status(422).json({error: e.message});
+    let tags = [];
+    if(!superlatives) superlatives = [];
+    tags.push(category, ...superlatives);
+
+    let languages;
+    if(github){
+      try{
+        languages = await getLanguageTags(github); 
+        tags.push(...languages);
+      } catch(e){
+          return res.status(422).json({error: e.message});
+      }
     }
 
-    let documentation_link = "";
+    // let documentation_link = "";
     let fileId
     try{
       // fileId = await createFile(files[0]);
       fileId = await createFile(files['files'][0]);
-      documentation_link = `https://drive.google.com/file/d/${fileId}/view`
+      // documentation_link = `https://drive.google.com/file/d/${fileId}/view`
     }catch(e){
         return res.status(422).json({error: e.message});
     }
+
+    console.log(tags);
     
     const post = new Post({
         project_name,
         semester,
+        year: parseInt(year),
         instructor,
         description,
-        tags,
+        languages,
         team,
-        documentation: documentation_link,
+        drive_asset: fileId,
         website,
         github,
-        pivitol_tracker
+        pivitol_tracker,
+        development_type,
+        no_code_solution,
+        category,
+        superlatives,
+        tags: tags,
     })
 
     try {
         await post.save();
-        res.status(201).json({message: MESSAGES.PROJECT_CREATED})
+        return res.status(201).json({message: MESSAGES.PROJECT_CREATED})
     } catch (error) {
         if (error.name === "ValidationError") {
           return res.status(422).json({ message: error.message });
@@ -159,7 +189,7 @@ const updateProject = async (req, res) => {
         if (github != project.github){
           let tags = req.body
           try{
-              tags = await appendLanguageTags(github, tags); 
+              tags = await getLanguageTags(github, tags); 
           } catch(e){
               return res.status(422).json({error: e.message});
           }
@@ -206,7 +236,7 @@ const deleteProject = async (req, res) => {
 
 module.exports = {
     allprojects,
-    createproject,
+    createProject,
     downloadProjects,
     updateProject,
     uploadFileTest,
