@@ -11,7 +11,7 @@ export default function Add(){
 
   const [project_name, setProjectName] = useState('');
   const [description, setDescription] = useState('');
-  const [semester, setSemester] = useState('spring');
+  const [semester, setSemester] = useState('Spring');
   const [year, setYear] = useState(2015);
   const [instructor, setInstructor] = useState('');
   const [development_type, setDevelopmentType] = useState("Code");
@@ -63,9 +63,54 @@ export default function Add(){
     }
   }
 
+  // async function handleFormSubmit(event) {
+  //   event.preventDefault();
+  //   const formData = new FormData();
+  //   formData.append("project_name", project_name);
+  //   formData.append("description", description);
+  //   formData.append("instructor", instructor);
+  //   formData.append("semester", semester);
+  //   formData.append("year", year);
+  //   for(let i=0; i<team.length;i++){
+  //       if(team[i].length > 0){
+  //           formData.append("team[]", team[i]);
+  //       }
+  //   }
+  //   formData.append("development_type", development_type);
+  //   formData.append("github", github);
+  //   formData.append("no_code_solution", no_code_solution);
+  //   formData.append("pivitol_tracker", pivitol_tracker);
+  //   formData.append("website", website);
+  //   formData.append("category", category);
+  //   for(let i=0; i<superlatives.length;i++){
+  //     if(superlatives[i].length > 0){
+  //         formData.append("superlatives[]", superlatives[i]);
+  //     }
+  //   }
+  //   formData.append("file", file);
+
+  //   try {
+  //     const response = await fetch(apiURL + '/createproject', {
+  //       method: 'POST',
+  //       body: formData,
+  //     });
+  
+  //     if (!response.ok) {
+  //       throw new Error('Error posting form data');
+  //     }
+  
+  //     const responseData = await response.json();
+  //     toast.success(responseData, { position: 'top-right' });
+  //     navigate('/browse')
+      
+  //   } catch (error) {
+  //     console.error(error);
+  //     toast.error("Error posting project. Check console for more information", { position: 'top-right' });
+  //   }
+  // }
+
   async function handleFormSubmit(event) {
     event.preventDefault();
-
     const formData = new FormData();
     formData.append("project_name", project_name);
     formData.append("description", description);
@@ -73,7 +118,9 @@ export default function Add(){
     formData.append("semester", semester);
     formData.append("year", year);
     for(let i=0; i<team.length;i++){
-      formData.append("team[]", team[i]);
+      if(team[i].length > 0){
+        formData.append("team[]", team[i]);
+      }
     }
     formData.append("development_type", development_type);
     formData.append("github", github);
@@ -82,43 +129,27 @@ export default function Add(){
     formData.append("website", website);
     formData.append("category", category);
     for(let i=0; i<superlatives.length;i++){
-      formData.append("superlatives[]", superlatives[i]);
+      if(superlatives[i].length > 0){
+        formData.append("superlatives[]", superlatives[i]);
+      }
     }
     formData.append("file", file);
-
-    // try{
-    //   const response = await axios.post(apiURL + '/createproject', formData, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data'
-    //     }
-    //   });
-    //   await response.data;
-    //   toast.success('Project Created!', { position: 'top-right' });
-    // }catch(error){
-    //   console.log(error);
-    // }
-
-
-    
+  
     try {
-      const response = await fetch(apiURL + '/createproject', {
-        method: 'POST',
-        body: formData,
+      const response = await axios.post(apiURL + '/createproject', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       });
   
-      if (!response.ok) {
-        throw new Error('Error posting form data');
-      }
-  
-      const responseData = await response.json();
-      toast.success('New project posted!', { position: 'top-right' });
+      toast.success(response.data.message, { position: 'top-right' });
       navigate('/browse')
-      
     } catch (error) {
       console.error(error);
       toast.error("Error posting project. Check console for more information", { position: 'top-right' });
     }
   }
+  
 
   return (
     <div className="isolate bg-white px-6 py-10 sm:py-16 lg:px-8 ">
@@ -177,14 +208,14 @@ export default function Add(){
                 Upload Documentation*
               </label>
               <p className="text-sm leading-6 text-gray-600">Attach documentation that is associated with this project</p>
-              <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-500 px-6 py-10">
+              <div className="mt-2 justify-center rounded-lg border border-dashed border-gray-500 px-6 py-10">
                 {file ? (
                   <div className="text-center">
             <div className="mb-4">
             <div className="flex justify-center">
                 <FolderIcon className="mx-auto my-5 h-12 w-12 text-gray-300" aria-hidden="true" />
               </div>
-              <p className="text-sm text-gray-600">{file.name}</p>
+              <p className="text-sm text-gray-600 break-words">{file.name}</p>
               <button
                 type="button"
                 onClick={() =>setFile(null)}
@@ -197,7 +228,7 @@ export default function Add(){
           ) : (
           <div className="text-center">
                   <FolderIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                  <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                  <div className="mt-4 text-sm leading-6 text-gray-600">
                     <label
                       htmlFor="file-upload"
                       className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
@@ -432,6 +463,7 @@ export default function Add(){
                 >
                   <option value="Software Engineering">Software Engineering</option>
                   <option value="Education">Education</option>
+                  <option value="Games">Games</option>
                   <option value="Travel">Travel</option>
                   <option value="Productivity & Organization">Productivity & Organization</option>
                   <option value="Fitness & Health">Fitness & Health</option>
@@ -511,7 +543,7 @@ export default function Add(){
         </button>
         <button
           type="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          className="rounded-md bg-indigo-600 px-10 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Save
         </button>

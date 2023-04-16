@@ -9,18 +9,20 @@ const Dashboard = function() {
   
     const [adminData, setAdminData] = useState(null);
 
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5050/protected');
+        const data = await response.data;
+        setAdminData(data.user);
+        console.log(adminData)
+      } catch (error) {
+        console.log(error);
+        toast.error(error.response.data.message, { position: 'top-right' });
+      }
+    };
+
+    
     useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get('http://localhost:5050/protected');
-          const data = await response.data;
-          setAdminData(data.user);
-          console.log(adminData)
-        } catch (error) {
-          console.log(error);
-          toast.error(error.response.data.message, { position: 'top-right' });
-        }
-      };
       fetchData();
     }, []);
 

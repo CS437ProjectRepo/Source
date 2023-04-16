@@ -3,7 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { ArrowDownTrayIcon, FolderPlusIcon, FunnelIcon} from '@heroicons/react/20/solid'
 import apiURL from "../../config/apiURL";
-// import axios from 'axios';
+import {useNavigate } from "react-router-dom";
 import filters from '../../config/filters';
 import FilterMenu from '../filterMenu';
 import ProjectModal from '../projectModal';
@@ -21,6 +21,7 @@ export default function Browse() {
     featured: [],
   });
   const {isAdminLoggedIn} = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const apiEndpoint =  apiURL + '/allprojects';
@@ -33,16 +34,6 @@ export default function Browse() {
       });
   }, []);
 
-  // useEffect( async function getProjectData() {
-  //   const apiEndpoint =  apiURL + '/allprojects';
-  //   try {
-  //     const response = await axios.post(apiEndpoint);
-  //     const posts = response.data.posts;
-  //     setProjectData(posts)
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }, []);
 
   useEffect(() => {
     const selectedId = window.location.hash.slice(1);
@@ -247,6 +238,7 @@ export default function Browse() {
                       type="button"
                       className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm text-gray-600 shadow-sm  border border-dashed border-gray-400"
                       key={card._id + "-edit"}
+                      onClick={(e)=>{navigate('/edit', {state: card._id})}}
                       >
                       <PencilIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-600" aria-hidden="true" />
                       Edit

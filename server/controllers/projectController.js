@@ -79,13 +79,24 @@ const uploadFileTest = async (req, res) => {
   }
 };
 
-const allprojects = async(req, res) => {
+const allProjects = async(req, res) => {
    try{
-    const posts = await Post.find()
+    const posts = await Post.find().sort([['year', -1]])
     return res.json({posts});
    } catch(error){
     return res.status(500).json({error: error.message});
    }
+}
+
+const singleProject = async(req, res) => {
+  const {projectId} = req.query;
+  // console.log(projectId);
+  try{
+   const project = await Post.findById(projectId);
+   return res.json({project});
+  } catch(error){
+   return res.status(500).json({error: error.message});
+  }
 }
 
 
@@ -184,6 +195,9 @@ const updateProject = async (req, res) => {
       const { _id } = project
       let newData = (({ _id, __v, ...o }) => o)(req.body);
       
+      // if(req.file.hasOwnProperty("file")){
+      //   deleteProject()
+      // }
       if(req.body.hasOwnProperty("github")) {
         const {github} = req.body
         if (github != project.github){
@@ -235,7 +249,8 @@ const deleteProject = async (req, res) => {
 
 
 module.exports = {
-    allprojects,
+    allProjects,
+    singleProject,
     createProject,
     downloadProjects,
     updateProject,

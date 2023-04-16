@@ -52,7 +52,7 @@ export default function ProjectModal(props) {
                 {props.card.description}
                 </p>
                 <dl className="mt-6">
-                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">Semester</dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{props.card.semester} {props.card.year}</dd>
                     </div>
@@ -60,11 +60,11 @@ export default function ProjectModal(props) {
                         <dt className="text-sm font-medium text-gray-500">Instructor</dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{props.card.instructor}</dd>
                     </div>
-                    {/* <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    {/* <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">Description</dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{props.card.description}</dd>
                     </div> */}
-                    <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">Team Members</dt>
                         <ul class="mt-1 text-sm list-disc pl-4 sm:mt-0">
                         {props.card.team.map(member => (
@@ -72,7 +72,7 @@ export default function ProjectModal(props) {
                         ))}
                         </ul>
                     </div>
-                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">Tags</dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 tag-container">
                         {props.card.tags.map(tag => (
@@ -98,7 +98,7 @@ export default function ProjectModal(props) {
                         </ul>
                         </dd>
                     </div>
-                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    { props.card.github && (<div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">Github</dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         <ul className="divide-y divide-gray-200 rounded-md border border-gray-200">
@@ -115,7 +115,25 @@ export default function ProjectModal(props) {
                             </li>
                         </ul>
                         </dd>
-                    </div>
+                    </div>)}
+                    { props.card.pivitol_tracker && (<div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt className="text-sm font-medium text-gray-500">Pivitol Tracker</dt>
+                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                        <ul className="divide-y divide-gray-200 rounded-md border border-gray-200">
+                            <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
+                            <div className="flex w-0 flex-1 items-center">
+                                <LinkIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                <span className="ml-2 w-0 flex-1 truncate">{props.card.pivitol_tracker}</span>
+                            </div>
+                            <div className="ml-4 flex-shrink-0">
+                                <a href={props.card.pivitol_tracker} rel="noreferrer" target="_blank" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                Visit
+                                </a>
+                            </div>
+                            </li>
+                        </ul>
+                        </dd>
+                    </div>)}
                 </dl>
               </div>
             </div>

@@ -3,9 +3,9 @@ const filters = [
       id: 'featured',
       name: 'Featured',
       options: [
-        { value: 'outstanding-ui', label: 'Outstanding UI', checked: false },
-        { value: 'outstanding-report', label: 'Outstanding Report', checked: false },
-        { value: 'outstanding-testing', label: 'Outstanding Testing', checked: false },
+        { value: 'Outstanding UI', label: 'Outstanding UI', checked: false },
+        { value: 'Outstanding Report', label: 'Outstanding Report', checked: false },
+        { value: 'Outstanding Testing', label: 'Outstanding Testing', checked: false },
       ],
     },
     {
@@ -14,6 +14,7 @@ const filters = [
       options: [
         { value: 'Software Engineering', label: 'Software Engineering', checked: false },
         { value: 'Education', label: 'Education', checked: false },
+        { value: 'Games', label: 'Games', checked: false },
         { value: 'Travel', label: 'Travel', checked: false },
         { value: 'Productivity & Organization', label: 'Productivity & Organization', checked: false },
         { value: 'Fitness & Health', label: 'Fitness & Health', checked: false },

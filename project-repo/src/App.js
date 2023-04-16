@@ -12,6 +12,7 @@ import Browse from './components/screens/browse';
 import Dashboard from './components/screens/dashboard';
 import Cards from './components/screens/cards';
 import Add from './components/screens/add';
+import Edit from './components/screens/edit';
 import ErrorPage from './components/screens/errorPage';
 import Logout from './components/screens/logout';
 import './App.css';
@@ -33,6 +34,10 @@ const routes =  [
   { 
     path: "/add",
     element: <Add />,
+  },
+  { 
+    path: "/edit",
+    element: <Edit />,
   },
   { 
     path: "/login",
