@@ -45,7 +45,7 @@ export default function ProjectModal(props) {
                 </button>
               </div>
               <div>
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
+                <h3 className="text-lg font-medium leading-6 text-gray-800">
                   {props.card.project_name}
                 </h3>
                 <p className="mt-1 text-sm text-gray-500">
@@ -54,19 +54,15 @@ export default function ProjectModal(props) {
                 <dl className="mt-6">
                     <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">Semester</dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{props.card.semester} {props.card.year}</dd>
+                        <dd className="mt-1 text-sm text-gray-800 sm:col-span-2 sm:mt-0">{props.card.semester} {props.card.year}</dd>
                     </div>
                     <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">Instructor</dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{props.card.instructor}</dd>
+                        <dd className="mt-1 text-sm text-gray-800 sm:col-span-2 sm:mt-0">{props.card.instructor}</dd>
                     </div>
-                    {/* <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt className="text-sm font-medium text-gray-500">Description</dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{props.card.description}</dd>
-                    </div> */}
                     <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">Team Members</dt>
-                        <ul class="mt-1 text-sm list-disc pl-4 sm:mt-0">
+                        <ul class="mt-1 text-sm list-disc pl-4 sm:mt-0 text-gray-800">
                         {props.card.team.map(member => (
                           <li>{member}</li>
                         ))}
@@ -74,15 +70,15 @@ export default function ProjectModal(props) {
                     </div>
                     <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">Tags</dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 tag-container">
+                        <dd className="mt-1 text-sm text-white sm:col-span-2 sm:mt-0 tag-container">
                         {props.card.tags.map(tag => (
-                          <span key={tag} className="bg-gray-200 px-2 rounded-full text-sm">{tag}</span>
+                          <span key={tag} className="bg-indigo-500 px-2 rounded-full text-sm">{tag}</span>
                         ))}
                         </dd>
                     </div>
                     <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">Documentation</dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                        <dd className="mt-1 text-sm text-gray-800 sm:col-span-2 sm:mt-0">
                         <ul className="divide-y divide-gray-200 rounded-md border border-gray-200">
                             <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                             <div className="flex w-0 flex-1 items-center">
@@ -100,7 +96,7 @@ export default function ProjectModal(props) {
                     </div>
                     { props.card.github && (<div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">Github</dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                        <dd className="mt-1 text-sm text-gray-800 sm:col-span-2 sm:mt-0">
                         <ul className="divide-y divide-gray-200 rounded-md border border-gray-200">
                             <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                             <div className="flex w-0 flex-1 items-center">
@@ -118,7 +114,7 @@ export default function ProjectModal(props) {
                     </div>)}
                     { props.card.pivitol_tracker && (<div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">Pivitol Tracker</dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                        <dd className="mt-1 text-sm text-gray-800 sm:col-span-2 sm:mt-0">
                         <ul className="divide-y divide-gray-200 rounded-md border border-gray-200">
                             <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                             <div className="flex w-0 flex-1 items-center">

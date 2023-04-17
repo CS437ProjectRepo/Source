@@ -69,7 +69,7 @@ export default function Edit(){
 
   useEffect(() => {
     getData();
-  }, [state]);
+  });
 
   if(!isAdminLoggedIn){
     return <Navigate to="/login" />;
@@ -109,6 +109,7 @@ export default function Edit(){
     }
   }
 
+  //TODO: write this function where data is only appended to form if changed
   async function handleFormSubmit(event) {
     event.preventDefault();
 
@@ -140,8 +141,8 @@ export default function Edit(){
     }
     
     try {
-      const response = await fetch(apiURL + '/createproject', {
-        method: 'POST',
+      const response = await fetch(apiURL + '/', {
+        method: 'PUT',
         body: formData,
       });
   

@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect, useContext } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { XMarkIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
-import { ArrowDownTrayIcon, FolderPlusIcon, FunnelIcon} from '@heroicons/react/20/solid'
+import { XMarkIcon, PencilIcon } from '@heroicons/react/24/outline'
+import { ArrowDownTrayIcon, FolderPlusIcon, FunnelIcon, ArrowLongLeftIcon, ArrowLongRightIcon} from '@heroicons/react/20/solid'
 import apiURL from "../../config/apiURL";
 import {useNavigate } from "react-router-dom";
 import filters from '../../config/filters';
@@ -24,25 +24,28 @@ export default function Browse() {
   });
   const {isAdminLoggedIn} = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(9);
+  const [postsPerPage, setPostsPerPage] = useState(9)
   const pageNumbers = [];
   const navigate = useNavigate();
 
-  async function getProjectData() {
-    try {
-      const response = await axios.get(apiURL + '/allprojects');
-      const data = response.data;
-      setProjectData(data.posts);
-    } catch (error) {
-      console.error('Error fetching project data: ', error);
-    } finally{
-      setLoading(false);
-    }
-  }
-
   useEffect(() => {
+    const getProjectData = async()=>{
+      try {
+        const response = await axios.get(apiURL + '/allprojects');
+        const data = response.data;
+        setProjectData(data.posts);
+      } catch (error) {
+        console.error('Error fetching project data: ', error);
+      } finally{
+        setLoading(false);
+      }
+    }
+
     getProjectData();
-  }, []);
+    if(isAdminLoggedIn){
+      setPostsPerPage(8)
+    }
+  }, [isAdminLoggedIn]);
 
 
   useEffect(() => {
@@ -52,9 +55,6 @@ export default function Browse() {
       setSelectedCard(selectedCard);
       setProjectModalIsOpen(true);
     }
-
-    console.log(selectedId)
-    console.log(selectedCard);
   }, [projectData, selectedCard]);
   
   const filteredCards = projectData.filter(card => {
@@ -86,6 +86,14 @@ export default function Browse() {
     pageNumbers.push(i);
   }
 
+  const nextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const prevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
   const handleCardClick = (selectedCard) => {
     setSelectedCard(selectedCard);
     window.location.hash = selectedCard._id;
@@ -96,6 +104,14 @@ export default function Browse() {
     setSelectedCard(null);
     setProjectModalIsOpen(false);
     window.location.hash = '';
+  }
+
+  function resetFilters(){
+   setSelectedFilters({
+      category: [],
+      language: [],
+      featured: [],
+    });
   }
 
   return (
@@ -145,7 +161,7 @@ export default function Browse() {
               >
                 <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
                   <div className="flex items-center justify-between px-4">
-                    <h2 className="text-lg font-medium text-gray-800">Filters</h2>
+                    <h2 className="text-md font-medium text-gray-800">Filters</h2>
                     <button
                       type="button"
                       className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
@@ -176,6 +192,12 @@ export default function Browse() {
                       selectedOptions={selectedFilters.featured}
                       onChange={filterValue => handleFilterChange('featured', filterValue)}
                     />
+                    <button className="text-indigo-500 my-4 disabled:text-gray-400 text-sm"
+                      onClick={resetFilters}
+                      disabled={selectedFilters.category.length === 0 && selectedFilters.language.length === 0 && selectedFilters.featured.length === 0 }
+                    >
+                      Clear All Filters
+                    </button>
                   </form>
                 </Dialog.Panel>
               </Transition.Child>
@@ -192,7 +214,7 @@ export default function Browse() {
             type="button"
             className="download-button inline-flex items-center rounded-md px-3 py-2 text-xs text-gray-800 shadow-sm hover:bg-indigo-800"
             >
-            <ArrowDownTrayIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
+            <ArrowDownTrayIcon className="mr-2 h-5 w-5" aria-hidden="true" />
             Download CSV
           </button>
 
@@ -233,6 +255,12 @@ export default function Browse() {
                   selectedOptions={selectedFilters.featured}
                   onChange={filterValue => handleFilterChange('featured', filterValue)}
                 />
+                <button className="text-indigo-500 my-4 disabled:text-gray-400 text-sm"
+                  onClick={resetFilters}
+                  disabled={selectedFilters.category.length === 0 && selectedFilters.language.length === 0 && selectedFilters.featured.length === 0 }
+                >
+                  Clear All Filters
+                </button>
             </form>
 
             {/* Filtered cards */}
@@ -242,23 +270,23 @@ export default function Browse() {
                 <Link to="/add">
                   <div className="add-card rounded-lg  border">
                   <FolderPlusIcon className="text-gray-300"/>
-                  <p className='mt-2 text-md text-gray-500'>Add a Project</p>
+                  <p className='mt-2 text-sm text-gray-500'>Add a Project</p>
                   </div>
                 </Link>
               )}
               {currentCards.map(card => (
-                <div className="bg-white rounded-lg shadow-md card">
+                <div className="bg-white rounded-lg shadow-md card text-sm break-words">
                 <div  key={card._id} onClick={() => handleCardClick(card)}>
                   <div className="p-4 card-header rounded-t">
-                    <h2 className="text-md font-medium">{card.project_name}</h2>
-                    <h6 className="text-md">{card.semester} {card.year} / {card.instructor}</h6>
+                    <h2 className="font-medium">{card.project_name}</h2>
+                    <h6>{card.semester} {card.year} / {card.instructor}</h6>
                   </div>
                   
                   <div className="mt-2 mx-4 mb-4 card-body">
                     <p className="mt-2">{card.description}</p>
                     <div className="tag-container mt-4">
-                      {card.tags.map(tag => (
-                        <span key={tag} className="tag px-2 py-1 rounded-full text-sm font-medium">{tag}</span>
+                      {card.tags.map((tag) => (
+                        <span className="tag px-2 py-1 rounded-full text-sm font-medium">{tag}</span>
                       ))}
                     </div>
                   </div>
@@ -274,14 +302,6 @@ export default function Browse() {
                     <PencilIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-600" aria-hidden="true" />
                     Edit
                   </button>
-                  {/* <button
-                    type="button"
-                    className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm text-red-500 shadow-sm  border border-red-500"
-                    key={card._id + "-delete"}
-                    >
-                    <TrashIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-red-500" aria-hidden="true" />
-                    Delete
-                  </button> */}
                 </div>
                 )}
             </div>
@@ -294,25 +314,46 @@ export default function Browse() {
           </div>
         </section>
         <hr/>
-        <p className="text-center text-gray-500 pt-8 pb-2">
-                Showing <span className="font-bold">{firstProjectIndex}</span> to <span className="font-bold">{lastProjectIndex}</span> of <span className="font-bold">{filteredCards.length}</span> Entries
+        <p className="text-center text-gray-500 pt-8 pb-4 text-sm">
+          Viewing <span className="font-bold">{firstProjectIndex}</span> to <span className="font-bold">{lastProjectIndex}</span> of <span className="font-bold">{filteredCards.length}</span> Projects
         </p>
-        <div className="justify-center flex pb-8"> 
-              {pageNumbers.map((number) => (
-                <button
-                  key={number}
-                  className={`px-4 py-2 rounded-lg mx-1 ${
-                    number === currentPage
-                      ? 'bg-indigo-500 text-white'
-                      : 'bg-white text-indigo-500'
-                  }`}
-                  onClick={() => paginate(number)}
-                >
-                  {number}
-                </button>
-              ))}
+        <div className="justify-center flex justify-between pb-8 text-sm"> 
+          <button
+            className={`mx-3 bg-transparent flex gap-2 mt-2 align-center ${
+              currentPage === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-indigo-500'
+            }`}
+            onClick={prevPage}
+            disabled={currentPage === 1}
+          >
+            <ArrowLongLeftIcon className="w-5 h-5"/> Previous
+          </button>
+          <div className='hidden sm:block'>
+          {pageNumbers.map((number) => (
+            <button
+              key={number}
+              className={`px-4 py-2 rounded-lg mx-1 ${
+                number === currentPage
+                  ? 'bg-indigo-500 text-white'
+                  : 'bg-white text-indigo-500'
+              }`}
+              onClick={() => paginate(number)}
+            >
+              {number}
+            </button>
+          ))}
           </div>
+          <button
+            className={`mx-3 bg-transparent mt-2 flex gap-2 align-center ${
+              currentPage === Math.ceil(filteredCards.length / postsPerPage)
+                ? 'text-gray-300 cursor-not-allowed'
+                : 'text-indigo-500'
+            }`}
+            onClick={nextPage}
+            disabled={currentPage === Math.ceil(filteredCards.length / postsPerPage)}
+          >
+            Next <ArrowLongRightIcon className="w-5 h-5"/>
+          </button>
+        </div>
       </main>
-    </div>
-  );
+  </div>);
 }
