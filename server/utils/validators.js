@@ -5,7 +5,7 @@ const projectFieldValidation = (req, res, next) => {
     const {project_name,  semester, year, instructor, description, team, development_type, github, no_code_solution} = body
     console.log(req.body);
     if(!project_name || !semester || !year || !instructor || !description || !team || !development_type){
-        return res.status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY).json({error: MESSAGES.FIELDS_MISSING + "hey"})
+        return res.status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY).json({error: MESSAGES.FIELDS_MISSING})
     }
     switch(development_type){
         case ("Code"):{

@@ -138,6 +138,8 @@ const createProject = async(req, res) => {
       }
     }
 
+    console.log(tags);
+
     // let documentation_link = "";
     let fileId
     try{

@@ -178,6 +178,10 @@ header{
     background-color: #1e1f1f;
   }
 
+  .bg-opacity-50{
+    background-color: #1e1f1f78;
+  }
+
   .tag{
     background-color: var(--accent);
   }

@@ -5,6 +5,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { FolderIcon } from '@heroicons/react/24/solid'
 import apiURL from '../../config/apiURL';
 import { toast } from 'react-toastify';
+import { Transition } from '@headlessui/react'
 
 export default function Add(){
   const { isAdminLoggedIn } = useContext(AuthContext);
@@ -19,11 +20,12 @@ export default function Add(){
   const [no_code_solution, setNoCode] = useState ('');
   const [website, setWebsite] = useState('');
   const [pivitol_tracker, setPivitolTracker] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('Software Engineering');
   const [team, setTeam] = useState([]);
   const [superlatives, setSuperlatives] = useState([]); 
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   if(!isAdminLoggedIn){
     return <Navigate to="/login" />;
@@ -45,7 +47,9 @@ export default function Add(){
 
   const handleTeamMembersChange = (event) => {
     const inputText = event.target.value;
-    const membersList = inputText.split(",").map((member) => member.trim());
+    const membersList = inputText.split(",")
+    .map((member) => member.trim())
+    .filter((member) => member !== "");
     setTeam(membersList);
   };
 
@@ -63,53 +67,9 @@ export default function Add(){
     }
   }
 
-  // async function handleFormSubmit(event) {
-  //   event.preventDefault();
-  //   const formData = new FormData();
-  //   formData.append("project_name", project_name);
-  //   formData.append("description", description);
-  //   formData.append("instructor", instructor);
-  //   formData.append("semester", semester);
-  //   formData.append("year", year);
-  //   for(let i=0; i<team.length;i++){
-  //       if(team[i].length > 0){
-  //           formData.append("team[]", team[i]);
-  //       }
-  //   }
-  //   formData.append("development_type", development_type);
-  //   formData.append("github", github);
-  //   formData.append("no_code_solution", no_code_solution);
-  //   formData.append("pivitol_tracker", pivitol_tracker);
-  //   formData.append("website", website);
-  //   formData.append("category", category);
-  //   for(let i=0; i<superlatives.length;i++){
-  //     if(superlatives[i].length > 0){
-  //         formData.append("superlatives[]", superlatives[i]);
-  //     }
-  //   }
-  //   formData.append("file", file);
-
-  //   try {
-  //     const response = await fetch(apiURL + '/createproject', {
-  //       method: 'POST',
-  //       body: formData,
-  //     });
-  
-  //     if (!response.ok) {
-  //       throw new Error('Error posting form data');
-  //     }
-  
-  //     const responseData = await response.json();
-  //     toast.success(responseData, { position: 'top-right' });
-  //     navigate('/browse')
-      
-  //   } catch (error) {
-  //     console.error(error);
-  //     toast.error("Error posting project. Check console for more information", { position: 'top-right' });
-  //   }
-  // }
 
   async function handleFormSubmit(event) {
+    setLoading(true);
     event.preventDefault();
     const formData = new FormData();
     formData.append("project_name", project_name);
@@ -118,9 +78,7 @@ export default function Add(){
     formData.append("semester", semester);
     formData.append("year", year);
     for(let i=0; i<team.length;i++){
-      if(team[i].length > 0){
-        formData.append("team[]", team[i]);
-      }
+      formData.append("team[]", team[i]);
     }
     formData.append("development_type", development_type);
     formData.append("github", github);
@@ -145,14 +103,42 @@ export default function Add(){
       toast.success(response.data.message, { position: 'top-right' });
       navigate('/browse')
     } catch (error) {
-      console.error(error);
-      toast.error("Error posting project. Check console for more information", { position: 'top-right' });
+      const message = error.response.data.error;
+      if(message){
+        toast.error(message, { position: 'top-right' });
+      }
+      else{
+        toast.error("Error posting project. Check console for more information", { position: 'top-right' });
+        console.log(error);
+      }
+    }finally{
+      setLoading(false);
     }
   }
   
 
   return (
     <div className="isolate bg-white px-6 py-10 sm:py-16 lg:px-8 ">
+    <Transition
+        show={loading}
+        enter="transition-opacity duration-300"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-300"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
+      <div className="fixed inset-0 bg-white bg-opacity-50 z-10 flex justify-center items-center">
+      <div role="status">
+          <svg aria-hidden="true" className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-indigo-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+              <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+          </svg>
+          <span className="sr-only">Loading...</span>
+      </div>
+      </div>
+    </Transition>
+
     <div className="mx-auto max-w-2xl text-center">
       <h2 className="text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl">Add a New Project</h2>
       {/* <p className="mt-2 text-lg leading-8 text-gray-600">
