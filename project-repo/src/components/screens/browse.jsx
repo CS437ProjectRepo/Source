@@ -320,7 +320,7 @@ export default function Browse() {
         <div className="justify-center flex justify-between pb-8 text-sm"> 
           <button
             className={`mx-3 bg-transparent flex gap-2 mt-2 align-center ${
-              currentPage === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-indigo-500'
+              currentPage === 1 ? 'text-gray-500 cursor-not-allowed' : 'text-indigo-500'
             }`}
             onClick={prevPage}
             disabled={currentPage === 1}
@@ -345,7 +345,7 @@ export default function Browse() {
           <button
             className={`mx-3 bg-transparent mt-2 flex gap-2 align-center ${
               currentPage === Math.ceil(filteredCards.length / postsPerPage)
-                ? 'text-gray-300 cursor-not-allowed'
+                ? 'text-gray-500 cursor-not-allowed'
                 : 'text-indigo-500'
             }`}
             onClick={nextPage}
