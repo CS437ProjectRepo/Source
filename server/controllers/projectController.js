@@ -17,7 +17,7 @@ const downloadProjects = async (req, res) => {
     /**
      * The columns will be generated using the project schema paths this will allow for future developement if any fields get added to the modul
      */
-    worksheet.columns = Object.keys(schemaPaths).filter(path => !['_id','__v'].includes(path)).map(path => {
+    worksheet.columns = Object.keys(schemaPaths).filter(path => !['_id','__v', 'drive_asset'].includes(path)).map(path => {
       const header = schemaPaths[path].options.label || path
       return {header, key : path}
      
@@ -25,14 +25,14 @@ const downloadProjects = async (req, res) => {
 
     /**
      * Insert the data into the excel workbook
-     * Tags can sometimes be an empty array --> [] so we add some clean up work for the worksheet we will insert an empty "" instead of []
+     * Some fields have an empty array --> [] so we add some clean up work for the worksheet we will insert an empty "" instead of []
      */
     const projectData = {}
     const maxWidths = {}
     projects.forEach(project => {
       Object.keys(project.toObject()).forEach(key =>{
-        if(key ==='tags'){
-          projectData[key] = project[key].length ? project[key].join(', ') : ''
+        if(key ==='tags' || key === 'superlatives' || key === 'team' || key === 'languages'){
+          projectData[key] = project[key].length ? project[key].join(', ').replace(/["]/g, '') : ''
         } else {
           projectData[key] = project[key]
         }
@@ -43,11 +43,10 @@ const downloadProjects = async (req, res) => {
     })
 
     //console.log(maxWidths)
-    Object.keys(maxWidths).forEach(key => {
-      const column = worksheet.getColumn(key)
-      //console.log("Key ", column.key, "Width ", column.width )
-      column.width = Math.max(column.width, maxWidths[key])
-    })
+    worksheet.columns.forEach(column => {
+      const key = column.key;
+      column.width = Math.max(column.width, maxWidths[key]);
+    });
 
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     res.setHeader('Content-Disposition', 'attachment; filename=projects.xlsx');
@@ -140,12 +139,12 @@ const createProject = async(req, res) => {
 
     console.log(tags);
 
-    // let documentation_link = "";
+    let documentation_link = "";
     let fileId
     try{
       // fileId = await createFile(files[0]);
       fileId = await createFile(files['files'][0]);
-      // documentation_link = `https://drive.google.com/file/d/${fileId}/view`
+      documentation_link = `https://drive.google.com/file/d/${fileId}/view`
     }catch(e){
         return res.status(422).json({error: e.message});
     }
@@ -161,6 +160,7 @@ const createProject = async(req, res) => {
         languages,
         team,
         drive_asset: fileId,
+        drive_link: documentation_link,
         website,
         github,
         pivitol_tracker,

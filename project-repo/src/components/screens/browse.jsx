@@ -75,6 +75,32 @@ export default function Browse() {
     }));
   };
 
+  const handleProjectDownLoadClick = async () => {
+    console.log('asdasdsa');
+    //https://blog.stephensorensen.com/download-files-using-fetch
+    const downloadAllProjectEndpoint = apiURL + '/download/projects';
+    try {
+      const response = await fetch(downloadAllProjectEndpoint, {
+        headers: { Accept: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' },
+      });
+      const data = await response.blob();
+      const url = window.URL.createObjectURL(data);
+      const link = document.createElement('a');
+      link.href = url;
+
+      link.download = 'projects.xlsx'
+
+      //link.setAttribute('download', 'projects.xlsx');
+      //document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url)
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const firstProjectIndex = indexOfFirstPost + 1;
@@ -212,6 +238,7 @@ export default function Browse() {
           <div className="flex items-center">
           <button
             type="button"
+            onClick={() => handleProjectDownLoadClick()}
             className="download-button inline-flex items-center rounded-md px-3 py-2 text-xs text-gray-800 shadow-sm hover:bg-indigo-800"
             >
             <ArrowDownTrayIcon className="mr-2 h-5 w-5" aria-hidden="true" />
