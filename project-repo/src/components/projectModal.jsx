@@ -72,7 +72,7 @@ export default function ProjectModal(props) {
                         <dt className="text-sm font-medium text-gray-500">Tags</dt>
                         <dd className="mt-1 text-sm text-white sm:col-span-2 sm:mt-0 tag-container">
                         {props.card.tags.map(tag => (
-                          <span key={tag} className="bg-indigo-500 px-2 rounded-full text-sm">{tag}</span>
+                          <span key={tag} className="bg-indigo-500 px-2 py-1 rounded-full text-sm">{tag}</span>
                         ))}
                         </dd>
                     </div>
