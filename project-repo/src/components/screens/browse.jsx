@@ -215,15 +215,6 @@ export default function Browse() {
             {/* Filters */}
             <form className="hidden lg:block">
               <h2 className='font-medium'>Filter By</h2>
-              {/* {filters.map(filter => (
-                  <FilterMenu
-                  options={filter.options}
-                  catagory={filter.name}
-                  selectedOptions={selectedFilters[filter.id]}
-                  onChange={filterValue => handleFilterChange(filters.name, filterValue)}
-                />
-              ))
-              } */}
                 <FilterMenu
                   options={filters[0].options}
                   catagory={filters[0].name}
