@@ -5,7 +5,7 @@ const {MESSAGES, HTTP_STATUS_CODES} = require("../utils/server.constants");
 
 const register = async (req, res) => {
   const { email, password, adminCode} = req.body;
-  if (!email || !password) {
+  if (!email || !password || !adminCode) {
     return res
       .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
       .json({ message: MESSAGES.FIELDS_MISSING });
@@ -15,7 +15,7 @@ const register = async (req, res) => {
   if(adminCode != process.env.ADMIN_CODE){
     return res
     .status(HTTP_STATUS_CODES.UNAUTHORIZED)
-    .json({ message: "Invalid admin code" });
+    .json({ message: MESSAGES.INVALID_ADMIN_CODE});
   }
 
   const existingUser = await User.findOne({ email: email });
@@ -40,7 +40,7 @@ const register = async (req, res) => {
       if (error.name === "ValidationError") {
         return res
           .status(HTTP_STATUS_CODES.UNAUTHORIZED)
-          .json({ message: error.message});
+          .json({ message: error.message, name: "ValidationError"});
       } else {
         return res
           .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
