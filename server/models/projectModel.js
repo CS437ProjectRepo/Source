@@ -53,6 +53,10 @@ const projectSchema = mongoose.Schema({
         require: true,
         label: 'Google Drive Asset ID'
     },
+    drive_link: {
+        type: String,
+        label : 'Google Drive Link'
+    },
     website: {
         type: String,
         label: 'Website'
