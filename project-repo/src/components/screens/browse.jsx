@@ -344,7 +344,7 @@ export default function Browse() {
         </section>
         <hr/>
         <p className="text-center text-gray-500 pt-8 pb-4 text-sm">
-          Viewing <span className="font-bold">{firstProjectIndex}</span> to <span className="font-bold">{lastProjectIndex}</span> of <span className="font-bold">{filteredCards.length}</span> Projects
+          Viewing <span className="font-medium">{firstProjectIndex}</span> to <span className="font-medium">{lastProjectIndex}</span> of <span className="font-medium">{filteredCards.length}</span> Projects
         </p>
         <div className="justify-center flex justify-between pb-8 text-sm"> 
           <button
