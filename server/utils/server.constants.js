@@ -3,6 +3,7 @@ exports.MESSAGES = {
     EMAIL_ALREADY_EXIST:              "An account with that email already exists.",
     FIELDS_MISSING:                   "Please fill in all fields.",
     INTERNAL_SERVER_ERROR:            "An unexpected error occurred.",
+    INVALID_ADMIN_CODE:                "Invalid admin code.",
     INVALID_CREDENTIALS:              "Invalid username or password.",
     INVALID_GITHUB_LINK:              "Invalid github link provided.",
     INVALID_PROJECT_FIELDS:           "Invalid project field or fields.",
