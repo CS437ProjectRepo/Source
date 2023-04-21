@@ -47,7 +47,7 @@ export default function Add(){
 
   const handleTeamMembersChange = (event) => {
     const inputText = event.target.value;
-    const membersList = inputText.split(",")
+    const membersList = inputText.replace(/\s{2,}/g, ' ').split(",")
     .map((member) => member.trim())
     .filter((member) => member !== "");
     setTeam(membersList);

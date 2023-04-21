@@ -73,6 +73,7 @@ export default function Browse() {
       ...prevFilters,
       [filterType]: filterValue,
     }));
+    paginate(1)
   };
 
   const indexOfLastPost = currentPage * postsPerPage;
@@ -112,6 +113,7 @@ export default function Browse() {
       language: [],
       featured: [],
     });
+    paginate(1)
   }
 
   return (
