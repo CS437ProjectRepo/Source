@@ -1,41 +1,69 @@
-const filters = [
+import {featured, categories, no_code_solutions, getLanguages} from './filterOptions'
+// const filters = [
+//     {
+//       id: 'featured',
+//       name: 'Featured',
+//       options: [
+//         { value: 'Outstanding UI', label: 'Outstanding UI', checked: false },
+//         { value: 'Outstanding Report', label: 'Outstanding Report', checked: false },
+//         { value: 'Outstanding Testing', label: 'Outstanding Testing', checked: false },
+//       ],
+//     },
+//     {
+//       id: 'category',
+//       name: 'Category',
+//       options: [
+//         { value: 'Software Engineering', label: 'Software Engineering', checked: false },
+//         { value: 'Education', label: 'Education', checked: false },
+//         { value: 'Games', label: 'Games', checked: false },
+//         { value: 'Travel', label: 'Travel', checked: false },
+//         { value: 'Productivity & Organization', label: 'Productivity & Organization', checked: false },
+//         { value: 'Fitness & Health', label: 'Fitness & Health', checked: false },
+//         { value: 'Event Planning', label: 'Event Planning', checked: false },
+//         { value: 'Social Networking', label: 'Social Networking', checked: false },
+//         { value: 'Miscellaneous', label: 'Miscellaneous', checked: false },
+//       ],
+//     },
+//     {
+//       id: 'languages',
+//       name: 'Programming Languages',
+//       options: [
+//         { value: 'JavaScript', label: 'JavaScript', checked: false },
+//         { value: 'Java', label: 'Java', checked: false },
+//         { value: 'Python', label: 'Python', checked: false },
+//         { value: 'PHP', label: 'PHP', checked: false },
+//         { value: 'HTML', label: 'HTML', checked: false },
+//         { value: 'CSS', label: 'CSS', checked: false },
+//         { value: 'ApacheConf', label: 'ApacheConf', checked: false },
+//       ],
+//     },
+// ]
+
+const filterOptions = {
+  'Featured': featured,
+  'Catagories': categories,
+  'Programming Languages': getLanguages(),
+  'No Code Solutions': no_code_solutions,
+}
+
+let filters = [];
+for (let key in filterOptions){
+  filters.push(
     {
-      id: 'featured',
-      name: 'Featured',
-      options: [
-        { value: 'Outstanding UI', label: 'Outstanding UI', checked: false },
-        { value: 'Outstanding Report', label: 'Outstanding Report', checked: false },
-        { value: 'Outstanding Testing', label: 'Outstanding Testing', checked: false },
-      ],
-    },
-    {
-      id: 'category',
-      name: 'Category',
-      options: [
-        { value: 'Software Engineering', label: 'Software Engineering', checked: false },
-        { value: 'Education', label: 'Education', checked: false },
-        { value: 'Games', label: 'Games', checked: false },
-        { value: 'Travel', label: 'Travel', checked: false },
-        { value: 'Productivity & Organization', label: 'Productivity & Organization', checked: false },
-        { value: 'Fitness & Health', label: 'Fitness & Health', checked: false },
-        { value: 'Event Planning', label: 'Event Planning', checked: false },
-        { value: 'Social Networking', label: 'Social Networking', checked: false },
-        { value: 'Miscellaneous', label: 'Miscellaneous', checked: false },
-      ],
-    },
-    {
-      id: 'languages',
-      name: 'Programming Languages',
-      options: [
-        { value: 'JavaScript', label: 'JavaScript', checked: false },
-        { value: 'Java', label: 'Java', checked: false },
-        { value: 'Python', label: 'Python', checked: false },
-        { value: 'PHP', label: 'PHP', checked: false },
-        { value: 'HTML', label: 'HTML', checked: false },
-        { value: 'CSS', label: 'CSS', checked: false },
-        { value: 'ApacheConf', label: 'ApacheConf', checked: false },
-      ],
-    },
-]
+      id: key.toLowerCase(),
+      name: key,
+      options: 
+        filterOptions[key].map(option => {
+          return {
+            value: option,
+            label: option,
+            checked: false
+          };
+        })
+      
+    }
+  )
+}
+
 
 export default filters;

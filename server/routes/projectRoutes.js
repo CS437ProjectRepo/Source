@@ -24,6 +24,6 @@ router.post('/uploadfiletest', upload.any(), projectController.uploadFileTest);
 
 router.get('/download/projects', projectController.downloadProjects);
 
-router.post('/deleteProject', requireLogin, projectController.deleteProject);
+router.post('/deleteproject', requireLogin, projectController.deleteProject);
 
 module.exports = router

@@ -60,14 +60,20 @@ const createFile =  async (fileObject) => {
 function deleteFile(fileId) {
     const drive = google.drive({ version: 'v3', auth: getAuthToken() });
 
-    return new Promise((resolve, reject) => {
-        drive.files.delete({ fileId }, (err, res) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(res.data);
-            }
-        });
+    // return new Promise((resolve, reject) => {
+    //     drive.files.delete({ fileId }, (err, res) => {
+    //         if (err) {
+    //             reject(err);
+    //         } else {
+    //             resolve(res.data);
+    //         }
+    //     });
+    // });
+    
+    drive.files.delete({fileId}, (err, res) => {
+        console.error(`Error deleting file: ${err}`);
+        return;
+      }
     });
 }
 

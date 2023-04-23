@@ -6,6 +6,7 @@ import { FolderIcon } from '@heroicons/react/24/solid'
 import apiURL from '../../config/apiURL';
 import { toast } from 'react-toastify';
 import { Transition } from '@headlessui/react'
+import {featured, categories, no_code_solutions} from '../../config/filterOptions'
 
 export default function Add(){
   const { isAdminLoggedIn } = useContext(AuthContext);
@@ -20,7 +21,7 @@ export default function Add(){
   const [no_code_solution, setNoCode] = useState ('');
   const [website, setWebsite] = useState('');
   const [pivitol_tracker, setPivitolTracker] = useState('');
-  const [category, setCategory] = useState('Software Engineering');
+  const [category, setCategory] = useState('For This Course');
   const [team, setTeam] = useState([]);
   const [superlatives, setSuperlatives] = useState([]); 
   const [file, setFile] = useState(null);
@@ -332,7 +333,8 @@ export default function Add(){
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option value="Code">Code</option>
-                  <option value="No Code">No-Code</option>
+                  <option value="No Code">No Code</option>
+                  <option value="Unavailable">Unavailable</option>
                 </select>
               </div>
             </div>
@@ -370,16 +372,11 @@ export default function Add(){
                     onChange={(e) => setNoCode(e.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
-                    <option value="adalo">Adalo</option>
-                    <option value="airtable">Airtable</option>
-                    <option value="appSheet">AppSheet</option>
-                    <option value="bubble">Bubble</option>
-                    <option value="glide">Glide</option>
-                    <option value="squarespace">Squarespace</option>
-                    <option value="wix">Wix</option>
-                    <option value="wordpress">Wordpress</option>
-                    <option value="zapier">Zapier</option>
-                    <option value="no-code">Other No-Code Platform</option>
+                  {
+                    no_code_solutions.map((solution) => (
+                      <option value={solution}>{solution}</option>
+                    ))
+                  }
                   </select>
                 </div>
               </div>
@@ -447,15 +444,11 @@ export default function Add(){
                   value={category}
                   onChange={handleCategoryChange}
                 >
-                  <option value="Software Engineering">Software Engineering</option>
-                  <option value="Education">Education</option>
-                  <option value="Games">Games</option>
-                  <option value="Travel">Travel</option>
-                  <option value="Productivity & Organization">Productivity & Organization</option>
-                  <option value="Fitness & Health">Fitness & Health</option>
-                  <option value="Event Planning">Event Planning</option>
-                  <option value="Social Networking">Social Networking</option>
-                  <option value="Miscellaneous">Miscellaneous</option>
+                {
+                  categories.map((solution) => (
+                    <option value={solution}>{solution}</option>
+                  ))
+                }
                 </select> 
                   
               </div>
@@ -465,57 +458,27 @@ export default function Add(){
               <legend className="text-sm font-semibold leading-6 text-gray-800">Superlatives</legend>
               <p className="text-sm text-gray-500"> Other students should look to this project as an example for:</p>
               <div className="mt-6 space-y-6">
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="outstanding-UI"
-                      name="Outstanding UI"
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      // value={superlatives.indexOf("Outstanding UI") !== -1}
-                      onChange={(event) => {handleSuperlativeChange( event)}}
-                    />
+              {
+                featured.map((feature) => (
+                  <div className="relative flex gap-x-3">
+                    <div className="flex h-6 items-center">
+                      <input
+                        id={feature}
+                        name={feature}
+                        type="checkbox"
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        // value={superlatives.indexOf("Outstanding UI") !== -1}
+                        onChange={(event) => {handleSuperlativeChange( event)}}
+                      />
+                    </div>
+                    <div className="text-sm leading-6">
+                      <label htmlFor="outstanding-UI" className="font-medium text-gray-800">
+                        {feature}
+                      </label>
+                    </div>
                   </div>
-                  <div className="text-sm leading-6">
-                    <label htmlFor="outstanding-UI" className="font-medium text-gray-800">
-                      Outstanding UI
-                    </label>
-                  </div>
-                </div>
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="outstanding-report"
-                      name="Outstanding Report"
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      // value={superlatives.indexOf("Outstanding Report") !== -1}
-                      onChange={(event) => {handleSuperlativeChange(event)}}
-                    />
-                  </div>
-                  <div className="text-sm leading-6">
-                    <label htmlFor="outstanding-report" className="font-medium text-gray-800">
-                      Outstanding Report
-                    </label>
-                  </div>
-                </div>
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="outstanding-testing"
-                      name="Outstanding Testing"
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      // value={superlatives.indexOf("Outstanding Testing") !== -1}
-                      onChange={(event) => {handleSuperlativeChange(event)}}
-                    />
-                  </div>
-                  <div className="text-sm leading-6">
-                    <label htmlFor="outstanding-testing" className="font-medium text-gray-800">
-                      Outstanding Testing
-                    </label>
-                  </div>
-                </div>
+                ))
+              }
               </div>
             </fieldset>
           </div>

@@ -117,11 +117,11 @@ const createProject = async(req, res) => {
 
   let {year, superlatives} = req.body;
 
-  // const existingProject = await Post.findOne({project_name: project_name});
+  const existingProject = await Post.findOne({project_name: project_name});
   try {
-    // if (existingProject){
-    //     return res.status(422).json({error: "project with that title already exists"})
-    // }
+    if (existingProject){
+      return res.status(422).json({error: "project with that title already exists"})
+    }
     
     let tags = [];
     if(!superlatives) superlatives = [];
@@ -229,7 +229,7 @@ const updateProject = async (req, res) => {
   };
 
 const deleteProject = async (req, res) => {
-  const {project_name} = req.body;
+  const {project_name, drive_asset} = req.body;
   if(!project_name) {
     return res.status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY).json({message: MESSAGES.FIELDS_MISSING})
   }
@@ -240,8 +240,7 @@ const deleteProject = async (req, res) => {
       return res.status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY).json({error : MESSAGES.PROJECT_DOES_NOT_EXIST})
     }
     
-    const {documentation} = project;
-    deleteFile(documentation)
+    deleteFile(drive_asset)
 
     return res.status(HTTP_STATUS_CODES.OK).json({message : MESSAGES.PROJECT_DELETED});
   } catch (error) {

@@ -130,6 +130,24 @@ export default function ProjectModal(props) {
                         </ul>
                         </dd>
                     </div>)}
+                    { props.card.website && (<div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt className="text-sm font-medium text-gray-500">Wesbite</dt>
+                        <dd className="mt-1 text-sm text-gray-800 sm:col-span-2 sm:mt-0">
+                        <ul className="divide-y divide-gray-200 rounded-md border border-gray-200">
+                            <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
+                            <div className="flex w-0 flex-1 items-center">
+                                <LinkIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                <span className="ml-2 w-0 flex-1 truncate">{props.card.website}</span>
+                            </div>
+                            <div className="ml-4 flex-shrink-0">
+                                <a href={props.card.website} rel="noreferrer" target="_blank" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                Visit
+                                </a>
+                            </div>
+                            </li>
+                        </ul>
+                        </dd>
+                    </div>)}
                 </dl>
               </div>
             </div>

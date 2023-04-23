@@ -20,6 +20,9 @@ const projectFieldValidation = (req, res, next) => {
             }
             break;
         }
+        case("Unavailable"):{
+            break;
+        }
         default:{
             return res.status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY).json({error: MESSAGES.FIELDS_MISSING + development_type})
         }

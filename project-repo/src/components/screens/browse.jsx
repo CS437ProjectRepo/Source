@@ -5,6 +5,7 @@ import { ArrowDownTrayIcon, FolderPlusIcon, FunnelIcon, ArrowLongLeftIcon, Arrow
 import apiURL from "../../config/apiURL";
 import {useNavigate } from "react-router-dom";
 import filters from '../../config/filters';
+import { setLanguages } from '../../config/filterOptions';
 import FilterMenu from '../filterMenu';
 import ProjectModal from '../projectModal';
 import { AuthContext } from '../../App';
@@ -24,7 +25,7 @@ export default function Browse() {
   });
   const {isAdminLoggedIn} = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(9)
+  const [postsPerPage, setPostsPerPage] = useState(6)
   const pageNumbers = [];
   const navigate = useNavigate();
 
@@ -34,6 +35,7 @@ export default function Browse() {
         const response = await axios.get(apiURL + '/allprojects');
         const data = response.data;
         setProjectData(data.posts);
+        await setLanguages(data.posts);
       } catch (error) {
         console.error('Error fetching project data: ', error);
       } finally{
@@ -43,7 +45,7 @@ export default function Browse() {
 
     getProjectData();
     if(isAdminLoggedIn){
-      setPostsPerPage(8)
+      setPostsPerPage(5)
     }
   }, [isAdminLoggedIn]);
 
@@ -317,6 +319,11 @@ export default function Browse() {
                       {card.tags.map((tag) => (
                         <span className="tag px-2 py-1 rounded-full text-sm font-medium">{tag}</span>
                       ))}
+                                            {
+                        card.development_type == "Unavailable" && (
+                          <span className="text-gray-600 itallic px-2 py-1 rounded-full text-sm italic"> Development Data Unavailable</span>
+                        )
+                      }
                     </div>
                   </div>
                 </div>
@@ -344,7 +351,7 @@ export default function Browse() {
         </section>
         <hr/>
         <p className="text-center text-gray-500 pt-8 pb-4 text-sm">
-          Viewing <span className="font-medium">{firstProjectIndex}</span> to <span className="font-medium">{lastProjectIndex}</span> of <span className="font-medium">{filteredCards.length}</span> Projects
+          Viewing <span className="font-bold">{firstProjectIndex}</span> to <span className="font-bold">{lastProjectIndex}</span> of <span className="font-bold">{filteredCards.length}</span> Projects
         </p>
         <div className="justify-center flex justify-between pb-8 text-sm"> 
           <button

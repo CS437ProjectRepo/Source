@@ -6,6 +6,7 @@ import { FolderIcon, TrashIcon } from '@heroicons/react/24/solid'
 import apiURL from '../../config/apiURL';
 import { toast } from 'react-toastify';
 import { Transition } from '@headlessui/react'
+import {featured, categories, no_code_solutions} from '../../config/filterOptions'
 
 export default function Edit(){
   const { isAdminLoggedIn } = useContext(AuthContext);
@@ -69,7 +70,7 @@ export default function Edit(){
 
   useEffect(() => {
     getData();
-  });
+  }, [state]);
 
   if(!isAdminLoggedIn){
     return <Navigate to="/login" />;
@@ -78,11 +79,6 @@ export default function Edit(){
   function getYear(){
     return new Date().getFullYear();
   }
-
-  function handleCancelClick(){
-    navigate('/browse');
-  }
-
 
   const handleDevelopmentTypeChange = (event) => {
     const curr = event.target.value;
@@ -106,6 +102,34 @@ export default function Edit(){
       setSuperlatives([...superlatives, superlative]);
     } else {
       setSuperlatives(superlatives => superlatives.filter(tag => tag !== superlative));
+    }
+  }
+
+  function handleCancelClick(){
+    navigate('/browse');
+  }
+
+  async function handleDeleteClick(){
+    setLoading(true);
+    try {
+      const response = await axios.post(apiURL + '/deleteProject', {
+        project_name: projectData.project_name,
+        drive_asset: projectData.drive_asset
+      });
+  
+      toast.success(response.data.message, { position: 'top-right' });
+      navigate('/browse')
+    } catch (error) {
+      const message = error.response.data.error;
+      if(message){
+        toast.error(message, { position: 'top-right' });
+      }
+      else{
+        toast.error("Error deleting project. Check console for more information", { position: 'top-right' });
+        console.log(error);
+      }
+    }finally{
+      setLoading(false);
     }
   }
 
@@ -367,7 +391,8 @@ export default function Edit(){
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option value="Code">Code</option>
-                  <option value="No Code">No-Code</option>
+                  <option value="No Code">No Code</option>
+                  <option value="Unavailable">Unavailable</option>
                 </select>
               </div>
             </div>
@@ -404,16 +429,11 @@ export default function Edit(){
                     onChange={(e) => setNoCode(e.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
-                    <option value="adalo">Adalo</option>
-                    <option value="airtable">Airtable</option>
-                    <option value="appSheet">AppSheet</option>
-                    <option value="bubble">Bubble</option>
-                    <option value="glide">Glide</option>
-                    <option value="squarespace">Squarespace</option>
-                    <option value="wix">Wix</option>
-                    <option value="wordpress">Wordpress</option>
-                    <option value="zapier">Zapier</option>
-                    <option value="no-code">Other No-Code Platform</option>
+                  {
+                    no_code_solutions.map((solution) => (
+                      <option value={solution}>{solution}</option>
+                    ))
+                  }
                   </select>
                 </div>
               </div>
@@ -479,14 +499,11 @@ export default function Edit(){
                   value={category}
                   onChange={handleCategoryChange}
                 >
-                  <option value="Software Engineering">Software Engineering</option>
-                  <option value="Education">Education</option>
-                  <option value="Travel">Travel</option>
-                  <option value="Productivity & Organization">Productivity & Organization</option>
-                  <option value="Fitness & Health">Fitness & Health</option>
-                  <option value="Event Planning">Event Planning</option>
-                  <option value="Social Networking">Social Networking</option>
-                  <option value="Miscellaneous">Miscellaneous</option>
+                {
+                  categories.map((solution) => (
+                    <option value={solution}>{solution}</option>
+                  ))
+                }
                 </select> 
                   
               </div>
@@ -496,68 +513,39 @@ export default function Edit(){
               <legend className="text-sm font-semibold leading-6 text-gray-800">Superlatives</legend>
               <p className="text-sm text-gray-500"> Other students should look to this project as an example for:</p>
               <div className="mt-6 space-y-6">
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="outstanding-UI"
-                      name="Outstanding UI"
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      // value={superlatives.indexOf("Outstanding UI") !== -1}
-                      onChange={(event) => {handleSuperlativeChange( event)}}
-                    />
+              {
+                featured.map((feature) => (
+                  <div className="relative flex gap-x-3">
+                    <div className="flex h-6 items-center">
+                      <input
+                        id={feature}
+                        name={feature}
+                        type="checkbox"
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        // value={superlatives.indexOf("Outstanding UI") !== -1}
+                        onChange={(event) => {handleSuperlativeChange( event)}}
+                      />
+                    </div>
+                    <div className="text-sm leading-6">
+                      <label htmlFor="outstanding-UI" className="font-medium text-gray-800">
+                        {feature}
+                      </label>
+                    </div>
                   </div>
-                  <div className="text-sm leading-6">
-                    <label htmlFor="outstanding-UI" className="font-medium text-gray-800">
-                      Outstanding UI
-                    </label>
-                  </div>
-                </div>
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="outstanding-report"
-                      name="Outstanding Report"
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      // value={superlatives.indexOf("Outstanding Report") !== -1}
-                      onChange={(event) => {handleSuperlativeChange(event)}}
-                    />
-                  </div>
-                  <div className="text-sm leading-6">
-                    <label htmlFor="outstanding-report" className="font-medium text-gray-800">
-                      Outstanding Report
-                    </label>
-                  </div>
-                </div>
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="outstanding-testing"
-                      name="Outstanding Testing"
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      // value={superlatives.indexOf("Outstanding Testing") !== -1}
-                      onChange={(event) => {handleSuperlativeChange(event)}}
-                    />
-                  </div>
-                  <div className="text-sm leading-6">
-                    <label htmlFor="outstanding-testing" className="font-medium text-gray-800">
-                      Outstanding Testing
-                    </label>
-                  </div>
-                </div>
+                ))
+              }
               </div>
             </fieldset>
           </div>
         </div>
       </div>
       <div className="mt-6 flex items-center justify-between">
-      <button
-          type="submit"
-          className="flex rounded-md bg-red-600 px-2 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-        <TrashIcon className="w-4 h-4 mr-1"/> Delete 
+        <button
+            type="button"
+            onClick={handleDeleteClick}
+            className="flex rounded-md bg-red-600 px-2 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+          <TrashIcon className="w-4 h-4 mr-1"/> Delete 
         </button>
         <div className="flex gap-x-3">
             <button type="button" className="text-sm font-semibold leading-6 text-gray-800"
