@@ -71,6 +71,7 @@ function deleteFile(fileId) {
     // });
     
     drive.files.delete({fileId}, (err, res) => {
+      if (err) {
         console.error(`Error deleting file: ${err}`);
         return;
       }
