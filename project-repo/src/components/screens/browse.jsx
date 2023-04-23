@@ -25,7 +25,7 @@ export default function Browse() {
   });
   const {isAdminLoggedIn} = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(6)
+  const [postsPerPage, setPostsPerPage] = useState(9)
   const pageNumbers = [];
   const navigate = useNavigate();
 
@@ -45,7 +45,7 @@ export default function Browse() {
 
     getProjectData();
     if(isAdminLoggedIn){
-      setPostsPerPage(5)
+      setPostsPerPage(postsPerPage - 1)
     }
   }, [isAdminLoggedIn]);
 
