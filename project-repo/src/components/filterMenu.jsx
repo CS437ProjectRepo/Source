@@ -1,50 +1,34 @@
-import { Disclosure } from '@headlessui/react'
-import { MinusIcon, PlusIcon} from '@heroicons/react/20/solid'
-function FilterMenu({ options, catagory, selectedOptions, onChange }) {
-  const handleOptionChange = (optionValue) => {
-    const newSelectedOptions = selectedOptions.includes(optionValue)
-      ? selectedOptions.filter(value => value !== optionValue)
-      : [...selectedOptions, optionValue];
-      onChange(newSelectedOptions);
-   }; 
-      return (
-        <Disclosure as="div" className="border-b border-gray-200 py-6">
-        {({ open }) => (
-          <>
-            <h3 className="-my-3 flow-root">
-              <Disclosure.Button className="flex w-full items-center justify-between py-3 text-sm text-gray-400 hover:text-gray-500">
-                <span className="font-medium text-gray-800">{catagory}</span>
-                <span className="ml-6 flex items-center">
-                  {open ? (
-                    <MinusIcon className="h-5 w-5" aria-hidden="true" />
-                  ) : (
-                    <PlusIcon className="h-5 w-5" aria-hidden="true" />
-                  )}
-                </span>
-              </Disclosure.Button>
-            </h3>
-            <Disclosure.Panel className="pt-6">
-              <div className="space-y-4">
-                {options.map((option) => (
-                  <div key={option.value} className="flex items-center">
-                    <label key={option.value} className="flex items-center">
-                   <input
-                     type="checkbox"
-                     className="form-checkbox h-5 w-5 text-purple-600"
-                     value={option.value}
-                     checked={selectedOptions.includes(option.value)}
-                     onChange={() => handleOptionChange(option.value)}
-                   />
-                   <span className="ml-2 text-sm text-gray-700">{option.label}</span>
-                 </label>
-                  </div>
-                ))}
-              </div>
-            </Disclosure.Panel>
-          </>
-        )}
-      </Disclosure>
+
+import Filter from './filter';
+
+export default function FilterMenu(props){
+    return(
+     <form className={props.classes}>
+        <h2 className='font-medium'>Filter By</h2>
+        <Filter
+            options={props.filters[0].options}
+            category={props.filters[0].name}
+            selectedOptions={props.selectedFilters.category}
+            onChange={(filterValue) => props.handleFilterChange('category', filterValue)}
+        />
+        <Filter
+            options={props.filters[1].options}
+            category={props.filters[1].name}
+            selectedOptions={props.selectedFilters.language}
+            onChange={filterValue => props.handleFilterChange('language', filterValue)}
+        />
+        <Filter
+            options={props.filters[2].options}
+            category={props.filters[2].name}
+            selectedOptions={props.selectedFilters.featured}
+            onChange={filterValue => props.handleFilterChange('featured', filterValue)}
+        />
+        <button className="text-indigo-500 my-4 disabled:text-gray-400 text-sm"
+            onClick={props.resetFilters}
+            disabled={props.selectedFilters.category.length === 0 && props.selectedFilters.language.length === 0 && props.selectedFilters.featured.length === 0 }
+        >
+            Clear All Filters
+        </button>
+    </form>
     )
 }
-
-export default FilterMenu

@@ -4,13 +4,13 @@ import axios from 'axios';
 import { Navigate, useNavigate, useLocation } from "react-router-dom";
 import { FolderIcon, TrashIcon } from '@heroicons/react/24/solid'
 import apiURL from '../../config/apiURL';
+import Loading from '../loading';
 import { toast } from 'react-toastify';
-import { Transition } from '@headlessui/react'
 import {featured, categories, no_code_solutions} from '../../config/filterOptions'
 
 export default function Edit(){
   const { isAdminLoggedIn } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(true);
   const {state} = useLocation();
   const navigate = useNavigate();
   const [projectData, setProjectData] = useState(null);
@@ -23,12 +23,12 @@ export default function Edit(){
   const [no_code_solution, setNoCode] = useState ('');
   const [website, setWebsite] = useState('');
   const [pivitol_tracker, setPivitolTracker] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('For This Class');
   const [teamString, setTeamString] = useState('');
   const [team, setTeam] = useState([]);
   const [superlatives, setSuperlatives] = useState([]); 
   const [file, setFile] = useState(null);
-  const [activeAsset, setActiveAsset] = useState(false);
+  const [originalAsset, setOriginalAsset] = useState(false);
   
 
   async function getData(){
@@ -53,11 +53,11 @@ export default function Edit(){
     setNoCode(project.no_code_solution);
     setWebsite(project.website);
     setPivitolTracker(project.pivitol_tracker);
-    setCategory(project.catagory);
+    setCategory(project.category);
     setTeam(project.team)
     setTeamString(project.team.join(", "));
-    setSuperlatives(project.superlatives); 
-    setActiveAsset(true);
+    setSuperlatives(project.superlatives);
+    setOriginalAsset(true);
 
    
     } catch (error) {
@@ -133,78 +133,86 @@ export default function Edit(){
     }
   }
 
-  //TODO: write this function where data is only appended to form if changed
   async function handleFormSubmit(event) {
+    setLoading(true);
     event.preventDefault();
-
+    const fields = ['description', 'instructor', 'semester', 'year', 'team', 'development_type', 'github', 'no_code_solution', 'pivitol_tracker', 'website', 'category', 'superlatives'];
     const formData = new FormData();
     formData.append("project_name", projectData.project_name);
-    formData.append("description", description);
-    formData.append("instructor", instructor);
-    formData.append("semester", semester);
-    formData.append("year", year);
-    for(let i=0; i<team.length;i++){
-        if(team[i].length > 0){
-            formData.append("team[]", team[i]);
-        }
-    }
-    formData.append("development_type", development_type);
-    formData.append("github", github);
-    formData.append("no_code_solution", no_code_solution);
-    formData.append("pivitol_tracker", pivitol_tracker);
-    formData.append("website", website);
-    formData.append("category", category);
-    for(let i=0; i<superlatives.length;i++){
-        if(superlatives[i].length > 0){
-            formData.append("superlatives[]", superlatives[i]);
-        }
-    }
 
-    if(!activeAsset){
+    let hasChanged = false;
+    fields.forEach(field => {
+      if (projectData[field] !== eval(field)) {
+        switch(field){
+          case "year": {
+            formData.append("year", parseInt(year));
+            break;
+          }
+          case "team": {
+            for(let i=0; i<team.length;i++){
+              if(team[i].length > 0){
+                  formData.append("team[]", team[i]);
+              }
+            }
+            break;
+          }
+          case "superlatives":{
+            for(let i=0; i<superlatives.length;i++){
+              if(superlatives[i].length > 0){
+                  formData.append("superlatives[]", superlatives[i]);
+              }
+            }
+            break;
+          }
+          default: {
+            formData.append(field, eval(field));
+          }
+        }
+        hasChanged = true;
+      }
+    });
+
+    if(!originalAsset){
         formData.append("file", file);
+        hasChanged = true;
     }
     
-    try {
-      const response = await fetch(apiURL + '/', {
-        method: 'PUT',
-        body: formData,
-      });
-  
-      if (!response.ok) {
-        throw new Error('Error posting form data');
+    if(hasChanged){
+      for (const pair of formData.entries()) {
+        console.log(`${pair[0]}, ${pair[1]}`);
       }
-  
-      const responseData = await response.json();
-      toast.success('New project posted!', { position: 'top-right' });
-      navigate('/browse')
-      
-    } catch (error) {
-      console.error(error);
-      toast.error("Error posting project. Check console for more information", { position: 'top-right' });
+
+      try {
+        // const response = await axios.post(apiURL + '/editproject', formData);
+        const response = await axios.post(apiURL + '/editproject', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+
+        if (response.status !== 200) {
+          throw new Error('Error posting form data');
+        }
+
+        const responseData = response.data;
+        toast.success('Project updated', { position: 'top-right' });
+        navigate('/browse');
+      } catch (error) {
+        console.error(error);
+        toast.error("Error posting project. Check console for more information", { position: 'top-right' });
+      } finally{
+        setLoading(false);
+      }
+
+    }else{
+      toast.warning('No changes were made.', { position: 'top-right' });
     }
+    
   }
 
   return (
    <>
-    <Transition
-    show={loading}
-    enter="transition-opacity duration-300"
-    enterFrom="opacity-0"
-    enterTo="opacity-100"
-    leave="transition-opacity duration-300"
-    leaveFrom="opacity-100"
-    leaveTo="opacity-0"
-    >
-        <div className="fixed inset-0 bg-white bg-opacity-50 z-10 flex justify-center items-center">
-            <div role="status">
-                <svg aria-hidden="true" className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-indigo-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
-                </svg>
-                <span className="sr-only">Loading...</span>
-            </div>
-        </div>
-    </Transition>
+  <Loading isLoading={isLoading}/>
 
    {projectData && (
     <div className="px-6 py-10 lg:px-8 flex">
@@ -245,7 +253,7 @@ export default function Edit(){
               </label>
               <p className="text-sm leading-6 text-gray-600">Currently attached documentation</p>
               <div className="mt-2 justify-center rounded-lg border border-dashed border-gray-500 px-6 py-10">
-                {activeAsset || file ? (
+                {originalAsset || file ? (
                   <div className="text-center">
             <div className="mb-4">
             <div className="flex justify-center">
@@ -254,7 +262,10 @@ export default function Edit(){
               {file ? <p className="text-sm text-gray-600"> file.name</p> : <a href={`https://drive.google.com/file/d/${projectData.drive_asset}/view`} target='blank' className='block text-indigo-600 break-words'> {`https://drive.google.com/file/d/${projectData.drive_asset}/view`} </a>}
               <button
                 type="button"
-                onClick={() =>{setActiveAsset(false)}}
+                onClick={() =>{
+                  setOriginalAsset(false)
+                  setFile(null)
+                }}
                 className="font-semibold text-indigo-600 hover:text-indigo-500"
               >
                 Attach a different file
@@ -281,7 +292,7 @@ export default function Edit(){
 
                   <button
                     type="button"
-                    onClick={() =>{setActiveAsset(true)}}
+                    onClick={() =>{setOriginalAsset(true)}}
                     className="font-semibold text-indigo-600 hover:text-indigo-500 mt-4"
                 >
                     Restore Documentation
@@ -430,8 +441,8 @@ export default function Edit(){
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
                   {
-                    no_code_solutions.map((solution) => (
-                      <option value={solution}>{solution}</option>
+                    no_code_solutions.map((solution, index) => (
+                      <option key={index} value={solution}>{solution}</option>
                     ))
                   }
                   </select>
@@ -500,8 +511,8 @@ export default function Edit(){
                   onChange={handleCategoryChange}
                 >
                 {
-                  categories.map((solution) => (
-                    <option value={solution}>{solution}</option>
+                  categories.map((solution, index) => (
+                    <option key={index} value={solution}>{solution}</option>
                   ))
                 }
                 </select> 
@@ -513,7 +524,7 @@ export default function Edit(){
               <legend className="text-sm font-semibold leading-6 text-gray-800">Superlatives</legend>
               <p className="text-sm text-gray-500"> Other students should look to this project as an example for:</p>
               <div className="mt-6 space-y-6">
-              {
+              { 
                 featured.map((feature) => (
                   <div className="relative flex gap-x-3">
                     <div className="flex h-6 items-center">
@@ -522,7 +533,7 @@ export default function Edit(){
                         name={feature}
                         type="checkbox"
                         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        // value={superlatives.indexOf("Outstanding UI") !== -1}
+                        value={superlatives.indexOf({feature}) !== -1}
                         onChange={(event) => {handleSuperlativeChange( event)}}
                       />
                     </div>

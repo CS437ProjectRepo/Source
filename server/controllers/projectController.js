@@ -7,8 +7,7 @@ const {createFile, deleteFile} = require("../utils/googleDriveHelper");
 
 const downloadProjects = async (req, res) => {
   try{
-
-    const projects = await Post.find({}, '-_id -__v');
+    const projects = await Post.find({}, '-_id -__v').sort([['year', -1]]);
     const schemaPaths = Post.schema.paths
     
     const excelWorkbook = new Excel.Workbook();
@@ -139,8 +138,8 @@ const createProject = async(req, res) => {
 
     console.log(tags);
 
-    let documentation_link = "";
     let fileId
+    let documentation_link;
     try{
       // fileId = await createFile(files[0]);
       fileId = await createFile(files['files'][0]);
@@ -154,7 +153,7 @@ const createProject = async(req, res) => {
     const post = new Post({
         project_name,
         semester,
-        year: parseInt(year),
+        year,
         instructor,
         description,
         languages,
@@ -187,41 +186,81 @@ const createProject = async(req, res) => {
   }
 }
 
+
 const updateProject = async (req, res) => {
     const {project_name} = req.body;
+    console.log(req.body);
     try {
       const project = await Post.findOne({project_name: project_name})
       if(!project){
         return res.status(422).json({ error: MESSAGES.PROJECT_DOES_NOT_EXIST });
       }
-      const { _id } = project
+      const { _id} = project
+      const {
+        github, 
+        category, 
+      } = req.body
+
+      let {
+        superlatives
+      } = req.body;
+
+
+      let fileId;
+      let documentation_link
+      if(req.file){
+        const originalAsset = project.drive_asset;
+        deleteProject(originalAsset);
+        try{ 
+          fileId = await createFile(files['files'][0]);
+          documentation_link = `https://drive.google.com/file/d/${fileId}/view`
+        }catch(e){
+            return res.status(422).json({error: e.message});
+        }
+      }
+
       let newData = (({ _id, __v, ...o }) => o)(req.body);
-      
-      // if(req.file.hasOwnProperty("file")){
-      //   deleteProject()
-      // }
-      if(req.body.hasOwnProperty("github")) {
-        const {github} = req.body
-        if (github != project.github){
-          let tags = req.body
+      if(superlatives || github || category){
+        let tags = [];
+        
+        if(category){
+          tags.push(category)
+        }else{
+          tags.push(project.category)
+        }
+
+        if(superlatives){
+          tags.push(...superlatives);
+        } else{
+          tags.push(...project.superlatives)
+        }
+        
+        let languages;
+        
+        if(github){
           try{
-              tags = await getLanguageTags(github, tags); 
+            languages = await getLanguageTags(github); 
+            tags.push(...languages);
+            newData.languages = languages;
           } catch(e){
               return res.status(422).json({error: e.message});
           }
-          newData = {
-              ...newData,
-              tags: tags
-            }
+        }else{
+          tags.push(...project.languages)
         }
+
+        newData.tags = tags;
       }
+
+      if(fileId){
+        newData.drive_asset = fileId;
+        newData.drive_link = documentation_link;
+      }
+
       await Post.findByIdAndUpdate(_id, newData);
       return res.status(200).json({ message: MESSAGES.PROJECT_UPDATED });
     } catch (error) {
-      if (error.name === "ValidationError") {
-        console.log(error.message)
-        return res.status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY).json({ error: MESSAGES.INVALID_PROJECT_FIELDS });
-      }
+      console.log(error);
       return res
         .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
         .json({ error: MESSAGES.INTERNAL_SERVER_ERROR});
