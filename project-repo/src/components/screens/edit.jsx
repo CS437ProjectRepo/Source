@@ -195,7 +195,7 @@ export default function Edit(){
         }
 
         const responseData = response.data;
-        toast.success('Project updated', { position: 'top-right' });
+        toast.success(responseData.message, { position: 'top-right' });
         navigate('/browse');
       } catch (error) {
         console.error(error);
@@ -206,6 +206,7 @@ export default function Edit(){
 
     }else{
       toast.warning('No changes were made.', { position: 'top-right' });
+      setLoading(false);
     }
     
   }
@@ -524,8 +525,7 @@ export default function Edit(){
               <legend className="text-sm font-semibold leading-6 text-gray-800">Superlatives</legend>
               <p className="text-sm text-gray-500"> Other students should look to this project as an example for:</p>
               <div className="mt-6 space-y-6">
-              { 
-                featured.map((feature) => (
+              { featured.map((feature) => (
                   <div className="relative flex gap-x-3">
                     <div className="flex h-6 items-center">
                       <input
@@ -533,7 +533,8 @@ export default function Edit(){
                         name={feature}
                         type="checkbox"
                         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        value={superlatives.indexOf({feature}) !== -1}
+                        // value={superlatives.indexOf(feature) !== -1}
+                        checked={superlatives.includes(feature)}
                         onChange={(event) => {handleSuperlativeChange( event)}}
                       />
                     </div>
