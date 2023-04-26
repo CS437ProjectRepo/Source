@@ -17,7 +17,7 @@ const categories = [
     'Miscellaneous'
 ]
 
-//default hard coded languages, call setLangauges on projectData to expand
+//default hard coded languages
 let languages = [
     'JavaScript',
     'Java',
@@ -26,25 +26,6 @@ let languages = [
     'HTML',
     'CSS', 
 ]
-
-
-const setLanguages = function(data) {
-    return new Promise((resolve, reject) => {
-      for (const post of data) {
-        for (const language of post.languages) {
-          if (!languages.includes(language)) {
-            console.log(language);
-            languages.push(language);
-          }
-        }
-      } 
-      resolve(languages);
-    });
-  };
-
-const getLanguages = function(){
-    return languages
-}
 
 const no_code_solutions = [
     'Adalo',
@@ -60,4 +41,4 @@ const no_code_solutions = [
 ]
 
 
-module.exports =  {featured, categories, no_code_solutions, setLanguages, getLanguages}
+module.exports =  {featured, categories, no_code_solutions, languages}

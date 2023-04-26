@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState, useEffect, useContext } from 'react'
 import { XMarkIcon, PencilIcon } from '@heroicons/react/24/outline'
-import FilterMenu from '../filterMenu'
+import FilterMenu from './filterMenu'
 export default function MobileFilters(props){
     return (
         <Transition.Root show={props.mobileFiltersOpen} as={Fragment}>

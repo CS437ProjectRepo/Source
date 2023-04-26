@@ -4,14 +4,14 @@ import { XMarkIcon, PencilIcon } from '@heroicons/react/24/outline'
 import { ArrowDownTrayIcon, FolderPlusIcon, FunnelIcon, ArrowLongLeftIcon, ArrowLongRightIcon} from '@heroicons/react/20/solid'
 import apiURL from "../../config/apiURL";
 import {useNavigate } from "react-router-dom";
-import filters from '../../config/filters';
-import { setLanguages } from '../../config/filterOptions';
+// import filterData from '../../config/filterData';
+import createFilterObject from '../../util/filterObject';
 import ProjectModal from '../projectModal';
 import Loading from '../loading';
 import { AuthContext } from '../../App';
 import { Link } from "react-router-dom";
 import axios from 'axios';
-import MobileFilterMenu from './mobileFilterMenu';
+import MobileFilterMenu from '../mobileFilterMenu';
 import FilterMenu from '../filterMenu';
 
 
@@ -31,6 +31,7 @@ export default function Browse() {
   const [postsPerPage, setPostsPerPage] = useState(9)
   const pageNumbers = [];
   const navigate = useNavigate();
+  const [filterData, setFilterData] = useState([])
 
   useEffect(() => {
     const getProjectData = async()=>{
@@ -38,7 +39,8 @@ export default function Browse() {
         const response = await axios.get(apiURL + '/allprojects');
         const data = response.data;
         setProjectData(data.posts);
-        await setLanguages(data.posts);
+        setFilterData(createFilterObject(data.posts));
+
       } catch (error) {
         console.error('Error fetching project data: ', error);
       } finally{
@@ -150,10 +152,13 @@ export default function Browse() {
   return (
     <div className="browse">
       <Loading isLoading={isLoading}/>
-      <MobileFilterMenu
+      {
+        filterData.length > 0 && (
+          <>
+          <MobileFilterMenu
         mobileFiltersOpen={mobileFiltersOpen}
         setMobileFiltersOpen={setMobileFiltersOpen}
-        filters={filters} 
+        filters={filterData} 
         selectedFilters={selectedFilters} 
         handleFilterChange={handleFilterChange} 
         resetFilters={resetFilters}
@@ -190,7 +195,7 @@ export default function Browse() {
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
             <FilterMenu
               classes="hidden lg:block"
-              filters={filters} 
+              filters={filterData} 
               selectedFilters={selectedFilters} 
               handleFilterChange={handleFilterChange} 
               resetFilters={resetFilters}
@@ -293,5 +298,9 @@ export default function Browse() {
           </button>
         </div>
       </main>
+          </>
+        )
+      }
+      
   </div>);
 }
