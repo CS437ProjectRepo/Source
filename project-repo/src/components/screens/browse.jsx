@@ -147,6 +147,7 @@ export default function Browse() {
       category: [],
       language: [],
       featured: [],
+      nocode: [],
     });
     // paginate(1)
   }

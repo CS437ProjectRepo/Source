@@ -4,6 +4,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import {Popover } from '@headlessui/react'
 import { AuthContext } from '../App'
 
+
 function Navbar(){
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const {isAdminLoggedIn} = useContext(AuthContext);
@@ -81,25 +82,25 @@ function Navbar(){
               <div className="space-y-2 py-6">
                 <a
                   href="/"
-                  className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-200 hover:bg-indigo-700"
                 >
                   Home
                 </a>
                 <a
                   href="/browse"
-                  className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-200 hover:bg-indigo-700"
                 >
                   Browse
                 </a>
                 {/* <a
                   href="/search"
-                  className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-200 hover:bg-indigo-700"
                 >
                   Search
                 </a> */}
                 <a
                   href="/about"
-                  className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-200 hover:bg-indigo-700"
                 >
                   About
                 </a>
@@ -107,7 +108,7 @@ function Navbar(){
                 {isAdminLoggedIn  && (
                   <a
                   href="/dashboard"
-                  className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-200 hover:bg-indigo-700"
                   >
                     Dashboard
                   </a>
@@ -118,16 +119,16 @@ function Navbar(){
               {isAdminLoggedIn ? (
                 <a
                   href="/logout"
-                  className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-200 hover:bg-indigo-700"
                 >
                   Log out
                 </a>
                 ) : (
                   <a
                   href="/login"
-                  className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-200 hover:bg-indigo-700"
                 >
-                  Admin Log in
+                  Admin Log in <span aria-hidden="true">&rarr;</span>
                 </a>
               )}
                 

@@ -8,9 +8,9 @@ import Home from './components/screens/home'
 import Login from './components/screens/login';
 import SignUp from './components/screens/signUp';
 import ForgotPassword from './components/screens/forgotPassword';
+import About from './components/screens/about';
 import Browse from './components/screens/browse';
 import Dashboard from './components/screens/dashboard';
-import Cards from './components/screens/cards';
 import Add from './components/screens/add';
 import Edit from './components/screens/edit';
 import ErrorPage from './components/screens/errorPage';
@@ -28,8 +28,8 @@ const routes =  [
     element: <Browse />,
   },
   { 
-    path: "/cards",
-    element: <Cards />,
+    path: "/about",
+    element: <About />,
   },
   { 
     path: "/add",
