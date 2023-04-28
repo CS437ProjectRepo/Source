@@ -16,7 +16,6 @@ router.get('/', (req, res) => {
 });
 
 router.post('/createproject',  requireLogin, upload.any(), projectFieldValidation, projectController.createProject);
-// router.post('/createproject', requireLogin,  upload.any(), projectFieldValidation, projectController.createProject);
 
 router.post('/editproject', requireLogin, upload.any(), projectController.updateProject);
 

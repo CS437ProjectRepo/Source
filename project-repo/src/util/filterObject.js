@@ -7,6 +7,12 @@ const setLanguages = function(data) {
         languages.push(language);
       }
     }
+    
+    if(post.no_code_solution.length > 0  && !no_code_solutions.includes(post.no_code_solution)){
+      no_code_solutions.push(post.no_code_solution)
+    } 
+      
+       
   } 
 
   const filterOptions = {

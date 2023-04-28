@@ -29,7 +29,9 @@ exports.MESSAGES = {
   exports.ROUTES = {
     USER_LOGIN      : "/login",
     USER_REGISTER   : "/register",
-    USER_PROTECTED  : "/protected"
+    USER_PROTECTED  : "/protected",
+    USER_CHANGE_PASSWORD : "/changepassword",
+    USER_FORGOT_PASSWORD : "/forgotpassword",
   }
  
   exports.SEMESTER = [

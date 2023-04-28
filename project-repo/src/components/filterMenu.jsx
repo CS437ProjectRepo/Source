@@ -4,7 +4,7 @@ import Filter from './filter';
 export default function FilterMenu(props){
     return(
      <form className={props.classes}>
-        <h2 className='font-medium'>Filter By</h2>
+        <h2 className='font-medium text-gray-800'>Filter By</h2>
         <Filter
             options={props.filters[0].options}
             category={props.filters[0].name}
@@ -23,6 +23,16 @@ export default function FilterMenu(props){
             selectedOptions={props.selectedFilters.featured}
             onChange={filterValue => props.handleFilterChange('featured', filterValue)}
         />
+        {
+            props.filters[3].options.length > 0 && (
+                <Filter
+                    options={props.filters[3].options}
+                    category={props.filters[3].name}
+                    selectedOptions={props.selectedFilters.nocode}
+                    onChange={filterValue => props.handleFilterChange('nocode', filterValue)}
+                />
+            )
+        }
         <button className="text-indigo-500 my-4 disabled:text-gray-400 text-sm"
             onClick={props.resetFilters}
             disabled={props.selectedFilters.category.length === 0 && props.selectedFilters.language.length === 0 && props.selectedFilters.featured.length === 0 }

@@ -8,7 +8,7 @@ require('../models/projectModel')
 
 
 app.use(cors());
-app.use(express.json())
+app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
 app.use(require('../routes/projectRoutes'))
 app.use(require('../routes/userRoutes'))

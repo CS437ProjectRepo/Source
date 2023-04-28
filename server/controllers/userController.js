@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+const nodemailer = require("nodemailer");
 const User = mongoose.model("User");
 const {MESSAGES, HTTP_STATUS_CODES} = require("../utils/server.constants");
 
@@ -100,8 +101,72 @@ const protectedRoute = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+
+  if(!oldPassword || !newPassword){
+    return res.status(HTTP_STATUS_CODES.UNAUTHORIZED)
+      .json({ message: MESSAGES.INVALID_CREDENTIALS });
+  }
+
+  console.log(oldPassword, newPassword)
+  try {
+    const user = await User.findById(req.user._id);
+
+    const isPasswordValid = await user.comparePassword(oldPassword);
+    if (!isPasswordValid) {
+      console.log(req.user._id)
+      return res
+        .status(HTTP_STATUS_CODES.UNAUTHORIZED)
+        .json({ message: "Invalid Password"});
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    return res
+      .status(HTTP_STATUS_CODES.OK)
+      .json({ message: MESSAGES.PASSWORD_CHANGED });
+  } catch (error) {
+    if (error.name === "ValidationError") {
+      return res
+        .status(HTTP_STATUS_CODES.UNAUTHORIZED)
+        .json({ message: error.message, name: "ValidationError"});
+    }
+    return res
+      .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+      .json({ message: MESSAGES.INTERNAL_SERVER_ERROR });
+  }
+};
+
+const forgotPassword = async(req, res) => {
+  const email = req.body
+  if(!email){
+    return res.status(HTTP_STATUS_CODES.UNAUTHORIZED)
+      .json({ message: MESSAGES.INVALID_CREDENTIALS });
+  }
+
+  try{
+    const savedUser = await User.findOne({ email: email });
+    if (!savedUser) {
+      return res
+        .status(HTTP_STATUS_CODES.UNAUTHORIZED)
+        .json({ message: MESSAGES.INVALID_CREDENTIALS });
+    }
+
+    // const token = jwt.sign({ _id: savedUser._id }, process.env.JWTSECRET, {
+    //   expiresIn: "5m",
+    // });
+
+  }catch(error){
+    return res.status(400).json({message: error.message})
+  }
+}
+
 module.exports = {
   register,
   login,
   protectedRoute,
+  changePassword,
+  forgotPassword
 };

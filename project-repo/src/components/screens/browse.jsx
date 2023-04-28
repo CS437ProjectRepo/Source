@@ -25,6 +25,7 @@ export default function Browse() {
     category: [],
     language: [],
     featured: [],
+    nocode: [],
   });
   const {isAdminLoggedIn} = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
@@ -64,13 +65,14 @@ export default function Browse() {
   }, [projectData, selectedCard]);
   
   const filteredCards = projectData.filter(card => {
-    const { category, language, featured } = selectedFilters;
+    const { category, language, featured, nocode } = selectedFilters;
     const tags = card.tags;
     
     return (
       (category.length === 0 || category.some(tag => tags.includes(tag))) &&
       (language.length === 0 || language.some(tag => tags.includes(tag))) &&
-      (featured.length === 0 || featured.some(tag => tags.includes(tag)))
+      (featured.length === 0 || featured.some(tag => tags.includes(tag))) && 
+      (nocode.length === 0 || nocode.some(tag => tags.includes(tag)))
     );
   });
 
@@ -164,14 +166,14 @@ export default function Browse() {
         resetFilters={resetFilters}
       />
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-baseline justify-between border-b border-gray-200 pt-10 pb-6">
+        <div className="flex items-baseline justify-between pt-10 pb-6">
           <h1 className="text-2xl font-bold tracking-tight text-gray-800">Term Project Repository</h1>
 
           <div className="flex items-center">
           <button
             type="button"
             onClick={() => handleProjectDownLoadClick()}
-            className="download-button inline-flex items-center rounded-md px-3 py-2 text-xs text-gray-800 shadow-sm hover:bg-indigo-800"
+            className="download-button inline-flex items-center rounded-md px-2 sm:px-4 py-2 text-xs text-gray-800 shadow-sm hover:bg-indigo-800"
             >
             <ArrowDownTrayIcon className="mr-2 h-5 w-5" aria-hidden="true" />
             Download CSV
@@ -179,7 +181,7 @@ export default function Browse() {
 
             <button
               type="button"
-              className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
+              className="-m-2 ml-2 sm:ml-4 p-1 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
               onClick={() => setMobileFiltersOpen(true)}
             >
               <span className="sr-only">Filters</span>

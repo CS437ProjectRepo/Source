@@ -3,10 +3,12 @@ import { useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import { Navigate} from "react-router-dom";
 import { toast } from 'react-toastify';
+import apiURL from '../../config/apiURL';
 
 const Dashboard = function() {
     const { isAdminLoggedIn } = useContext(AuthContext);
-  
+    const [oldPassword, setOldPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
     const [adminData, setAdminData] = useState(null);
 
     const fetchData = async () => {
@@ -30,20 +32,51 @@ const Dashboard = function() {
       return <Navigate to="/login" />;
     }
 
+    const handleChangePasswordSubmit = async function(event){
+      event.preventDefault();
+
+      try {
+        const response = await axios.post(apiURL + '/changepassword', {
+          oldPassword,
+          newPassword,
+        });
+        
+        const data = await response.data;
+        console.log(data);
+        toast.success(data, { position: 'top-right' });
+        // const token = data.token;
+        // toast.success('Welcome Admin!', { position: 'top-right' });
+        // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        // sessionStorage.setItem('authToken', token);
+        // login();
+
+        return;
+  
+      } catch (error) {
+        console.log(error);
+        toast.error(error.response.data.message, { position: 'top-right' });
+      }
+    };
+
     return (
       adminData && (
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 overflow-wrap break-words">
-          <div className="bg-white shadow-xl sm:rounded-lg">
+          <div className="p-4 mb-4">
+          <h1 className="text-3xl font-bold mb-2 text-gray-800">Hello, Admin {adminData.email} 👋</h1>
+              <p className="text-sm mt-2 text-gray-800 mb-4"> This is the admin dashboard where you can view account information about this web app and change your password</p>
+              <hr/>
+          </div>
+          <div className="bg-white shadow-xl sm:rounded-lg my-4">
             <div className="p-6">
-              <h1 className="text-3xl font-bold mb-2 text-gray-800">Hello, Admin {adminData.email} 👋</h1>
-              <p className="text-sm mt-2 text-gray-800 mb-4"> This is the admin dashboard where you can view your information</p>
-              <hr className="mb-4"/>
                 <div className="mb-4">
                   <h2 className="text-xl font-semibold text-gray-800">Secret Admin Code</h2>
                   <p className="text-sm text-gray-800 mb-2"> This is the code other admins need to create a new account</p>
-                  <p className="text-gray-800 input-mask">{`103292347`}</p>
+                  <p className="text-gray-800 input-mask w-100 bg-gray-100 bg-opacity-50 p-2 rounded">{`103292347`}</p>
                 </div>
-                <hr className="mb-4"/>
+            </div>
+          </div> 
+          <div className="bg-white shadow-xl sm:rounded-lg">
+            <div className="p-6">
                 <div className="mb-4">
                   <h2 className="text-xl font-semibold text-gray-800">Google Account</h2>
                   <p className="text-sm text-gray-800 mb-2"> Use this gmail account to manually manage files stored on google drive. This is the master account associated with all accounts used to create this project
@@ -86,12 +119,44 @@ const Dashboard = function() {
                     <br />
                     <a href='https://account.mongodb.com/account/login' className="text-indigo-500">https://account.mongodb.com/account/login</a>
                   </p>
-
                   <p className="text-gray-800 font-semibold">Login with Google</p>
-                  
                 </div>
             </div>
           </div>
+
+          <div className="bg-white shadow-xl sm:rounded-lg my-4">
+            <div className="p-6">
+            <form className="mb-4">
+                  <h2 className="text-xl font-semibold mb-2 text-gray-800">Change Your Password</h2>
+                    <div className="mb-4 grid grid-cols-1">
+                      <label htmlFor="oldPassword" className="block text-sm font-medium leading-6 text-gray-800">
+                          Old Password
+                      </label>
+                      <input name="oldPassword" id="oldPassword" type="password" 
+                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                       value={oldPassword}
+                       onChange={(event)=>{setOldPassword(event.target.value)}}
+                      ></input>
+                    </div>
+                    <div className="mb-4">
+                      <label htmlFor="oldPassword" className="block text-sm font-medium leading-6 text-gray-800">
+                        New Password <span className="font-light">(must be at least 6 characters long and contain at least one capital letter, one number, and one special character)</span> 
+                      </label>
+                      <input name="newPassword" id="newPassword" type="password" 
+                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                       value={newPassword} 
+                       onChange={(event)=>{setNewPassword(event.target.value)}}
+                      ></input>
+                    </div>
+                    <button
+                    className="rounded-md bg-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                     onClick={handleChangePasswordSubmit}
+                    >
+                     Change Password
+                    </button>
+                </form>
+            </div>
+          </div> 
         </div>   
     ))
 }
