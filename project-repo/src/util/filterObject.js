@@ -15,9 +15,9 @@ const setLanguages = function(data) {
 
   const filterOptions = {
     'Featured': featured,
-    'Categories': categories,
-    'Programming Languages': languages,
-    'No Code Solutions': no_code_solutions,
+    'Category': categories,
+    'Programming Language': languages,
+    'No Code Solution': no_code_solutions,
   }
 
   return filterOptions

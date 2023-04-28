@@ -4,7 +4,7 @@ import Filter from './filter';
 export default function FilterMenu(props){
     return(
      <form className={props.classes}>
-        <h2 className='font-medium text-gray-800'>Filter By</h2>
+        <h2 className='font-semibold text-gray-800'>Filter By</h2>
         <Filter
             options={props.filters[0].options}
             category={props.filters[0].name}

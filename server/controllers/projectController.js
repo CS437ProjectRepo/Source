@@ -59,24 +59,6 @@ const downloadProjects = async (req, res) => {
   }
 };
 
-const uploadFileTest = async (req, res) => {
-  try {
-    const { body, files } = req;
-    let documentation_link;
-    console.log(req.body);
-    for (let i = 0; i < files.length; i += 1) {
-      const fileId = await createFile(files[i]); 
-      //REACT VERSION vvvv
-      // const fileId = await createFile(files['files'][i]);
-      documentation_link = `https://drive.google.com/file/d/${fileId}/view`
-    }
-    console.log(body);
-    res.status(201).json({message: 'Form Submitted: ' + documentation_link});
-  } catch (error) {
-    return res.status(500).json({error: error.message});
-  }
-};
-
 const allProjects = async(req, res) => {
    try{
     const posts = await Post.find().sort([['year', -1]])
@@ -138,8 +120,6 @@ const createProject = async(req, res) => {
       tags.push(no_code_solution)
     }
 
-    console.log(tags);
-
     let fileId
     let documentation_link;
     try{
@@ -150,7 +130,7 @@ const createProject = async(req, res) => {
         return res.status(422).json({error: e.message});
     }
 
-    console.log(tags);
+    // console.log(tags);
     
     const post = new Post({
         project_name,
@@ -191,7 +171,7 @@ const createProject = async(req, res) => {
 
 const updateProject = async (req, res) => {
     const {project_name} = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     try {
       const project = await Post.findOne({project_name: project_name})
       if(!project){
@@ -236,7 +216,7 @@ const updateProject = async (req, res) => {
           tags.push(project.category)
         }
 
-        console.log(project.development_type)
+        // console.log(project.development_type)
         switch(project.development_type){
           case "Code":{
             let languages;
@@ -246,7 +226,7 @@ const updateProject = async (req, res) => {
                 tags.push(...languages);
                 newData.languages = languages;
               } catch(e){
-                  return res.status(422).json({error: e.message});
+                  return res.status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY).json({error: e.message});
               }
             }else{
               tags.push(...project.languages)
@@ -279,7 +259,7 @@ const updateProject = async (req, res) => {
       }
 
       await Post.findByIdAndUpdate(_id, newData);
-      return res.status(200).json({ message: MESSAGES.PROJECT_UPDATED });
+      return res.status(HTTP_STATUS_CODES.OK).json({ message: MESSAGES.PROJECT_UPDATED });
     } catch (error) {
       console.log(error);
       return res
@@ -315,6 +295,5 @@ module.exports = {
     createProject,
     downloadProjects,
     updateProject,
-    uploadFileTest,
     deleteProject
 }

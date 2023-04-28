@@ -29,7 +29,7 @@ export default function Browse() {
   });
   const {isAdminLoggedIn} = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(9)
+  const [postsPerPage, setPostsPerPage] = useState(12)
   const pageNumbers = [];
   const navigate = useNavigate();
   const [filterData, setFilterData] = useState([])
@@ -170,7 +170,7 @@ export default function Browse() {
         resetFilters={resetFilters}
       />
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-baseline justify-between pt-10">
+        <div className="flex justify-between pt-10">
           <h1 className="text-2xl font-bold tracking-tight text-gray-800">Term Project Repository</h1>
           <div className="flex items-center">
           <button
@@ -179,7 +179,7 @@ export default function Browse() {
             className="download-button inline-flex items-center rounded-md px-2 sm:px-4 py-2 text-xs text-gray-800 shadow-sm hover:bg-purple-800"
             >
             <ArrowDownTrayIcon className="mr-2 h-5 w-5" aria-hidden="true" />
-            Download CSV
+            Download as CSV
           </button>
 
             <button
@@ -192,7 +192,7 @@ export default function Browse() {
             </button>
           </div>
         </div>
-        <p className='text-sm mt-4 mb-6 text-gray-600 md:max-w-2xl'>Filter past term projects by featured, categories, programming languages, no code solutions, and catagory. Click on a project to view details, like its documentation, and copy the link to share it.</p>
+        <p className='leading-6 text-sm mt-2 mb-6 text-gray-600 md:max-w-2xl'>Filter past term projects by featured, categories, programming languages and no code solutions. Click on a project to view details, like its documentation, and copy the link to share it.</p>
         <hr/>
         <section aria-labelledby="projects-heading" className="pt-6 pb-14">
           <h2 id="projects-heading" className="sr-only">
