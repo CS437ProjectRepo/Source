@@ -3,8 +3,8 @@
 @import 'tailwindcss/utilities';
 
 :root{
-  --accent: #4f46e5;
-  --light-accent: #8d8ad0;
+  --accent: #a65ad8;
+  --light-accent: #f8e7fa;
 }
 
 body {
@@ -44,9 +44,9 @@ img.logo-nav{
   background-image: linear-gradient(120deg, #fcfbfd 0%, #f1f1f3 100%);
 }
 
-.nav-bg{
+/* .nav-bg{
   background-color:var(--accent);
-}
+} */
 
 header{
   z-index: 1;
@@ -87,7 +87,7 @@ header{
 
 .card-header{
   cursor: pointer;
-  background-image: linear-gradient(120deg, #e1dfff 20%, #ffe5dc 90%, #ffe1dc 100%);
+  background-image: linear-gradient(120deg, var(--light-accent), #dce8ff 100%);
 }
 
 .card-body{
@@ -141,6 +141,16 @@ header{
   -webkit-text-security: none;
 }
 
+/* .about-photo{
+  filter: sepia(100%) hue-rotate(210deg);
+
+} */
+
+
+img.logo-gray{
+  opacity: 0.5;
+}
+
 @media (prefers-color-scheme: dark) {
   .bg-gradient{
     background-image: linear-gradient(150deg, #23222c 0%, rgb(0, 0, 0) 100%);
@@ -158,12 +168,16 @@ header{
     color:#a0a0a0;
   }
 
+  a.text-gray-600{
+    color: white;
+  }
+
   .text-gray-400, .text-gray-500{
     color:#7b7a7a;
   }
 
   .text-gray-200, .text-gray-300{
-    color: #545454;
+    color: #8c8a8a;
   }
 
   .form-checkbox{
@@ -195,17 +209,13 @@ header{
   }
 
   .card-header{
-    background-image: linear-gradient(120deg, #372fce 20%, #893a4f);
+    background-image: linear-gradient(120deg, var(--accent) 10%, #4d9fb8);
   }
 
-  img.logo{
+  img.logo-gray{
+    opacity: 1;
     filter: invert();
   }
-
-  /* .add-card svg{
-    color: var(--accent);
-  } */
-
 
 }
 

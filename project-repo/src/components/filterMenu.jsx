@@ -33,7 +33,7 @@ export default function FilterMenu(props){
                 />
             )
         }
-        <button className="text-indigo-500 my-4 disabled:text-gray-400 text-sm"
+        <button className="text-purple-500 my-4 disabled:text-gray-400 text-sm"
             onClick={props.resetFilters}
             disabled={props.selectedFilters.category.length === 0 && props.selectedFilters.language.length === 0 && props.selectedFilters.featured.length === 0 && props.selectedFilters.nocode.length === 0 }
         >

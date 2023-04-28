@@ -134,6 +134,8 @@ const createProject = async(req, res) => {
       } catch(e){
           return res.status(422).json({error: e.message});
       }
+    } else{
+      tags.push(no_code_solution)
     }
 
     console.log(tags);
@@ -198,12 +200,17 @@ const updateProject = async (req, res) => {
       const { _id} = project
       const {
         github, 
-        category, 
+        category,
+        no_code_solution,
       } = req.body
 
       let {
         superlatives
       } = req.body;
+
+      if (!superlatives){
+        superlatives = [];
+      }
 
 
       let fileId;
@@ -229,27 +236,41 @@ const updateProject = async (req, res) => {
           tags.push(project.category)
         }
 
+        console.log(project.development_type)
+        switch(project.development_type){
+          case "Code":{
+            let languages;
+            if(github){
+              try{
+                languages = await getLanguageTags(github); 
+                tags.push(...languages);
+                newData.languages = languages;
+              } catch(e){
+                  return res.status(422).json({error: e.message});
+              }
+            }else{
+              tags.push(...project.languages)
+            }
+            break;
+          }
+          case "No Code": {
+            if(no_code_solution){
+              tags.push(no_code_solution)
+            }else{
+              tags.push(project.no_code_solution)
+            }
+            break;
+          }
+        }
+
         if(superlatives){
           tags.push(...superlatives);
         } else{
           tags.push(...project.superlatives)
         }
-        
-        let languages;
-        
-        if(github){
-          try{
-            languages = await getLanguageTags(github); 
-            tags.push(...languages);
-            newData.languages = languages;
-          } catch(e){
-              return res.status(422).json({error: e.message});
-          }
-        }else{
-          tags.push(...project.languages)
-        }
 
         newData.tags = tags;
+        console.log(tags);
       }
 
       if(fileId){

@@ -81,7 +81,7 @@ const Dashboard = function() {
                   <h2 className="text-xl font-semibold text-gray-800">Google Account</h2>
                   <p className="text-sm text-gray-800 mb-2"> Use this gmail account to manually manage files stored on google drive. This is the master account associated with all accounts used to create this project
                   <br />
-                  <a href="https://drive.google.com/drive/folders/1YHDfQNxN9tatehJWb0epepSoS3gYuhhn" className="text-indigo-500">https://drive.google.com/drive/folders/1YHDfQNxN9tatehJWb0epepSoS3gYuhhn</a>
+                  <a href="https://drive.google.com/drive/folders/1YHDfQNxN9tatehJWb0epepSoS3gYuhhn" className="text-purple-500">https://drive.google.com/drive/folders/1YHDfQNxN9tatehJWb0epepSoS3gYuhhn</a>
                   </p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="mb-4">
@@ -99,7 +99,7 @@ const Dashboard = function() {
                   <h2 className="text-xl font-semibold mb-2 text-gray-800">Github Account</h2>
                   <p className="text-sm text-gray-800 mb-2">Use the github account if you ever need to access/modify the codebase for this project
                   <br />
-                  <a href="https://github.com/CS437ProjectRepo/Source" className="text-indigo-500">https://github.com/CS437ProjectRepo/Source</a>
+                  <a href="https://github.com/CS437ProjectRepo/Source" className="text-purple-500">https://github.com/CS437ProjectRepo/Source</a>
                   </p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="mb-4">
@@ -117,7 +117,7 @@ const Dashboard = function() {
                   <h2 className="text-xl font-semibold mb-2 text-gray-800">MongoDB Atlas</h2>
                   <p className="text-sm text-gray-800 mb-2">Use MongoDB Atlas if you ever need to manually access the database. 
                     <br />
-                    <a href='https://account.mongodb.com/account/login' className="text-indigo-500">https://account.mongodb.com/account/login</a>
+                    <a href='https://account.mongodb.com/account/login' className="text-purple-500">https://account.mongodb.com/account/login</a>
                   </p>
                   <p className="text-gray-800 font-semibold">Login with Google</p>
                 </div>
@@ -133,7 +133,7 @@ const Dashboard = function() {
                           Old Password
                       </label>
                       <input name="oldPassword" id="oldPassword" type="password" 
-                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
                        value={oldPassword}
                        onChange={(event)=>{setOldPassword(event.target.value)}}
                       ></input>
@@ -143,13 +143,13 @@ const Dashboard = function() {
                         New Password <span className="font-light">(must be at least 6 characters long and contain at least one capital letter, one number, and one special character)</span> 
                       </label>
                       <input name="newPassword" id="newPassword" type="password" 
-                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
                        value={newPassword} 
                        onChange={(event)=>{setNewPassword(event.target.value)}}
                       ></input>
                     </div>
                     <button
-                    className="rounded-md bg-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="rounded-md bg-purple-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
                      onClick={handleChangePasswordSubmit}
                     >
                      Change Password

@@ -81,7 +81,7 @@ export default function Browse() {
       ...prevFilters,
       [filterType]: filterValue,
     }));
-    // paginate(1)
+    paginate(1)
   };
 
   const handleProjectDownLoadClick = async () => {
@@ -149,11 +149,14 @@ export default function Browse() {
       featured: [],
       nocode: [],
     });
-    // paginate(1)
+    paginate(1)
   }
 
   return (
     <div className="browse">
+      <div className="absolute inset-x-0 top-0 overflow-hidden pl-[50%] -z-10">
+        <img src="https://tailwindui.com/img/beams-basic-transparent.png" alt="" className="-ml-[39rem] w-[113.125rem] max-w-none"/>
+      </div>
       <Loading isLoading={isLoading}/>
       {
         filterData.length > 0 && (
@@ -167,14 +170,13 @@ export default function Browse() {
         resetFilters={resetFilters}
       />
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-baseline justify-between pt-10 pb-6">
+        <div className="flex items-baseline justify-between pt-10">
           <h1 className="text-2xl font-bold tracking-tight text-gray-800">Term Project Repository</h1>
-
           <div className="flex items-center">
           <button
             type="button"
             onClick={() => handleProjectDownLoadClick()}
-            className="download-button inline-flex items-center rounded-md px-2 sm:px-4 py-2 text-xs text-gray-800 shadow-sm hover:bg-indigo-800"
+            className="download-button inline-flex items-center rounded-md px-2 sm:px-4 py-2 text-xs text-gray-800 shadow-sm hover:bg-purple-800"
             >
             <ArrowDownTrayIcon className="mr-2 h-5 w-5" aria-hidden="true" />
             Download CSV
@@ -190,7 +192,8 @@ export default function Browse() {
             </button>
           </div>
         </div>
-
+        <p className='text-sm mt-4 mb-6 text-gray-600 md:max-w-2xl'>Filter past term projects by featured, categories, programming languages, no code solutions, and catagory. Click on a project to view details, like its documentation, and copy the link to share it.</p>
+        <hr/>
         <section aria-labelledby="projects-heading" className="pt-6 pb-14">
           <h2 id="projects-heading" className="sr-only">
             Projects
@@ -266,7 +269,7 @@ export default function Browse() {
         <div className="justify-center flex justify-between pb-8 text-sm"> 
           <button
             className={`mx-3 bg-transparent flex gap-2 mt-2 align-center ${
-              currentPage === 1 ? 'text-gray-500 cursor-not-allowed' : 'text-indigo-500'
+              currentPage === 1 ? 'text-gray-500 cursor-not-allowed' : 'text-purple-500'
             }`}
             onClick={prevPage}
             disabled={currentPage === 1}
@@ -279,8 +282,8 @@ export default function Browse() {
               key={number}
               className={`px-4 py-2 rounded-lg mx-1 ${
                 number === currentPage
-                  ? 'bg-indigo-500 text-white'
-                  : 'bg-white text-indigo-500'
+                  ? 'bg-purple-500 text-white'
+                  : 'bg-white text-purple-500'
               }`}
               onClick={() => paginate(number)}
             >
@@ -292,7 +295,7 @@ export default function Browse() {
             className={`mx-3 bg-transparent mt-2 flex gap-2 align-center ${
               currentPage === Math.ceil(filteredCards.length / postsPerPage)
                 ? 'text-gray-500 cursor-not-allowed'
-                : 'text-indigo-500'
+                : 'text-purple-500'
             }`}
             onClick={nextPage}
             disabled={currentPage === Math.ceil(filteredCards.length / postsPerPage)}
@@ -304,6 +307,5 @@ export default function Browse() {
           </>
         )
       }
-      
   </div>);
 }
