@@ -7,7 +7,12 @@ require('../models/userModel')
 require('../models/projectModel')
 
 
-app.use(cors());
+app.use(cors({
+    origin: [
+        "https://localhost:3000", 
+        "https://term-project-repository.onrender.com"
+    ]
+}));
 app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
 app.use(require('../routes/projectRoutes'))

@@ -14,7 +14,7 @@ const Dashboard = function() {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5050/protected');
+        const response = await axios.get( apiURL + 'protected');
         const data = await response.data;
         setAdminData(data.user);
       } catch (error) {
@@ -36,12 +36,12 @@ const Dashboard = function() {
       event.preventDefault();
 
       try {
-        const response = await axios.post(apiURL + '/changepassword', {
+        const response = await axios.post(process.env.apiURL + '/changepassword', {
           oldPassword,
           newPassword,
         });
         
-        if(response.status != 200){
+        if(response.status !== 200){
           throw new Error(response.message);
         }
 

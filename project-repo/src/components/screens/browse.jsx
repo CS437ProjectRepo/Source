@@ -1,10 +1,8 @@
-import { Fragment, useState, useEffect, useContext } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { XMarkIcon, PencilIcon } from '@heroicons/react/24/outline'
+import {useState, useEffect, useContext } from 'react'
+import {PencilIcon } from '@heroicons/react/24/outline'
 import { ArrowDownTrayIcon, FolderPlusIcon, FunnelIcon, ArrowLongLeftIcon, ArrowLongRightIcon} from '@heroicons/react/20/solid'
 import apiURL from "../../config/apiURL";
 import {useNavigate } from "react-router-dom";
-// import filterData from '../../config/filterData';
 import createFilterObject from '../../util/filterObject';
 import ProjectModal from '../projectModal';
 import Loading from '../loading';
@@ -13,6 +11,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import MobileFilterMenu from '../mobileFilterMenu';
 import FilterMenu from '../filterMenu';
+import LoadingErrorPage from './loadingErrorPage';
 
 
 export default function Browse() {
@@ -159,7 +158,7 @@ export default function Browse() {
       </div>
       <Loading isLoading={isLoading}/>
       {
-        filterData.length > 0 && (
+        filterData.length > 0 ? (
           <>
           <MobileFilterMenu
         mobileFiltersOpen={mobileFiltersOpen}
@@ -305,6 +304,9 @@ export default function Browse() {
         </div>
       </main>
           </>
+        ) :
+        (
+          <LoadingErrorPage/>
         )
       }
   </div>);

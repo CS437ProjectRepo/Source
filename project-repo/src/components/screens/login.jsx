@@ -29,7 +29,6 @@ export default function Login() {
       const data = await response.data;
       const token = data.token;
       toast.success('Welcome Admin!', { position: 'top-right' });
-      // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       sessionStorage.setItem('authToken', token);
       login();
       navigate('/browse')

@@ -183,7 +183,6 @@ export default function Edit(){
       }
 
       try {
-        // const response = await axios.post(apiURL + '/editproject', formData);
         const response = await axios.post(apiURL + '/editproject', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
