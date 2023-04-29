@@ -14,7 +14,7 @@ const teamData = [
       "photo": "https://anshitakhare.com/project-repo-media/rigo.png",
       "name": "Rigoberto Rosa",
       "role": "Requirements, Software Development, Testing",
-      "blurb": "",
+      "blurb": "With this project I delved into the world of backend development, honing my skills and expertise in MongoDB, Express,  and Node.js. Additionally, I had the opportunity to learn about unit testing, which helped me ensure the reliability and stability of my code. This journey has further fueled my enthusiasm for computer science and its ability to shape the future.",
       "linkedin": "www.linkedin.com/in/rigobertorosa",
       "email": "mailto:rigorosa@bu.edu"
   },
@@ -38,7 +38,7 @@ const teamData = [
         "photo": "https://anshitakhare.com/project-repo-media/ayoub.png",
         "name": "Ayoub Amghar",
         "role": "Wireframes",
-        "blurb": "",
+        "blurb": "I experimented with Adobe XD but ultimately used Balsamiq to create wireframes for this project. I carefully positioned each element and adjusted their properties to create a detailed wireframe that accurately represented the app's functionality and layout. Once I was satisfied with the wireframe, I exported it as a PDF and shared it with our team for feedback.",
         "linkedin": "https://www.linkedin.com/in/ayoub-amghar-494910182/",
         "email": "mailto:amghar1a@bu.edu"
     }
