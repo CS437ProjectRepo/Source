@@ -14,7 +14,7 @@ const Dashboard = function() {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get( apiURL + 'protected');
+        const response = await axios.get( apiURL + '/protected');
         const data = await response.data;
         setAdminData(data.user);
       } catch (error) {
