@@ -306,7 +306,7 @@ export default function Browse() {
           </>
         ) :
         (
-          <LoadingErrorPage/>
+          !isLoading && (<LoadingErrorPage/>)
         )
       }
   </div>);
