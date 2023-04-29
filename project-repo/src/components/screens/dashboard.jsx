@@ -1,22 +1,22 @@
 import { AuthContext } from '../../App';
 import { useState, useEffect, useContext} from 'react';
 import axios from 'axios';
-import { Navigate} from "react-router-dom";
+import { Navigate, useNavigate} from "react-router-dom";
 import { toast } from 'react-toastify';
 import apiURL from '../../config/apiURL';
 
 const Dashboard = function() {
-    const { isAdminLoggedIn } = useContext(AuthContext);
+    const { isAdminLoggedIn} = useContext(AuthContext);
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [adminData, setAdminData] = useState(null);
+    const navigate = useNavigate();
 
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:5050/protected');
         const data = await response.data;
         setAdminData(data.user);
-        console.log(adminData)
       } catch (error) {
         console.log(error);
         toast.error(error.response.data.message, { position: 'top-right' });
@@ -41,16 +41,13 @@ const Dashboard = function() {
           newPassword,
         });
         
-        const data = await response.data;
-        console.log(data);
-        toast.success(data, { position: 'top-right' });
-        // const token = data.token;
-        // toast.success('Welcome Admin!', { position: 'top-right' });
-        // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        // sessionStorage.setItem('authToken', token);
-        // login();
+        if(response.status != 200){
+          throw new Error(response.message);
+        }
 
-        return;
+        const data = await response.data;
+        toast.success('Password changed successfully!', { position: 'top-right' });
+        navigate('/browse');
   
       } catch (error) {
         console.log(error);

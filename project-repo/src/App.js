@@ -7,7 +7,6 @@ import NavBar from './components/navbar';
 import Home from './components/screens/home'
 import Login from './components/screens/login';
 import SignUp from './components/screens/signUp';
-import ForgotPassword from './components/screens/forgotPassword';
 import About from './components/screens/about';
 import Browse from './components/screens/browse';
 import Dashboard from './components/screens/dashboard';
@@ -46,10 +45,6 @@ const routes =  [
   {
     path: "/signup",
     element: <SignUp />,
-  },
-  {
-    path: "/forgotpassword",
-    element: <ForgotPassword />,
   },
   {
     path: "/dashboard",

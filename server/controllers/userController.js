@@ -109,13 +109,12 @@ const changePassword = async (req, res) => {
       .json({ message: MESSAGES.INVALID_CREDENTIALS });
   }
 
-  console.log(oldPassword, newPassword)
   try {
     const user = await User.findById(req.user._id);
 
     const isPasswordValid = await user.comparePassword(oldPassword);
     if (!isPasswordValid) {
-      console.log(req.user._id)
+      // console.log(req.user._id)
       return res
         .status(HTTP_STATUS_CODES.UNAUTHORIZED)
         .json({ message: "Invalid Password"});
