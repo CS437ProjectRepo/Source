@@ -2,7 +2,7 @@ import React from 'react';
 import { EnvelopeIcon, GlobeAltIcon} from '@heroicons/react/24/outline'
 const teamData = [
     {
-        "photo": "https://media.licdn.com/dms/image/D5603AQGXJnw5jc8avA/profile-displayphoto-shrink_800_800/0/1673301587851?e=1687996800&v=beta&t=DcUWUmRDWGRo33eWrfMSJpEZ-cAAanPZutq2NoTPASU",
+        "photo": "https://anshitakhare.com/project-repo-media/anshita.png",
         "name": "Anshita Khare",
         "role": "Software Development and Design",
         "blurb": "I had a lot of fun working on the frontend, backend, and database portion of project. Our target audience is fellow students seeking inspiration for their own projects, as well as our professors who serve as administrators. With these users in mind, we strove to create an elegantly designed application that was both cost-effective and user-friendly. This led us to develop a suite of features that allows administrators to easily manage(create, read, update, and delete) projects. Students are able to filter through the available projects by a variety of tags, including category and programming language, to quickly find the ones that most interested them.",
@@ -11,36 +11,36 @@ const teamData = [
         "website": "https:anshitakhare.com"
     },
     {
-        "photo": "https://cdn3.iconfinder.com/data/icons/rounded-folders/64/rounded_folder_label_closed-512.png",
+      "photo": "https://anshitakhare.com/project-repo-media/rigo.png",
+      "name": "Rigoberto Rosa",
+      "role": "Requirements, Software Development, Testing",
+      "blurb": "",
+      "linkedin": "www.linkedin.com/in/rigobertorosa",
+      "email": "mailto:rigorosa@bu.edu"
+  },
+    {
+        "photo": "https://anshitakhare.com/project-repo-media/soi.png",
         "name": "Supawadee Phakdee",
         "role": "Project Management",
-        "blurb": "",
-        "linkedin": "",
-        "email": "mailto:"
+        "blurb": "As the project manager, I worked to ensure that ensure that all aspects of the project are well-planned, well-documented, and well-executed, in order to deliver a successful project through a range of key activities, including developing and maintaining a Configuration Items List to track project components, creating personas to better understand our target audience of professors and students, maintaining an Estimation Record to track progress against budget and timeline, developing Use Cases to define how the project's features will be used by professors and students, and creating a State Transition Diagram to map out how the project's components will interact over time. I also work to ensure that all tools and technologies integrate effectively with each other by creating a Tool Connectivity Diagram.",
+        "linkedin": "https://www.linkedin.com/in/supawadee-phakdee/",
+        "email": "mailto:souy.supawadee@gmail.com"
     },
     {
-        "photo": "https://cdn3.iconfinder.com/data/icons/rounded-folders/64/rounded_folder_label_closed-512.png",
-        "name": "Rigoberto Rosa",
-        "role": "Requirements, Software Development, Testing",
-        "blurb": "",
-        "linkedin": "",
-        "email": "mailto:"
-    },
-    {
-        "photo": "https://cdn3.iconfinder.com/data/icons/rounded-folders/64/rounded_folder_label_closed-512.png",
+        "photo": "https://anshitakhare.com/project-repo-media/marouan.png",
         "name": "Marouan Boussif",
         "role": "Testing",
-        "blurb": "",
-        "linkedin": "",
-        "email": "mailto:"
+        "blurb": "Remember, every day is a new opportunity to learn, grow, and make a difference",
+        "linkedin": "https://www.linkedin.com/in/marouan-boussif-790004118/",
+        "email": "mailto:marouan_usa2008@outlook.fr"
     },
     {
-        "photo": "https://cdn3.iconfinder.com/data/icons/rounded-folders/64/rounded_folder_label_closed-512.png",
+        "photo": "https://anshitakhare.com/project-repo-media/ayoub.png",
         "name": "Ayoub Amghar",
         "role": "Wireframes",
         "blurb": "",
-        "linkedin": "",
-        "email": "mailto:"
+        "linkedin": "https://www.linkedin.com/in/ayoub-amghar-494910182/",
+        "email": "mailto:amghar1a@bu.edu"
     }
 ]
 
@@ -48,7 +48,7 @@ const About = () => {
   return (
     <div className="min-h-screen py-10">
       <div className="absolute inset-x-0 top-0 overflow-hidden pl-[50%] -z-10">
-        <img src="https://tailwindui.com/img/beams-basic-transparent.png" alt="" className="-ml-[39rem] w-[113.125rem] max-w-none"/>
+        <img src="https://tailwindui.com/img/beams-basic-transparent.png" alt="" loading="lazy" className="-ml-[39rem] w-[113.125rem] max-w-none"/>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
