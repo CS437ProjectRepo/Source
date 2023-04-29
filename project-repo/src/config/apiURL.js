@@ -1,3 +1,3 @@
-const apiURL = "http://localhost:5050";
+const apiURL = "https://term-project-repository-server.onrender.com";
 
 export default apiURL;

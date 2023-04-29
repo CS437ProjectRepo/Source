@@ -54,7 +54,7 @@ header{
 }
 
 .download-button{
-  background-color: var(--accent);
+  background: var(--accent);
   color: white;
 }
 
