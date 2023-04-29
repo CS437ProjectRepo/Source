@@ -37,7 +37,5 @@ const no_code_solutions = [
     'Other No-Code Platform'
 ]
 
-// const no_code_solutions = []
-
 
 module.exports =  {featured, categories, no_code_solutions, languages}
