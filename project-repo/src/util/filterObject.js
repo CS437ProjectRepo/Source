@@ -8,18 +8,16 @@ const setLanguages = function(data) {
       }
     }
     
-    if(post.no_code_solution.length > 0  && !no_code_solutions.includes(post.no_code_solution)){
-      no_code_solutions.push(post.no_code_solution)
-    } 
-      
-       
+    // if(post.no_code_solution.length > 0  && !no_code_solutions.includes(post.no_code_solution)){
+    //   no_code_solutions.push(post.no_code_solution)
+    // }
   } 
 
   const filterOptions = {
     'Featured': featured,
-    'Categories': categories,
-    'Programming Languages': languages,
-    'No Code Solutions': no_code_solutions,
+    'Category': categories,
+    'Programming Language': languages,
+    'No Code Solution': no_code_solutions,
   }
 
   return filterOptions

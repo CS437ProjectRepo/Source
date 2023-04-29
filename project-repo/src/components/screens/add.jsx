@@ -14,8 +14,8 @@ export default function Add(){
   const [project_name, setProjectName] = useState('');
   const [description, setDescription] = useState('');
   const [semester, setSemester] = useState('Spring');
-  const [year, setYear] = useState(2015);
-  const [instructor, setInstructor] = useState('');
+  const [year, setYear] = useState(getYear());
+  const [instructor, setInstructor] = useState('Elentukh');
   const [development_type, setDevelopmentType] = useState("Code");
   const [github, setGithub] = useState('');
   const [no_code_solution, setNoCode] = useState ('');
@@ -148,7 +148,7 @@ export default function Add(){
                   required
                   value={project_name}
                   onChange={(e) => setProjectName(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 text-sm leading-6"
                 />
               </div>
             </div>
@@ -167,7 +167,7 @@ export default function Add(){
                   required
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:py-1.5 text-sm leading-6"
                 />
               </div>
             </div>
@@ -188,7 +188,7 @@ export default function Add(){
               <button
                 type="button"
                 onClick={() =>setFile(null)}
-                className="font-semibold text-indigo-600 hover:text-indigo-500"
+                className="font-semibold text-purple-600 hover:text-purple-500"
               >
                 Attach a different file
               </button>
@@ -200,7 +200,7 @@ export default function Add(){
                   <div className="mt-4 text-sm leading-6 text-gray-600">
                     <label
                       htmlFor="file-upload"
-                      className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                      className="relative cursor-pointer rounded-md bg-white font-semibold text-purple-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-purple-600 focus-within:ring-offset-2 hover:text-purple-500"
                     >
                       <span>Upload a file</span>
                       <input id="file-upload" name="file-upload" type="file" className="sr-only"
@@ -236,7 +236,7 @@ export default function Add(){
                   required
                   value={instructor}
                   onChange={(e) => setInstructor(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 text-sm leading-6"
                 />
               </div>
             </div>
@@ -254,7 +254,7 @@ export default function Add(){
                   required
                   value={semester}
                   onChange={(e) => setSemester(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:max-w-xs text-sm leading-6"
                 >
                   <option value="Spring" >Spring</option>
                   <option value="Summer" >Summer</option>
@@ -270,7 +270,6 @@ export default function Add(){
               <div className="mt-2">
                 <input
                   type="number"
-                  placeholder={getYear()}
                   min={2015}
                   max={getYear()}
                   name="semester-year"
@@ -279,7 +278,7 @@ export default function Add(){
                   required
                   value={year}
                   onChange={(e) => setYear(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 text-sm leading-6"
                 />
               </div>
             </div>
@@ -296,7 +295,7 @@ export default function Add(){
                   id="team-members"
                   autoComplete="team-members"
                   onChange={handleTeamMembersChange}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 text-sm leading-6"
                 />
               </div>
             </div>
@@ -312,7 +311,7 @@ export default function Add(){
                   autoComplete="developmentType-type"
                   onChange={handleDevelopmentTypeChange}
                   value={development_type}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:max-w-xs text-sm leading-6"
                 >
                   <option value="Code">Code</option>
                   <option value="No Code">No Code</option>
@@ -336,7 +335,7 @@ export default function Add(){
                     maxLength={500}
                     value={github}
                     onChange={(e) => setGithub(e.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 text-sm leading-6"
                   />
                 </div>
               </div>
@@ -352,7 +351,7 @@ export default function Add(){
                     autoComplete="no-code-platform"
                     value={no_code_solution}
                     onChange={(e) => setNoCode(e.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:max-w-xs text-sm leading-6"
                   >
                   {
                     no_code_solutions.map((solution) => (
@@ -367,7 +366,7 @@ export default function Add(){
 
             <div className="sm:col-span-3">
               <label htmlFor="pivitol-tracker" className="block text-sm font-medium leading-6 text-gray-800">
-                Pivitol Tracker
+                Pivotal Tracker
               </label>
               <div className="mt-2">
                 <input
@@ -379,7 +378,7 @@ export default function Add(){
                   maxLength={500}
                   value={pivitol_tracker}
                   onChange={(e) => setPivitolTracker(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 text-sm leading-6"
                 />
               </div>
             </div>
@@ -390,7 +389,7 @@ export default function Add(){
               </label>
               <div className="mt-2">
                 <input
-                  placeholder="https://anshitakhare.com"
+                  placeholder="https://example.com"
                   type="text"
                   name="website"
                   id="website"
@@ -398,7 +397,7 @@ export default function Add(){
                   maxLength={500}
                   value={website}
                   onChange={(e) => setWebsite(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 text-sm leading-6"
                 />
               </div>
             </div>
@@ -422,7 +421,7 @@ export default function Add(){
                   name="category"
                   id="category"
                   autoComplete="category"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 text-sm leading-6"
                   value={category}
                   onChange={handleCategoryChange}
                 >
@@ -448,7 +447,7 @@ export default function Add(){
                         id={feature}
                         name={feature}
                         type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        className="h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-600"
                         value={superlatives.indexOf({feature}) !== -1}
                         onChange={(event) => {handleSuperlativeChange( event)}}
                       />
@@ -474,7 +473,7 @@ export default function Add(){
         </button>
         <button
           type="submit"
-          className="rounded-md bg-indigo-600 px-10 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          className="rounded-md bg-purple-600 px-10 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
         >
           Save
         </button>

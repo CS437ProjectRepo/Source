@@ -37,7 +37,7 @@ export default function ProjectModal(props) {
               <div className="absolute top-0 right-0 pt-4 pr-4">
                 <button
                   type="button"
-                  className="text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
                   onClick={props.handleModalClose}
                 >
                   <span className="sr-only">Close</span>
@@ -62,7 +62,7 @@ export default function ProjectModal(props) {
                     </div>
                     <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">Team Members</dt>
-                        <ul class="mt-1 text-sm list-disc pl-4 sm:mt-0 text-gray-800">
+                        <ul className="mt-1 text-sm list-disc pl-4 sm:mt-0 text-gray-800">
                         {props.card.team.map(member => (
                           <li>{member}</li>
                         ))}
@@ -72,7 +72,7 @@ export default function ProjectModal(props) {
                         <dt className="text-sm font-medium text-gray-500">Tags</dt>
                         <dd className="mt-1 text-sm text-white sm:col-span-2 sm:mt-0 tag-container">
                         {props.card.tags.map(tag => (
-                          <span key={tag} className="bg-indigo-500 px-2 py-1 rounded-full text-sm">{tag}</span>
+                          <span key={tag} className="bg-purple-500 px-2 py-1 rounded-full text-sm">{tag}</span>
                         ))}
                         </dd>
                     </div>
@@ -86,7 +86,7 @@ export default function ProjectModal(props) {
                                 <span className="ml-2 w-0 flex-1 truncate">https://drive.google.com/file/d/{props.card.drive_asset}/view</span>
                             </div>
                             <div className="ml-4 flex-shrink-0">
-                                <a href={`https://drive.google.com/file/d/${props.card.drive_asset}/view`} rel="noreferrer" target="_blank" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                <a href={`https://drive.google.com/file/d/${props.card.drive_asset}/view`} rel="noreferrer" target="_blank" className="font-medium text-purple-600 hover:text-purple-500">
                                 Visit
                                 </a>
                             </div>
@@ -104,7 +104,7 @@ export default function ProjectModal(props) {
                                 <span className="ml-2 w-0 flex-1 truncate">{props.card.github}</span>
                             </div>
                             <div className="ml-4 flex-shrink-0">
-                                <a href={props.card.github} rel="noreferrer" target="_blank" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                <a href={props.card.github} rel="noreferrer" target="_blank" className="font-medium text-purple-600 hover:text-purple-500">
                                 Visit
                                 </a>
                             </div>
@@ -122,7 +122,7 @@ export default function ProjectModal(props) {
                                 <span className="ml-2 w-0 flex-1 truncate">{props.card.pivitol_tracker}</span>
                             </div>
                             <div className="ml-4 flex-shrink-0">
-                                <a href={props.card.pivitol_tracker} rel="noreferrer" target="_blank" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                <a href={props.card.pivitol_tracker} rel="noreferrer" target="_blank" className="font-medium text-purple-600 hover:text-purple-500">
                                 Visit
                                 </a>
                             </div>
@@ -140,7 +140,7 @@ export default function ProjectModal(props) {
                                 <span className="ml-2 w-0 flex-1 truncate">{props.card.website}</span>
                             </div>
                             <div className="ml-4 flex-shrink-0">
-                                <a href={props.card.website} rel="noreferrer" target="_blank" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                <a href={props.card.website} rel="noreferrer" target="_blank" className="font-medium text-purple-600 hover:text-purple-500">
                                 Visit
                                 </a>
                             </div>

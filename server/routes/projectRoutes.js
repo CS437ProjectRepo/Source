@@ -11,15 +11,9 @@ router.get('/allprojects', projectController.allProjects);
 
 router.get('/project', projectController.singleProject);
 
-router.get('/', (req, res) => {
-    res.sendFile(`/Users/anshitakhare/Documents/Project-Repository/server/drivetest.html`);
-});
-
 router.post('/createproject',  requireLogin, upload.any(), projectFieldValidation, projectController.createProject);
 
 router.post('/editproject', requireLogin, upload.any(), projectController.updateProject);
-
-router.post('/uploadfiletest', upload.any(), projectController.uploadFileTest);
 
 router.get('/download/projects', projectController.downloadProjects);
 

@@ -31,12 +31,12 @@ function Filter({ options, category, selectedOptions, onChange }) {
                     <label key={option.value} className="flex items-center">
                    <input
                      type="checkbox"
-                     className="form-checkbox h-5 w-5 text-purple-600"
+                     className="form-checkbox h-4 w-4 text-purple-600"
                      value={option.value}
                      checked={selectedOptions.includes(option.value)}
                      onChange={() => handleOptionChange(option.value)}
                    />
-                   <span className="ml-2 text-sm text-gray-700">{option.label}</span>
+                   <span className="ml-2 text-sm text-gray-600">{option.label}</span>
                  </label>
                   </div>
                 ))}

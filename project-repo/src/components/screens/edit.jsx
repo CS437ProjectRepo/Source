@@ -243,7 +243,7 @@ export default function Edit(){
                   required
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:py-1.5 text-sm leading-6"
                 />
               </div>
             </div>
@@ -260,14 +260,14 @@ export default function Edit(){
             <div className="flex justify-center">
                 <FolderIcon className="mx-auto my-5 h-12 w-12 text-gray-300" aria-hidden="true" />
               </div>
-              {file ? <p className="text-sm text-gray-600"> file.name</p> : <a href={`https://drive.google.com/file/d/${projectData.drive_asset}/view`} target='blank' className='block text-indigo-600 break-words'> {`https://drive.google.com/file/d/${projectData.drive_asset}/view`} </a>}
+              {file ? <p className="text-sm text-gray-600"> file.name</p> : <a href={`https://drive.google.com/file/d/${projectData.drive_asset}/view`} target='blank' className='block text-purple-600 break-words'> {`https://drive.google.com/file/d/${projectData.drive_asset}/view`} </a>}
               <button
                 type="button"
                 onClick={() =>{
                   setOriginalAsset(false)
                   setFile(null)
                 }}
-                className="font-semibold text-indigo-600 hover:text-indigo-500"
+                className="font-semibold text-purple-600 hover:text-purple-500"
               >
                 Attach a different file
               </button>
@@ -279,7 +279,7 @@ export default function Edit(){
                   <div className="mt-4 text-sm leading-6 text-gray-600">
                     <label
                       htmlFor="file-upload"
-                      className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                      className="relative cursor-pointer rounded-md bg-white font-semibold text-purple-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-purple-600 focus-within:ring-offset-2 hover:text-purple-500"
                     >
                       <span>Upload a file</span>
                       <input id="file-upload" name="file-upload" type="file" className="sr-only"
@@ -294,7 +294,7 @@ export default function Edit(){
                   <button
                     type="button"
                     onClick={() =>{setOriginalAsset(true)}}
-                    className="font-semibold text-indigo-600 hover:text-indigo-500 mt-4"
+                    className="font-semibold text-purple-600 hover:text-purple-500 mt-4"
                 >
                     Restore Documentation
                 </button>
@@ -323,7 +323,7 @@ export default function Edit(){
                   required
                   value={instructor}
                   onChange={(e) => setInstructor(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 text-sm leading-6"
                 />
               </div>
             </div>
@@ -341,7 +341,7 @@ export default function Edit(){
                   required
                   value={semester}
                   onChange={(e) => setSemester(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:max-w-xs text-sm leading-6"
                 >
                   <option value="Spring" >Spring</option>
                   <option value="Summer" >Summer</option>
@@ -366,7 +366,7 @@ export default function Edit(){
                   required
                   value={year}
                   onChange={(e) => setYear(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 text-sm leading-6"
                 />
               </div>
             </div>
@@ -384,7 +384,7 @@ export default function Edit(){
                   autoComplete="team-members"
                   defaultValue={teamString}
                   onChange={handleTeamMembersChange}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 text-sm leading-6"
                 />
               </div>
             </div>
@@ -400,7 +400,7 @@ export default function Edit(){
                   autoComplete="developmentType-type"
                   onChange={handleDevelopmentTypeChange}
                   value={development_type}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:max-w-xs text-sm leading-6"
                 >
                   <option value="Code">Code</option>
                   <option value="No Code">No Code</option>
@@ -423,7 +423,7 @@ export default function Edit(){
                     maxLength={500}
                     value={github}
                     onChange={(e) => setGithub(e.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 text-sm leading-6"
                   />
                 </div>
               </div>
@@ -439,7 +439,7 @@ export default function Edit(){
                     autoComplete="no-code-platform"
                     value={no_code_solution}
                     onChange={(e) => setNoCode(e.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:max-w-xs text-sm leading-6"
                   >
                   {
                     no_code_solutions.map((solution, index) => (
@@ -465,7 +465,7 @@ export default function Edit(){
                   maxLength={500}
                   value={pivitol_tracker}
                   onChange={(e) => setPivitolTracker(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 text-sm leading-6"
                 />
               </div>
             </div>
@@ -483,7 +483,7 @@ export default function Edit(){
                   maxLength={500}
                   value={website}
                   onChange={(e) => setWebsite(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 text-sm leading-6"
                 />
               </div>
             </div>
@@ -507,7 +507,7 @@ export default function Edit(){
                   name="category"
                   id="category"
                   autoComplete="category"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 text-sm leading-6"
                   value={category}
                   onChange={handleCategoryChange}
                 >
@@ -532,7 +532,7 @@ export default function Edit(){
                         id={feature}
                         name={feature}
                         type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        className="h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-600"
                         // value={superlatives.indexOf(feature) !== -1}
                         checked={superlatives.includes(feature)}
                         onChange={(event) => {handleSuperlativeChange( event)}}
@@ -555,7 +555,7 @@ export default function Edit(){
         <button
             type="button"
             onClick={handleDeleteClick}
-            className="flex rounded-md bg-red-600 px-2 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="flex rounded-md bg-red-600 px-2 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
           >
           <TrashIcon className="w-4 h-4 mr-1"/> Delete 
         </button>
@@ -567,7 +567,7 @@ export default function Edit(){
             </button>
             <button
             type="submit"
-            className="rounded-md bg-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="rounded-md bg-purple-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
             >
             Save
             </button>
