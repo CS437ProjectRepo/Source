@@ -15,7 +15,7 @@ const teamData = [
         ],
         "linkedin": "https://www.linkedin.com/in/an-khare-1051a4260",
         "email": "mailto: ankhare8@gmail.com",
-        "website": "https:anshitakhare.com"
+        "website": "https://anshitakhare.com"
     },
     {
       "photo": "https://anshitakhare.com/project-repo-media/rigo.png",

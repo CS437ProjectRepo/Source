@@ -1,6 +1,6 @@
 import {useState, useEffect, useContext, useMemo } from 'react'
 import {PencilIcon } from '@heroicons/react/24/outline'
-import { ArrowDownTrayIcon, FolderPlusIcon, FunnelIcon, ArrowLongLeftIcon, ArrowLongRightIcon} from '@heroicons/react/20/solid'
+import {FolderPlusIcon, FunnelIcon, ArrowLongLeftIcon, ArrowLongRightIcon} from '@heroicons/react/20/solid'
 import apiURL from "../../config/apiURL";
 import {useNavigate } from "react-router-dom";
 import createFilterObject from '../../util/filterObject';
@@ -12,6 +12,7 @@ import axios from 'axios';
 import MobileFilterMenu from '../mobileFilterMenu';
 import FilterMenu from '../filterMenu';
 import LoadingErrorPage from './loadingErrorPage';
+import DownloadProjectsButton from '../downloadProjectButton';
 
 
 export default function Browse() {
@@ -34,7 +35,7 @@ export default function Browse() {
   const [filterData, setFilterData] = useState([])
 
   useEffect(() => {
-    const getProjectData = async()=>{
+    const getProjectData = async() => {
       try {
         const response = await axios.get(apiURL + '/allprojects');
         const data = response.data;
@@ -89,33 +90,6 @@ export default function Browse() {
     paginate(1)
   };
 
-  const handleProjectDownLoadClick = async () => {
-    //https://blog.stephensorensen.com/download-files-using-fetch
-    setLoading(true);
-    const downloadAllProjectEndpoint = apiURL + '/download/projects';
-    try {
-      const response = await fetch(downloadAllProjectEndpoint, {
-        headers: { Accept: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' },
-      });
-      const data = await response.blob();
-      const url = window.URL.createObjectURL(data);
-      const link = document.createElement('a');
-      link.href = url;
-
-      link.download = 'projects.xlsx'
-
-      //link.setAttribute('download', 'projects.xlsx');
-      //document.body.appendChild(link);
-      link.click();
-      link.parentNode.removeChild(link);
-      window.URL.revokeObjectURL(url)
-
-    } catch (error) {
-      console.log(error);
-    } finally{
-      setLoading(false);
-    }
-  }
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const firstProjectIndex = filteredCards.length > 0 ? indexOfFirstPost + 1 : 0;
@@ -178,14 +152,18 @@ export default function Browse() {
         <div className="flex justify-between pt-10">
           <h1 className="text-2xl font-bold tracking-tight text-gray-800">Term Project Repository</h1>
           <div className="flex items-center">
-          <button
+          {/* <button
             type="button"
             onClick={() => handleProjectDownLoadClick()}
             className="download-button inline-flex items-center rounded-md px-2 sm:px-4 py-2 text-xs text-gray-800 shadow-sm hover:bg-purple-600"
             >
             <ArrowDownTrayIcon className="mr-2 h-5 w-5" aria-hidden="true" />
             Download as CSV
-          </button>
+          </button> */}
+          <DownloadProjectsButton
+          loading={isLoading}
+          setLoading={setLoading}
+          />
 
             <button
               type="button"
@@ -238,7 +216,7 @@ export default function Browse() {
                         <span key={index} className="tag px-2 py-1 rounded-full text-sm font-medium">{tag}</span>
                       ))}
                       {
-                        card.development_type == "Unavailable" && (
+                        card.development_type === "Unavailable" && (
                           <span className="text-gray-600 itallic px-2 py-1 rounded-full text-sm italic"> Development Info Not Available</span>
                         )
                       }
