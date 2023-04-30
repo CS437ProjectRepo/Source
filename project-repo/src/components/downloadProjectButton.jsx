@@ -22,20 +22,20 @@ function DownloadProjectsButton(props) {
       responseType: 'blob',
       headers: { Accept: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' },
     })
-      .then((response) => {
-        const url = window.URL.createObjectURL(response.data);
-        setUrl(url);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'projects.xlsx';
-        link.click();
-      })
-      .catch((error) => {
-        console.error('Error downloading file', error);
-      })
-      .finally(() => {
-        props.setLoading(false);
-      });
+    .then((response) => {
+      const url = window.URL.createObjectURL(response.data);
+      setUrl(url);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'projects.xlsx';
+      link.click();
+    })
+    .catch((error) => {
+      console.error('Error downloading file', error);
+    })
+    .finally(() => {
+      props.setLoading(false);
+    });
   }
 
   return (
@@ -46,7 +46,7 @@ function DownloadProjectsButton(props) {
       className="download-button inline-flex items-center rounded-md px-2 sm:px-4 py-2 text-xs text-gray-800 shadow-sm hover:bg-purple-600"
     >
       <ArrowDownTrayIcon className="mr-2 h-5 w-5" aria-hidden="true" />
-      Download as CSV
+      Download as XSLX
     </button>
   );
 }

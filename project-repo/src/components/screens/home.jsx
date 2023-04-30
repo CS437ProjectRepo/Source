@@ -2,9 +2,10 @@ export default function Home() {
   return (
     <div className="mx-4">
         <div className="mx-auto max-w-2xl py-32 sm:py-48">
-          <div className="hidden sm:mb-8 sm:flex sm:justify-center">
-            <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+          <div className="mb-8 flex justify-center">
+            <div className="relative rounded-full px-3 text-center sm:p-1 py-2 px-8 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
               Getting started on your term project?{' '}
+              <br className="block sm:hidden"/>
               <a href="https://drive.google.com/file/d/1XnfRvOq29L3msrJhd_RknBZRlrMHfblf/view" target="blank" className="font-semibold text-purple-600">
                 <span className="absolute inset-0" aria-hidden="true" />
                 View the Term Project Description <span aria-hidden="true">&rarr;</span>
@@ -15,7 +16,7 @@ export default function Home() {
             <h1 className="text-4xl font-bold tracking-tight text-gray-800 sm:text-6xl">
               Welcome to the Term Project Repository
             </h1>
-            <p className="mt-6 text-md leading-8 text-gray-600">
+            <p className="mt-6 text-md md:leading-8 text-gray-600">
             Browse through all past projects from CS437/CS637 and gain inspiration for your own work. The repository is can be filtered by featured projects, programming languages, no code solutions, and catagory.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
@@ -36,7 +37,7 @@ export default function Home() {
           aria-hidden="true"
         >
           <div
-            className="relative left-[calc(50%+3rem)] w-[36.125rem] sm:w-[72.1875rem] aspect-[1155/678] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
+            className="relative left-[calc(50%+3rem)] w-[72.1875rem] aspect-[1155/678] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
             style={{
               clipPath:
                 'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',

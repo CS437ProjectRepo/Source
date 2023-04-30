@@ -141,34 +141,25 @@ export default function Browse() {
         filterData.length > 0 ? (
           <>
           <MobileFilterMenu
-        mobileFiltersOpen={mobileFiltersOpen}
-        setMobileFiltersOpen={setMobileFiltersOpen}
-        filters={filterData} 
-        selectedFilters={selectedFilters} 
-        handleFilterChange={handleFilterChange} 
-        resetFilters={resetFilters}
-      />
+          mobileFiltersOpen={mobileFiltersOpen}
+          setMobileFiltersOpen={setMobileFiltersOpen}
+          filters={filterData} 
+          selectedFilters={selectedFilters} 
+          handleFilterChange={handleFilterChange} 
+          resetFilters={resetFilters}
+          />
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between pt-10">
           <h1 className="text-2xl font-bold tracking-tight text-gray-800">Term Project Repository</h1>
           <div className="flex items-center">
-          {/* <button
-            type="button"
-            onClick={() => handleProjectDownLoadClick()}
-            className="download-button inline-flex items-center rounded-md px-2 sm:px-4 py-2 text-xs text-gray-800 shadow-sm hover:bg-purple-600"
-            >
-            <ArrowDownTrayIcon className="mr-2 h-5 w-5" aria-hidden="true" />
-            Download as CSV
-          </button> */}
-          <DownloadProjectsButton
-          loading={isLoading}
-          setLoading={setLoading}
-          />
-
+            <DownloadProjectsButton
+            loading={isLoading}
+            setLoading={setLoading}
+            />
             <button
-              type="button"
-              className="-m-2 ml-2 sm:ml-4 p-1 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
-              onClick={() => setMobileFiltersOpen(true)}
+            type="button"
+            className="-m-2 ml-2 sm:ml-4 p-1 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
+            onClick={() => setMobileFiltersOpen(true)}
             >
               <span className="sr-only">Filters</span>
               <FunnelIcon className="h-5 w-5" aria-hidden="true" />
@@ -183,11 +174,11 @@ export default function Browse() {
           </h2>
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
             <FilterMenu
-              classes="hidden lg:block"
-              filters={filterData} 
-              selectedFilters={selectedFilters} 
-              handleFilterChange={handleFilterChange} 
-              resetFilters={resetFilters}
+            classes="hidden lg:block"
+            filters={filterData} 
+            selectedFilters={selectedFilters} 
+            handleFilterChange={handleFilterChange} 
+            resetFilters={resetFilters}
             />
 
             {/* Filtered cards */}
