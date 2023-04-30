@@ -53,7 +53,7 @@ export default function ProjectModal(props) {
                   <h3 className="text-lg font-medium leading-6 text-gray-800">
                     {props.card.project_name}
                   </h3>
-                  <button className="flex text-purple-500 gap-1" onClick={handleShare}>
+                  <button className="flex text-sm text-purple-500 gap-1" onClick={handleShare}>
                     Share This Project
                     <ArrowTopRightOnSquareIcon className="mt-1 w-4 h-4"/>
                   </button>

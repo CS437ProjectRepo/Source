@@ -5,13 +5,13 @@ const teamData = [
         "photo": "https://anshitakhare.com/project-repo-media/anshita.png",
         "name": "Anshita Khare",
         "role": "Software Development and Design",
-        "blurb": "I had a lot of fun working on the frontend, backend, and database portion of project. Our target audience is fellow students seeking inspiration for their own projects, and our professors who serve as administrators. With these users in mind, my goal was to create an elegantly designed application that was both cost-effective and user-friendly. This led me to develop a suite of features that allows administrators to easily manage(create, read, update, and delete) projects. Students are able to filter through the available projects by a variety of tags, including category and programming language, to quickly find the ones that most interested them. Here are some of my favorite things about our project:",
+        "blurb": "I had a lot of fun working on the frontend, backend, and database portion of project using the MERN stack and Google and Github APIs. Our target audience is fellow students seeking inspiration for their own projects, and our professors who serve as administrators. With these users in mind, my goal was to create an elegantly designed application that was both cost-effective and user-friendly. This led me to develop a suite of features that allows administrators to easily manage(create, read, update, and delete) projects and enable all users to filter through the available projects by a variety of tags, including category and programming language, to quickly find the ones that most interested them. Here are some of my cool features about our project:",
         "ul": [
           "All uploaded documentation is stored in a Google Drive folder that can be accessed by the admins and manually manipulated if needed. This was done using the Google Drive API and a Google service account",
           "When projects with a Github link are uploaded, language tags and automatically retrieved by making a query to the Github API the using the path in the supplied URL.",
           "No filters are hardcoded into the UI, instead they pull data from a config file. This allows filters to be updated as needed. The language filters are appended based on programming languages retrieved from Github; if there are languages thare are being used by projects those languages will appear in the langugage filters",
           "When users click on a project modal, a unique identifier is added to the URI using a hash fragment. This enables users to share links to specific projects knowing that that link is opened the same modal will be visible",
-          "This website is fully responsive and dark mode support 😎"
+          "This website is fully responsive and has dark mode support 😎"
         ],
         "linkedin": "https://www.linkedin.com/in/an-khare-1051a4260",
         "email": "mailto: ankhare8@gmail.com",
@@ -37,7 +37,7 @@ const teamData = [
         "photo": "https://anshitakhare.com/project-repo-media/marouan.png",
         "name": "Marouan Boussif",
         "role": "Testing",
-        "blurb": "Remember, every day is a new opportunity to learn, grow, and make a difference",
+        "blurb": "For this project, I used libraries like HTTPMocks to test project routes in the server. Remember, every day is a new opportunity to learn, grow, and make a difference",
         "linkedin": "https://www.linkedin.com/in/marouan-boussif-790004118/",
         "email": "mailto:marouan_usa2008@outlook.fr"
     },
