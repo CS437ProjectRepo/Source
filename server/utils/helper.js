@@ -11,7 +11,7 @@ async function getLanguageTags(github) {
         const languageResponse = await axios.get(`https://api.github.com/repos${githubPath}/languages`);
         if (languageResponse.data != {}) {
             for (const language in languageResponse.data) {
-                languages.push(language);
+                language.push(language);
             }
         }
         return languages;
