@@ -1,4 +1,4 @@
-import {useState, useEffect, useContext } from 'react'
+import {useState, useEffect, useContext, useMemo } from 'react'
 import {PencilIcon } from '@heroicons/react/24/outline'
 import { ArrowDownTrayIcon, FolderPlusIcon, FunnelIcon, ArrowLongLeftIcon, ArrowLongRightIcon} from '@heroicons/react/20/solid'
 import apiURL from "../../config/apiURL";
@@ -61,19 +61,25 @@ export default function Browse() {
       setSelectedCard(selectedCard);
       setProjectModalIsOpen(true);
     }
+    
   }, [projectData, selectedCard]);
   
-  const filteredCards = projectData.filter(card => {
-    const { category, language, featured, nocode } = selectedFilters;
-    const tags = card.tags;
+  const filteredCards = useMemo(() => {
+    return projectData.filter(card => {
+      const { category, language, featured, nocode } = selectedFilters;
+      const tags = card.tags;
+      return (
+        (category.length === 0 || category.some(tag => tags.includes(tag))) &&
+        (language.length === 0 || language.some(tag => tags.includes(tag))) &&
+        (featured.length === 0 || featured.some(tag => tags.includes(tag))) && 
+        (nocode.length === 0 || nocode.some(tag => tags.includes(tag)))
+      );
+    });
     
-    return (
-      (category.length === 0 || category.some(tag => tags.includes(tag))) &&
-      (language.length === 0 || language.some(tag => tags.includes(tag))) &&
-      (featured.length === 0 || featured.some(tag => tags.includes(tag))) && 
-      (nocode.length === 0 || nocode.some(tag => tags.includes(tag)))
-    );
-  });
+  }, [projectData, selectedFilters]);
+
+  const isEmpty = filteredCards.length === 0;
+  
 
   const handleFilterChange = (filterType, filterValue) => {
     setSelectedFilters(prevFilters => ({
@@ -112,7 +118,7 @@ export default function Browse() {
   }
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const firstProjectIndex = indexOfFirstPost + 1;
+  const firstProjectIndex = filteredCards.length > 0 ? indexOfFirstPost + 1 : 0;
   const lastProjectIndex = indexOfLastPost > filteredCards.length ? filteredCards.length : indexOfLastPost;
   const currentCards = filteredCards.slice(indexOfFirstPost, indexOfLastPost);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -250,11 +256,15 @@ export default function Browse() {
                     <PencilIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-600" aria-hidden="true" />
                     Edit
                   </button>
-                </div>
-                )}
+                </div>)}
+              </div>))}
             </div>
-              ))}
-            </div>
+            {
+              isEmpty && 
+              <p className='w-100 text-gray-500 text-sm text-center'>
+                No projects with the selected tags...yet
+              </p>
+            }
             </div>
             {selectedCard && (
               <ProjectModal card={selectedCard} projectModalIsOpen={projectModalIsOpen} handleModalClose={handleCloseModal} />

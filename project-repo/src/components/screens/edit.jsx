@@ -157,6 +157,9 @@ export default function Edit(){
             break;
           }
           case "superlatives":{
+            if(superlatives.length === 0){
+              superlatives.push('empty');
+            }
             for(let i=0; i<superlatives.length;i++){
               if(superlatives[i].length > 0){
                   formData.append("superlatives[]", superlatives[i]);

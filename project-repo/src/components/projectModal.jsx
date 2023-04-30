@@ -1,10 +1,14 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline'
+import { ArrowTopRightOnSquareIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { PaperClipIcon, LinkIcon } from '@heroicons/react/20/solid'
-
+import { toast } from 'react-toastify';
 
 export default function ProjectModal(props) {
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast.info('Copied to clipboard', { position: 'top-right' });
+  };
   return (
     <Transition appear show={props.projectModalIsOpen} as={Fragment}>
       <Dialog
@@ -45,10 +49,16 @@ export default function ProjectModal(props) {
                 </button>
               </div>
               <div>
-                <h3 className="text-lg font-medium leading-6 text-gray-800">
-                  {props.card.project_name}
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">
+                <div className="mb-2">
+                  <h3 className="text-lg font-medium leading-6 text-gray-800">
+                    {props.card.project_name}
+                  </h3>
+                  <button className="flex text-purple-500 gap-1" onClick={handleShare}>
+                    Share This Project
+                    <ArrowTopRightOnSquareIcon className="mt-1 w-4 h-4"/>
+                  </button>
+                </div>
+                <p className="text-sm text-gray-500">
                 {props.card.description}
                 </p>
                 <dl className="mt-6">

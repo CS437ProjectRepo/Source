@@ -5,7 +5,14 @@ const teamData = [
         "photo": "https://anshitakhare.com/project-repo-media/anshita.png",
         "name": "Anshita Khare",
         "role": "Software Development and Design",
-        "blurb": "I had a lot of fun working on the frontend, backend, and database portion of project. Our target audience is fellow students seeking inspiration for their own projects, as well as our professors who serve as administrators. With these users in mind, we strove to create an elegantly designed application that was both cost-effective and user-friendly. This led us to develop a suite of features that allows administrators to easily manage(create, read, update, and delete) projects. Students are able to filter through the available projects by a variety of tags, including category and programming language, to quickly find the ones that most interested them.",
+        "blurb": "I had a lot of fun working on the frontend, backend, and database portion of project. Our target audience is fellow students seeking inspiration for their own projects, and our professors who serve as administrators. With these users in mind, my goal was to create an elegantly designed application that was both cost-effective and user-friendly. This led me to develop a suite of features that allows administrators to easily manage(create, read, update, and delete) projects. Students are able to filter through the available projects by a variety of tags, including category and programming language, to quickly find the ones that most interested them. Here are some of my favorite things about our project:",
+        "ul": [
+          "All uploaded documentation is stored in a Google Drive folder that can be accessed by the admins and manually manipulated if needed. This was done using the Google Drive API and a Google service account",
+          "When projects with a Github link are uploaded, language tags and automatically retrieved by making a query to the Github API the using the path in the supplied URL.",
+          "No filters are hardcoded into the UI, instead they pull data from a config file. This allows filters to be updated as needed. The language filters are appended based on programming languages retrieved from Github; if there are languages thare are being used by projects those languages will appear in the langugage filters",
+          "When users click on a project modal, a unique identifier is added to the URI using a hash fragment. This enables users to share links to specific projects knowing that that link is opened the same modal will be visible",
+          "This website is fully responsive and dark mode support 😎"
+        ],
         "linkedin": "https://www.linkedin.com/in/an-khare-1051a4260",
         "email": "mailto: ankhare8@gmail.com",
         "website": "https:anshitakhare.com"
@@ -14,7 +21,7 @@ const teamData = [
       "photo": "https://anshitakhare.com/project-repo-media/rigo.png",
       "name": "Rigoberto Rosa",
       "role": "Requirements, Software Development, Testing",
-      "blurb": "With this project I delved into the world of backend development, honing my skills and expertise in MongoDB, Express,  and Node.js. Additionally, I had the opportunity to learn about unit testing, which helped me ensure the reliability and stability of my code. This journey has further fueled my enthusiasm for computer science and its ability to shape the future.",
+      "blurb": "With this project I delved into the world of backend development, honing my skills and expertise in MongoDB, Express, and Node.js. Additionally, I had the opportunity to learn about unit testing, which helped me ensure the reliability and stability of our code. This journey has further fueled my enthusiasm for computer science and its ability to shape the future.",
       "linkedin": "www.linkedin.com/in/rigobertorosa",
       "email": "mailto:rigorosa@bu.edu"
   },
@@ -22,7 +29,7 @@ const teamData = [
         "photo": "https://anshitakhare.com/project-repo-media/soi.png",
         "name": "Supawadee Phakdee",
         "role": "Project Management",
-        "blurb": "As the project manager, I worked to ensure that ensure that all aspects of the project are well-planned, well-documented, and well-executed, in order to deliver a successful project through a range of key activities, including developing and maintaining a Configuration Items List to track project components, creating personas to better understand our target audience of professors and students, maintaining an Estimation Record to track progress against budget and timeline, developing Use Cases to define how the project's features will be used by professors and students, and creating a State Transition Diagram to map out how the project's components will interact over time. I also work to ensure that all tools and technologies integrate effectively with each other by creating a Tool Connectivity Diagram.",
+        "blurb": "As the project manager, I ensured that all project aspects were well-planned, documented, and executed for a successful delivery. My key activities included developing and maintaining a Configuration Items List to track project components, creating personas to understand the target audience, maintaining an Estimation Record to track progress, developing Use Cases to define features, and creating a State Transition Diagram to map component interactions over time. I also ensured effective integration of all tools and technologies by creating a Tool Connectivity Diagram",
         "linkedin": "https://www.linkedin.com/in/supawadee-phakdee/",
         "email": "mailto:souy.supawadee@gmail.com"
     },
@@ -65,15 +72,25 @@ const About = () => {
               <li key={index} className="col-span-1 flex bg-white rounded-lg shadow divide-x divide-gray-200 bg-opacity-50">
                 <div className="hidden lg:flex">
                   <img
-                    className="object-cover rounded-tl-lg rounded-bl-lg" style={{maxWidth: 15 + 'vw', height: "auto"}}
+                    className="object-contain rounded-tl-lg rounded-bl-lg" style={{maxWidth: 15 + 'vw', height: "auto"}}
                     src={member.photo}
                     alt={member.name}
                   />
                 </div>
-                <div className="px-4 py-2">
-                  <h3 className="text-md font-medium text-gray-800">{member.name}</h3>
-                  <p className="text-gray-500 text-sm">{member.role}</p>
-                  <p className="text-gray-800 text-sm break-words mt-2">{member.blurb}</p>
+                <div className="px-4 py-2 text-sm">
+                  <h3 className="text-lg font-medium text-gray-800">{member.name}</h3>
+                  <p className="text-gray-500 text-md ">{member.role}</p>
+                  <p className="text-gray-800 break-words my-2">{member.blurb}</p>
+                  {
+                    member.ul && (
+                      <ul className="list-disc text-gray-800 break-words my-4 ml-10">
+                        {
+                           member.ul.map((li, index) => (
+                            <li key={index} className="mb-2">{li}</li>
+                            ))
+                        }
+                      </ul>
+                    )}
                   <div className="flex gap-2 my-2">
                     <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
                         <svg className="w-5 h-5 pb-1 -mr-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"> 

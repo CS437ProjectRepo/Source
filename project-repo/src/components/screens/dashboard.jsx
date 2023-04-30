@@ -118,6 +118,15 @@ const Dashboard = function() {
                   </p>
                   <p className="text-gray-800 font-semibold">Login with Google</p>
                 </div>
+                <hr className="mb-4"/>
+                <div className="mb-4">
+                  <h2 className="text-xl font-semibold mb-2 text-gray-800">Render</h2>
+                  <p className="text-sm text-gray-800 mb-2">Use render adjustments need to be made to the hosting, like upgrading from free tier. Our react app was originally hosted as a static site and our server as a Free Tier web service.
+                    <br />
+                    <a href='https://dashboard.render.com' className="text-purple-500">https://dashboard.render.com</a>
+                  </p>
+                  <p className="text-gray-800 font-semibold">Login with Google</p>
+                </div>
             </div>
           </div>
 

@@ -188,11 +188,6 @@ const updateProject = async (req, res) => {
         superlatives
       } = req.body;
 
-      if (!superlatives){
-        superlatives = [];
-      }
-
-
       let fileId;
       let documentation_link
       if(req.file){
@@ -242,15 +237,19 @@ const updateProject = async (req, res) => {
             break;
           }
         }
-
+        
         if(superlatives){
-          tags.push(...superlatives);
+          if(superlatives.includes('empty')){
+            newData.superlatives = [];
+          } else{
+            tags.push(...superlatives);
+          }
         } else{
           tags.push(...project.superlatives)
         }
 
         newData.tags = tags;
-        console.log(tags);
+        // console.log(tags);
       }
 
       if(fileId){
