@@ -204,7 +204,7 @@ export default function Browse() {
                     <p className="mt-2">{card.description}</p>
                     <div className="tag-container mt-4">
                       {card.tags.map((tag, index) => (
-                        <span key={index} className="tag px-2 py-1 rounded-full text-sm font-medium">{tag}</span>
+                        tag !== "" && <span key={index} className="tag px-2 py-1 rounded-full text-sm font-medium">{tag}</span>
                       ))}
                       {
                         card.development_type === "Unavailable" && (

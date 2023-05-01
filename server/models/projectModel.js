@@ -85,4 +85,9 @@ const projectSchema = mongoose.Schema({
     }
 })
 
+// projectSchema.pre("save", function(next) {
+//     this.tags = this.tags.filter(tag => tag !== "");
+//     next();
+// });
+  
 mongoose.model("Project", projectSchema)

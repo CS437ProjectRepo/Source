@@ -5,8 +5,10 @@ import apiURL from "../../config/apiURL";
 import { toast } from 'react-toastify';
 import { Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from '../../App';
+import Loading from '../loading';
 
 export default function Login() {
+  const [isLoading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -19,6 +21,7 @@ export default function Login() {
   
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     try {
       const response = await axios.post(apiURL + '/login', {
@@ -28,6 +31,7 @@ export default function Login() {
       
       const data = await response.data;
       const token = data.token;
+      setLoading(false);
       toast.success('Welcome Admin!', { position: 'top-right' });
       sessionStorage.setItem('authToken', token);
       login();
@@ -37,6 +41,7 @@ export default function Login() {
 
     } catch (error) {
       console.log(error);
+      setLoading(false);
       toast.error("Invalid username or password", { position: 'top-right' });
     }
   };
@@ -47,6 +52,7 @@ export default function Login() {
 
   return (
     <>
+      <Loading isLoading={isLoading}/>
       <div className="flex near-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>

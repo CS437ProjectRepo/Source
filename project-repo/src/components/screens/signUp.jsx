@@ -6,11 +6,13 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from '../../App';
+import Loading from '../loading';
 
 export default function SignUp() {
   const [adminCode, setAdminCode] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   const { isAdminLoggedIn } = useContext(AuthContext);
@@ -21,7 +23,7 @@ export default function SignUp() {
   
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setLoading(true)
     try {
       const response = await axios.post(apiURL + '/register', {
         adminCode,
@@ -30,6 +32,7 @@ export default function SignUp() {
       });
       
       await response.data;
+      setLoading(false);
       toast.success('Account created successfully. Sign in', { position: 'top-right' });
       navigate('/login')
 
@@ -37,6 +40,7 @@ export default function SignUp() {
 
     } catch (error) {
       const message = await error.response.data.message;
+      setLoading(false);
       toast.error(message, { position: 'top-right' });
     }
   };

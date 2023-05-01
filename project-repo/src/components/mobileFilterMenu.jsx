@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState, useEffect, useContext } from 'react'
-import { XMarkIcon, PencilIcon } from '@heroicons/react/24/outline'
+import { Fragment} from 'react'
+import { XMarkIcon } from '@heroicons/react/24/outline'
 import FilterMenu from './filterMenu'
 export default function MobileFilters(props){
     return (
@@ -21,12 +21,12 @@ export default function MobileFilters(props){
           <div className="fixed inset-0 z-40 flex">
             <Transition.Child
               as={Fragment}
-              enter="transition ease-linear duration-300 transform"
+              enter="transition ease-linear duration-100 transform"
               enterFrom="translate-x-full"
               enterTo="translate-x-0"
-              leave="transition ease-linear duration-300 transform"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
+              leave="transition ease-linear duration-100 transform"
+              leaveFrom="translate-x-0"
+              leaveTo="translate-x-full"
             >
               <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
                 <div className="flex items-center justify-between px-4">
