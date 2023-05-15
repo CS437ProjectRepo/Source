@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../../App';
 import axios from 'axios';
-import { Navigate, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { FolderIcon, TrashIcon } from '@heroicons/react/24/solid'
 import apiURL from '../../config/apiURL';
 import Loading from '../loading';

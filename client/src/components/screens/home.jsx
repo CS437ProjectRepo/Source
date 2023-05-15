@@ -17,7 +17,7 @@ export default function Home() {
               Welcome to the Term Project Repository
             </h1>
             <p className="mt-6 text-md md:leading-8 text-gray-600">
-            Browse through all past projects from CS437/CS637 and gain inspiration for your own work. The project can be filtered by outstanding features, catagories, programming languages, no code solutions.
+            Browse through completed projects and gain inspiration for your own work. The project can be filtered by outstanding features, catagories, programming languages, no code solutions.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a

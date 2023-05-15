@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react'
 import axios from 'axios';
 import { AuthContext } from '../../App';
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FolderIcon } from '@heroicons/react/24/solid'
 import apiURL from '../../config/apiURL';
 import { toast } from 'react-toastify';
@@ -9,7 +9,7 @@ import Loading from '../loading';
 import {featured, categories, no_code_solutions} from '../../config/filterOptions'
 
 export default function Add(){
-  const { isAdminLoggedIn, logout } = useContext(AuthContext);
+  const { isAdminLoggedIn } = useContext(AuthContext);
 
   const [project_name, setProjectName] = useState('');
   const [description, setDescription] = useState('');
@@ -340,7 +340,7 @@ export default function Add(){
                   />
                 </div>
               </div>
-            ) :( development_type === "No Code" && (
+            ) : ( development_type === "No Code" && (
               <div className="sm:col-span-3">
                 <label htmlFor="no-code-platform" className="block text-sm font-medium leading-6 text-gray-800">
                   No-Code Platform*

@@ -16,7 +16,6 @@ import ErrorPage from './components/screens/errorPage';
 import Logout from './components/screens/logout';
 import './App.css';
 
-console.log(process.env.REACT_APP_apiURL)
 const routes =  [
   { 
     path: "/",
