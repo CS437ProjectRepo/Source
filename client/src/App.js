@@ -16,6 +16,7 @@ import ErrorPage from './components/screens/errorPage';
 import Logout from './components/screens/logout';
 import './App.css';
 
+console.log(process.env.REACT_APP_apiURL)
 const routes =  [
   { 
     path: "/",
@@ -60,18 +61,19 @@ export const AuthContext = React.createContext();
 const router = createBrowserRouter(routes);
 const App = () => {
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
-    const storedValue = localStorage.getItem('isAdminLoggedIn');
+    const storedValue = sessionStorage.getItem('isAdminLoggedIn');
     return storedValue !== null ? JSON.parse(storedValue) : false;
   });
 
   const login = () => {
     setIsAdminLoggedIn(true);
-    localStorage.setItem('isAdminLoggedIn', JSON.stringify(true));
+    sessionStorage.setItem('isAdminLoggedIn', JSON.stringify(true));
   };
 
   const logout = () => {
     setIsAdminLoggedIn(false);
-    localStorage.setItem('isAdminLoggedIn', JSON.stringify(false));
+    sessionStorage.setItem('isAdminLoggedIn', JSON.stringify(false));
+    sessionStorage.clear();
   };
 
   useEffect(() => {

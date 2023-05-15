@@ -51,6 +51,7 @@ export default function SignUp() {
 
   return (
     <>
+    <Loading isLoading={isLoading}/>
       <div className="flex near-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>
@@ -70,7 +71,6 @@ export default function SignUp() {
             </p>
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px rounded-md shadow-sm">
             <div>
                 <label htmlFor="admin-code" className="sr-only">

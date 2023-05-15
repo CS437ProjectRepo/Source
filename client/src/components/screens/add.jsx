@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import axios from 'axios';
 import { AuthContext } from '../../App';
 import { Navigate, useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import Loading from '../loading';
 import {featured, categories, no_code_solutions} from '../../config/filterOptions'
 
 export default function Add(){
-  const { isAdminLoggedIn } = useContext(AuthContext);
+  const { isAdminLoggedIn, logout } = useContext(AuthContext);
 
   const [project_name, setProjectName] = useState('');
   const [description, setDescription] = useState('');
@@ -28,9 +28,11 @@ export default function Add(){
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(false);
 
-  if(!isAdminLoggedIn){
-    return <Navigate to="/login" />;
-  }
+  useEffect(()=>{
+    if(!isAdminLoggedIn){
+      return navigate('/login')
+    }
+  }, [isAdminLoggedIn])
 
   function getYear(){
     return new Date().getFullYear();
@@ -39,7 +41,6 @@ export default function Add(){
   function handleCancelClick(){
     navigate('/browse');
   }
-
 
   const handleDevelopmentTypeChange = (event) => {
     const curr = event.target.value;

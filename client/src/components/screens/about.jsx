@@ -4,7 +4,7 @@ const teamData = [
     {
         "photo": "https://anshitakhare.com/project-repo-media/anshita.png",
         "name": "Anshita Khare",
-        "role": "Software Development and Design",
+        "role": "Full Stack Software Development and Design",
         "blurb": "I had a lot of fun working on the frontend, backend, and database portion of this project using the MERN stack and the Google and Github APIs. Our target audience is fellow students seeking inspiration for their own projects, and our professors who serve as administrators. With these users in mind, my goal was to create an elegantly designed application that was both cost-effective and user-friendly. This led me to develop a suite of features that allows administrators to easily manage(create, read, update, and delete) projects and enable all users to filter through the available projects by a variety of tags, including category and programming language, to quickly find the ones that most interested them. Here are some of my cool features about our project:",
         "ul": [
           "All uploaded documentation is stored in a Google Drive folder that can be accessed by the admins and manually manipulated if needed. This was done using the Google Drive API and a Google service account",
@@ -20,7 +20,7 @@ const teamData = [
     {
       "photo": "https://anshitakhare.com/project-repo-media/rigo.png",
       "name": "Rigoberto Rosa",
-      "role": "Requirements, Software Development, Testing",
+      "role": "Requirements, Backend Development, Testing",
       "blurb": "With this project I delved into the world of backend development, honing my skills and expertise in MongoDB, Express, and Node.js. Additionally, I had the opportunity to learn about unit testing, which helped me ensure the reliability and stability of our code. This journey has further fueled my enthusiasm for computer science and its ability to shape the future.",
       "linkedin": "www.linkedin.com/in/rigobertorosa",
       "email": "mailto:rigorosa@bu.edu"

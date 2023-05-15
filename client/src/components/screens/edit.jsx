@@ -30,6 +30,11 @@ export default function Edit(){
   const [file, setFile] = useState(null);
   const [originalAsset, setOriginalAsset] = useState(false);
   
+  useEffect(()=>{
+    if(!isAdminLoggedIn){
+      return navigate('/login')
+    }
+  }, [isAdminLoggedIn])
 
   async function getData(){
     try{
@@ -72,9 +77,6 @@ export default function Edit(){
     getData();
   }, [state]);
 
-  if(!isAdminLoggedIn){
-    return <Navigate to="/login" />;
-  }
 
   function getYear(){
     return new Date().getFullYear();
@@ -251,9 +253,9 @@ export default function Edit(){
             </div>
 
             <div className="col-span-full">
-              <label htmlFor="file-upload" className="block text-sm font-medium leading-6 text-gray-800">
+              <p className="block text-sm font-medium leading-6 text-gray-800">
                 Documentation*
-              </label>
+              </p>
               <p className="text-sm leading-6 text-gray-600">Currently attached documentation</p>
               <div className="mt-2 justify-center rounded-lg border border-dashed border-gray-500 px-6 py-10">
                 {originalAsset || file ? (
@@ -332,14 +334,14 @@ export default function Edit(){
 
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
-              <label htmlFor="semester-semester" className="block text-sm font-medium leading-6 text-gray-800">
+              <label htmlFor="semester" className="block text-sm font-medium leading-6 text-gray-800">
                 Semester*
               </label>
               <div className="mt-2">
               <select
-                  id="semester-semester"
-                  name="semester-semester"
-                  autoComplete="semester-semester"
+                  id="semester"
+                  name="semester"
+                  autoComplete="semester"
                   required
                   value={semester}
                   onChange={(e) => setSemester(e.target.value)}
@@ -362,9 +364,9 @@ export default function Edit(){
                   placeholder={getYear()}
                   min={2015}
                   max={getYear()}
-                  name="semester-year"
-                  id="semester-year"
-                  autoComplete="semester-year"
+                  name="year"
+                  id="year"
+                  autoComplete="year"
                   required
                   value={year}
                   onChange={(e) => setYear(e.target.value)}
@@ -541,7 +543,7 @@ export default function Edit(){
                       />
                     </div>
                     <div className="text-sm leading-6">
-                      <label htmlFor="outstanding-UI" className="font-medium text-gray-800">
+                      <label htmlFor={feature} className="font-medium text-gray-800">
                         {feature}
                       </label>
                     </div>

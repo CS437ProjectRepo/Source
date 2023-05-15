@@ -33,6 +33,7 @@ export default function Browse() {
   const pageNumbers = [];
   const navigate = useNavigate();
   const [filterData, setFilterData] = useState([])
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const getProjectData = async() => {
@@ -65,19 +66,35 @@ export default function Browse() {
     
   }, [projectData, selectedCard]);
   
+  // const filteredCards = useMemo(() => {
+  //   return projectData.filter(card => {
+  //     const { category, language, featured, nocode } = selectedFilters;
+  //     const tags = card.tags;
+  //     return (
+  //       (category.length === 0 || category.some(tag => tags.includes(tag))) &&
+  //       (language.length === 0 || language.some(tag => tags.includes(tag))) &&
+  //       (featured.length === 0 || featured.some(tag => tags.includes(tag))) && 
+  //       (nocode.length === 0 || nocode.some(tag => tags.includes(tag)))
+  //     );
+  //   });
+    
+  // }, [projectData, selectedFilters]);
+
   const filteredCards = useMemo(() => {
     return projectData.filter(card => {
       const { category, language, featured, nocode } = selectedFilters;
       const tags = card.tags;
+      const name = card.project_name.toLowerCase();
       return (
         (category.length === 0 || category.some(tag => tags.includes(tag))) &&
         (language.length === 0 || language.some(tag => tags.includes(tag))) &&
         (featured.length === 0 || featured.some(tag => tags.includes(tag))) && 
-        (nocode.length === 0 || nocode.some(tag => tags.includes(tag)))
+        (nocode.length === 0 || nocode.some(tag => tags.includes(tag))) &&
+        (search.length === 0 || name.includes(search.toLowerCase()))
       );
     });
-    
-  }, [projectData, selectedFilters]);
+  }, [projectData, selectedFilters, search]);
+  
 
   const isEmpty = filteredCards.length === 0;
   
@@ -179,6 +196,8 @@ export default function Browse() {
             selectedFilters={selectedFilters} 
             handleFilterChange={handleFilterChange} 
             resetFilters={resetFilters}
+            setSearch={setSearch}
+            paginate={paginate}
             />
 
             {/* Filtered cards */}

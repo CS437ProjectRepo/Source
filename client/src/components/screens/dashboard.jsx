@@ -6,11 +6,16 @@ import { toast } from 'react-toastify';
 import apiURL from '../../config/apiURL';
 
 const Dashboard = function() {
-    const { isAdminLoggedIn} = useContext(AuthContext);
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [adminData, setAdminData] = useState(null);
     const navigate = useNavigate();
+    const {isAdminLoggedIn} = useContext(AuthContext);
+    useEffect(()=>{
+      if(!isAdminLoggedIn){
+        return navigate('/login')
+      }
+    }, [isAdminLoggedIn])
 
     const fetchData = async () => {
       try {
@@ -22,15 +27,9 @@ const Dashboard = function() {
         toast.error(error.response.data.message, { position: 'top-right' });
       }
     };
-
-    
     useEffect(() => {
       fetchData();
     }, []);
-
-    if(!isAdminLoggedIn){
-      return <Navigate to="/login" />;
-    }
 
     const handleChangePasswordSubmit = async function(event){
       event.preventDefault();
@@ -45,7 +44,7 @@ const Dashboard = function() {
           throw new Error(response.message);
         }
 
-        const data = await response.data;
+        await response.data;
         toast.success('Password changed successfully!', { position: 'top-right' });
         navigate('/browse');
   

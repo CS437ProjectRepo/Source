@@ -39,6 +39,17 @@ export default function FilterMenu(props){
         >
             Clear All Filters
         </button>
+
+        <div className="mt-6">
+            <h2 className='font-semibold text-gray-800 mb-4'>Search By Name</h2>
+            <input 
+                type="text"
+                onChange={(event)=>{
+                    props.setSearch(event.target.value)
+                    props.paginate(1)
+                }}
+                className="bg-transparent text-sm rounded w-full border-0 px-3 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-purple-600" />
+        </div>
     </form>
     )
 }

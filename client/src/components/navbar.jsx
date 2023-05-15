@@ -1,4 +1,5 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
+import { Navigate } from 'react-router-dom'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import {Popover } from '@headlessui/react'
@@ -8,6 +9,7 @@ import { AuthContext } from '../App'
 function Navbar(){
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const {isAdminLoggedIn} = useContext(AuthContext);
+
   return (
     <header className="nav-bg">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
