@@ -20,9 +20,9 @@ const teamData = [
     {
       "photo": "https://anshitakhare.com/project-repo-media/rigo.png",
       "name": "Rigoberto Rosa",
-      "role": "Requirements, Backend Development, Testing",
-      "blurb": "With this project I delved into the world of backend development, honing my skills and expertise in MongoDB, Express, and Node.js. Additionally, I had the opportunity to learn about unit testing, which helped me ensure the reliability and stability of our code. This journey has further fueled my enthusiasm for computer science and its ability to shape the future.",
-      "linkedin": "www.linkedin.com/in/rigobertorosa",
+      "role": "Requirements, Software Development, Testing",
+      "blurb": "During this project, I focused on backend development and worked to improve my skills in MongoDB, Express, and Node.js. As part of this experience, I also gained knowledge about unit testing which helped to improve the reliability and stability of our code. Overall, this project has deepened my passion for computer science and its potential to influence the world in meaningful ways.",
+      "linkedin": "https://www.linkedin.com/in/rigobertorosa",
       "email": "mailto:rigorosa@bu.edu"
   },
     {
