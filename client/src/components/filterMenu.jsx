@@ -1,6 +1,6 @@
 
 import Filter from './filter';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
 export default function FilterMenu(props){
     return(
@@ -12,7 +12,6 @@ export default function FilterMenu(props){
         >
             Clear All
         </button>
-        <hr />
         <Filter
             options={props.filters[0].options}
             category={props.filters[0].name}
@@ -41,9 +40,10 @@ export default function FilterMenu(props){
                 />
             )
         }
+        <hr />
         <div className="my-8">
             {/* <h2 className='font-semibold text-gray-800 mb-4'>Search By</h2> */}
-            <div className='flex items-center border border-gray-200 rounded py-1'>
+            <div className='flex items-center border border-gray-200 rounded py-1.5'>
                 <input 
                     type="text"
                     onChange={(event)=>{
@@ -52,7 +52,7 @@ export default function FilterMenu(props){
                     }}
                     value={props.search}
                     placeholder="Search Project by Name"
-                    className="bg-transparent text-sm rounded w-full border-0 text-gray-600 placeholder:text-gray-400 focus:ring-0"
+                    className="bg-transparent text-sm font-medium rounded w-full border-0 text-gray-600 placeholder:text-gray-400 focus:ring-0"
                 />
                 <MagnifyingGlassIcon className='w-5 h-5 text-gray-400 ml-auto mr-2'/>
             </div>

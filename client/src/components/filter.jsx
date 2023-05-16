@@ -9,7 +9,7 @@ function Filter({ options, category, selectedOptions, onChange }) {
       onChange(newSelectedOptions);
    }; 
       return (
-        <Disclosure as="div" className="border-b border-gray-200 py-6">
+        <Disclosure as="div" className="border-t border-gray-200 py-6">
         {({ open }) => (
           <>
             <h3 className="-my-3 flow-root">
@@ -17,9 +17,9 @@ function Filter({ options, category, selectedOptions, onChange }) {
                 <span className="font-medium text-gray-800">{category}</span>
                 <span className="ml-6 flex items-center">
                   {open ? (
-                    <MinusIcon className="h-5 w-5" aria-hidden="true" />
+                    <MinusIcon className="h-5 w-5 mr-2 " aria-hidden="true" />
                   ) : (
-                    <PlusIcon className="h-5 w-5" aria-hidden="true" />
+                    <PlusIcon className="h-5 w-5 mr-2 " aria-hidden="true" />
                   )}
                 </span>
               </Disclosure.Button>
