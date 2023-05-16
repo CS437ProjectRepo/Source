@@ -204,7 +204,6 @@ const updateProject = async (req, res) => {
       let newData = (({ _id, __v, ...o }) => o)(req.body);
       if(superlatives || github || category){
         let tags = [];
-        
         if(category){
           tags.push(category)
         }else{
@@ -212,6 +211,9 @@ const updateProject = async (req, res) => {
         }
 
         // console.log(project.development_type)
+        if(development_type){
+          project.development_type = development_type
+        }
         switch(project.development_type){
           case "Code":{
             let languages;

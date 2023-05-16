@@ -16,7 +16,8 @@ async function getLanguageTags(github) {
         }
         return languages;
     } catch (error) {
-        console.log(error);
+        console.log(error.status);
+        console.log(error.data.message);
         throw new Error(MESSAGES.INVALID_GITHUB_LINK);
     }
 }
