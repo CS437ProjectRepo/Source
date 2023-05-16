@@ -81,8 +81,8 @@ export default function ProjectModal(props) {
                     <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">Tags</dt>
                         <dd className="mt-1 text-sm text-white sm:col-span-2 sm:mt-0 tag-container">
-                        {props.card.tag !== "" &&  props.card.tags.map(tag => (
-                          <span key={tag} className="bg-purple-500 px-2 py-1 rounded-full text-sm">{tag}</span>
+                        { props.card.tags.map(tag => (
+                          tag !== "" && (<span key={tag} className="bg-purple-500 px-2 py-1 rounded-full text-sm">{tag}</span>)
                         ))}
                         </dd>
                     </div>

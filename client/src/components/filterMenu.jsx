@@ -1,10 +1,18 @@
 
 import Filter from './filter';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 export default function FilterMenu(props){
     return(
      <form className={props.classes}>
         <h2 className='font-semibold text-gray-800'>Filter By</h2>
+        <button className="text-purple-500 disabled:text-gray-400 text-sm mb-6"
+            onClick={props.resetFilters}
+            disabled={props.selectedFilters.category.length === 0 && props.selectedFilters.language.length === 0 && props.selectedFilters.featured.length === 0 && props.selectedFilters.nocode.length === 0 && props.search.length === 0}
+        >
+            Clear All
+        </button>
+        <hr />
         <Filter
             options={props.filters[0].options}
             category={props.filters[0].name}
@@ -33,23 +41,21 @@ export default function FilterMenu(props){
                 />
             )
         }
-        <button className="text-purple-500 my-4 disabled:text-gray-400 text-sm"
-            onClick={props.resetFilters}
-            disabled={props.selectedFilters.category.length === 0 && props.selectedFilters.language.length === 0 && props.selectedFilters.featured.length === 0 && props.selectedFilters.nocode.length === 0 }
-        >
-            Clear All Filters
-        </button>
-
-        <div className="mt-6">
-            <h2 className='font-semibold text-gray-800 mb-4'>Search By</h2>
-            <input 
-                type="text"
-                onChange={(event)=>{
-                    props.setSearch(event.target.value)
-                    props.paginate(1)
-                }}
-                placeholder="Enter Project Name"
-                className="bg-transparent text-sm rounded w-full border-0 px-3 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-purple-600" />
+        <div className="my-8">
+            {/* <h2 className='font-semibold text-gray-800 mb-4'>Search By</h2> */}
+            <div className='flex items-center border border-gray-200 rounded py-1'>
+                <input 
+                    type="text"
+                    onChange={(event)=>{
+                        props.setSearch(event.target.value)
+                        props.paginate(1)
+                    }}
+                    value={props.search}
+                    placeholder="Search Project by Name"
+                    className="bg-transparent text-sm rounded w-full border-0 text-gray-600 placeholder:text-gray-400 focus:ring-0"
+                />
+                <MagnifyingGlassIcon className='w-5 h-5 text-gray-400 ml-auto mr-2'/>
+            </div>
         </div>
     </form>
     )

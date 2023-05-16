@@ -45,6 +45,9 @@ export default function MobileFilters(props){
                   selectedFilters={props.selectedFilters} 
                   handleFilterChange={props.handleFilterChange} 
                   resetFilters={props.resetFilters}
+                  search={props.search}
+                  setSearch={props.setSearch}
+                  paginate={props.paginate}
                 />
               </Dialog.Panel>
             </Transition.Child>

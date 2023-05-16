@@ -93,7 +93,10 @@ const protectedRoute = async (req, res) => {
   try {
     //exclude the password from the returned data
     const user = await User.findOne(req.user._id).select("-password");
-    return res.json({ user });
+    return res.json({
+      email: user.email,
+      secretAdminCode: process.env.ADMIN_CODE, 
+    });
   } catch (error) {
     return res
       .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)

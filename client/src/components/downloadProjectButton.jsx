@@ -43,7 +43,7 @@ function DownloadProjectsButton(props) {
       type="button"
       onClick={downloadProjects}
       disabled={props.loading}
-      className="download-button inline-flex items-center rounded-md px-2 sm:px-4 py-2 text-xs text-gray-800 shadow-sm hover:bg-purple-600"
+      className="download-button inline-flex items-center rounded-md ml-2 px-2 sm:px-4 py-2 text-xs text-gray-800 shadow-sm hover:bg-purple-600"
     >
       <ArrowDownTrayIcon className="mr-2 h-5 w-5" aria-hidden="true" />
       Download as XSLX

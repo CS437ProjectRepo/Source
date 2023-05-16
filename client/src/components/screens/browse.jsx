@@ -145,6 +145,7 @@ export default function Browse() {
       featured: [],
       nocode: [],
     });
+    setSearch('')
     paginate(1)
   }
 
@@ -164,8 +165,11 @@ export default function Browse() {
           selectedFilters={selectedFilters} 
           handleFilterChange={handleFilterChange} 
           resetFilters={resetFilters}
+          search={search}
+          setSearch={setSearch}
+          paginate={paginate}
           />
-      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <main className="mx-auto px-4 max-w-7xl">
         <div className="flex justify-between pt-10">
           <h1 className="text-2xl font-bold tracking-tight text-gray-800">Term Project Repository</h1>
           <div className="flex items-center">
@@ -196,6 +200,7 @@ export default function Browse() {
             selectedFilters={selectedFilters} 
             handleFilterChange={handleFilterChange} 
             resetFilters={resetFilters}
+            search={search}
             setSearch={setSearch}
             paginate={paginate}
             />
@@ -223,11 +228,11 @@ export default function Browse() {
                     <p className="mt-2">{card.description}</p>
                     <div className="tag-container mt-4">
                       {card.tags.map((tag, index) => (
-                        tag !== "" && <span key={index} className="tag px-2 py-1 rounded-full text-sm font-medium">{tag}</span>
+                        tag !== "" && <span key={index} className="tag px-2 py-1 rounded-full font-medium">{tag}</span>
                       ))}
                       {
                         card.development_type === "Unavailable" && (
-                          <span className="text-gray-600 itallic px-2 py-1 rounded-full text-sm italic"> Development Info Not Available</span>
+                          <span className="text-gray-600 itallic px-2 py-1 rounded-full italic"> Development Info Not Available</span>
                         )
                       }
                     </div>
@@ -250,7 +255,7 @@ export default function Browse() {
             {
               isEmpty && 
               <p className='w-100 text-gray-500 text-sm text-center'>
-                No projects with the selected tags...yet
+                No projects with those specifications...yet
               </p>
             }
             </div>

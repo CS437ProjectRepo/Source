@@ -1,7 +1,7 @@
 import { AuthContext } from '../../App';
 import { useState, useEffect, useContext} from 'react';
 import axios from 'axios';
-import { Navigate, useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { toast } from 'react-toastify';
 import apiURL from '../../config/apiURL';
 
@@ -21,7 +21,8 @@ const Dashboard = function() {
       try {
         const response = await axios.get( apiURL + '/protected');
         const data = await response.data;
-        setAdminData(data.user);
+        setAdminData(data);
+        console.log(data);
       } catch (error) {
         console.log(error);
         toast.error(error.response.data.message, { position: 'top-right' });
@@ -67,7 +68,7 @@ const Dashboard = function() {
                 <div className="mb-4">
                   <h2 className="text-xl font-semibold text-gray-800">Secret Admin Code</h2>
                   <p className="text-sm text-gray-800 mb-2"> This is the code other admins need to create a new account</p>
-                  <p className="text-gray-800 input-mask w-100 bg-gray-100 bg-opacity-50 p-2 rounded">{`103292347`}</p>
+                  <p className="text-gray-800 input-mask w-100 bg-gray-100 bg-opacity-50 p-2 rounded">{adminData.secretAdminCode}</p>
                 </div>
             </div>
           </div> 
