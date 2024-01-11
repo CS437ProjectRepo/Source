@@ -81,6 +81,7 @@ const singleProject = async(req, res) => {
 
 
 const createProject = async(req, res) => {
+  console.log(req.body);
   const files = req;
   const {
     project_name, 
