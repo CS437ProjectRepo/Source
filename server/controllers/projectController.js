@@ -157,6 +157,7 @@ const createProject = async(req, res) => {
         await post.save();
         return res.status(201).json({message: MESSAGES.PROJECT_CREATED})
     } catch (error) {
+        console.log(error)
         if (error.name === "ValidationError") {
           return res.status(422).json({ message: error.message });
         } else {
@@ -167,7 +168,7 @@ const createProject = async(req, res) => {
       console.log(error);
       return res.status(500).json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
   }
-}
+
 
 
 const updateProject = async (req, res) => {
