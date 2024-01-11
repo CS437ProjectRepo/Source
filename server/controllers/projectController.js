@@ -168,6 +168,7 @@ const createProject = async(req, res) => {
       console.log(error);
       return res.status(500).json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
   }
+}
 
 
 
